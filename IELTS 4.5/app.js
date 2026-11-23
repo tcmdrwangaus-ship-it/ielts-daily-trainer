@@ -595,39 +595,176 @@
     youtube: "유튜브"
   };
 
+  const IRREGULAR_LEMMAS = {
+    children: "child", people: "person", men: "man", women: "woman",
+    feet: "foot", teeth: "tooth", took: "take", taken: "take",
+    went: "go", gone: "go", saw: "see", seen: "see", made: "make",
+    came: "come", had: "have", did: "do", done: "do", said: "say",
+    got: "get", gotten: "get", felt: "feel", kept: "keep",
+    built: "build", spent: "spend", left: "leave", met: "meet",
+    paid: "pay", began: "begin", begun: "begin", wrote: "write",
+    written: "write", spoke: "speak", spoken: "speak", better: "good",
+    best: "good", worse: "bad", worst: "bad", more: "many", most: "many",
+    easier: "easy", easiest: "easy", cheaper: "cheap", cheapest: "cheap",
+    studies: "study", studied: "study", studying: "study",
+    running: "run", sitting: "sit", getting: "get", taking: "take",
+    making: "make", having: "have", living: "live", using: "use",
+    giving: "give", coming: "come", writing: "write", speaking: "speak",
+    reducing: "reduce", improving: "improve", focusing: "focus",
+    concentrating: "concentrate", relaxing: "relax", preferring: "prefer",
+    preferred: "prefer", registered: "register", registering: "register",
+    scheduled: "schedule", scheduling: "schedule", tried: "try", trying: "try",
+    adults: "adult", workers: "worker", lessons: "lesson", hours: "hour",
+    minutes: "minute", words: "word", evenings: "evening", weeks: "week",
+    months: "month", years: "year", classes: "class", buses: "bus",
+    takes: "take", works: "work", helps: "help", shows: "show",
+    adds: "add", starts: "start", finishes: "finish", wants: "want",
+    needs: "need", prefers: "prefer", feels: "feel", believes: "believe",
+    fits: "fit", relaxes: "relax", lives: "live", saves: "save", spends: "spend"
+  };
+
+  function getLemmaCandidates(rawWord) {
+    const lower = rawWord.toLowerCase().replace(/[^a-z]/g, "");
+    if (!lower) return [];
+    const list = [lower];
+    if (IRREGULAR_LEMMAS[lower]) {
+      list.push(IRREGULAR_LEMMAS[lower]);
+    }
+    if (lower.endsWith("ies") && lower.length > 4) {
+      list.push(lower.slice(0, -3) + "y");
+    }
+    if (/(ses|xes|zes|ches|shes)$/.test(lower)) {
+      list.push(lower.slice(0, -2));
+    }
+    if (lower.endsWith("s") && !lower.endsWith("ss") && !lower.endsWith("us") && lower.length > 3) {
+      list.push(lower.slice(0, -1));
+    }
+    if (lower.endsWith("ied") && lower.length > 4) {
+      list.push(lower.slice(0, -3) + "y");
+    }
+    if (lower.endsWith("ed") && lower.length > 4) {
+      const stem = lower.slice(0, -2);
+      list.push(stem);
+      list.push(stem + "e");
+      if (stem.length > 2 && stem[stem.length - 1] === stem[stem.length - 2]) {
+        list.push(stem.slice(0, -1));
+      }
+    }
+    if (lower.endsWith("ing") && lower.length > 5) {
+      const stem = lower.slice(0, -3);
+      list.push(stem);
+      list.push(stem + "e");
+      if (stem.length > 2 && stem[stem.length - 1] === stem[stem.length - 2]) {
+        list.push(stem.slice(0, -1));
+      }
+    }
+    if (lower.endsWith("er") && lower.length > 4) {
+      list.push(lower.slice(0, -2));
+      list.push(lower.slice(0, -1));
+    }
+    if (lower.endsWith("ly") && lower.length > 4) {
+      list.push(lower.slice(0, -2));
+    }
+    return [...new Set(list)].filter(Boolean);
+  }
+
+  function lemmatizeWord(rawWord) {
+    const candidates = getLemmaCandidates(rawWord);
+    const dict = curriculumData.vocabularyDict || {};
+    for (const c of candidates) {
+      if (dict[c]) return c;
+    }
+    for (const c of candidates) {
+      if (COMMON_KO_MAP[c]) return c;
+    }
+    return candidates.length > 1 ? candidates[1] : candidates[0] || "";
+  }
+
+  // Convert IPA string (e.g. /əˈdʌlt/, /ˈskedʒ.uːl/) to natural Hangul
+  function ipaToHangul(ipaStr) {
+    if (!ipaStr) return "";
+    let s = ipaStr
+      .replace(/[\/\[\]ˈˌ.]/g, "")
+      .replace(/ː/g, "")
+      .replace(/tʃ/g, "ㅊ")
+      .replace(/dʒ/g, "ㅈ")
+      .replace(/ʃ/g, "ㅅ")
+      .replace(/ʒ/g, "ㅈ")
+      .replace(/θ/g, "ㅆ")
+      .replace(/ð/g, "ㄷ")
+      .replace(/ŋ/g, "ㅇ")
+      .replace(/eɪ/g, "에이")
+      .replace(/aɪ/g, "아이")
+      .replace(/ɔɪ/g, "오이")
+      .replace(/aʊ/g, "아우")
+      .replace(/əʊ|oʊ/g, "오우")
+      .replace(/ɪə/g, "이어")
+      .replace(/eə/g, "에어")
+      .replace(/ʊə/g, "우어")
+      .replace(/ju/g, "유")
+      .replace(/j/g, "이")
+      .replace(/w/g, "우")
+      .replace(/ə|ʌ|ɜ|ɚ|ɝ/g, "어")
+      .replace(/æ/g, "애")
+      .replace(/e|ɛ/g, "에")
+      .replace(/i|ɪ/g, "이")
+      .replace(/ɑ|ɒ/g, "아")
+      .replace(/ɔ/g, "오")
+      .replace(/u|ʊ/g, "우")
+      .replace(/p/g, "ㅍ")
+      .replace(/b/g, "ㅂ")
+      .replace(/t/g, "ㅌ")
+      .replace(/d/g, "ㄷ")
+      .replace(/k/g, "ㅋ")
+      .replace(/g|ɡ/g, "ㄱ")
+      .replace(/f/g, "ㅍ")
+      .replace(/v/g, "ㅂ")
+      .replace(/s/g, "ㅅ")
+      .replace(/z/g, "ㅈ")
+      .replace(/h/g, "ㅎ")
+      .replace(/m/g, "ㅁ")
+      .replace(/n/g, "ㄴ")
+      .replace(/l/g, "ㄹ")
+      .replace(/r|ɹ/g, "ㄹ");
+
+    const jamoFallback = {
+      "ㅍ": "프", "ㅂ": "브", "ㅌ": "트", "ㄷ": "드", "ㅋ": "크",
+      "ㄱ": "그", "ㅅ": "스", "ㅈ": "즈", "ㅊ": "치", "ㅆ": "쓰",
+      "ㅎ": "흐", "ㅁ": "음", "ㄴ": "은", "ㅇ": "응", "ㄹ": "르"
+    };
+    let out = "";
+    for (const ch of s) {
+      out += jamoFallback[ch] || ch;
+    }
+    return out;
+  }
+
   function englishToHangulPron(word) {
     let w = word.toLowerCase().replace(/[^a-z]/g, "");
     if (!w) return "";
-    // Common rule-based phonetic approximation for Korean learners
+    const exactPron = {
+      adult: "어덜트", adults: "어덜츠", often: "오픈", schedule: "스케줄",
+      register: "레지스터", library: "라이브러리", evening: "이브닝",
+      quiet: "콰이어트", enough: "이너프", people: "피플", busy: "비지",
+      study: "스터디", studies: "스터디즈", studying: "스터딩",
+      minute: "미닛", minutes: "미니츠", hour: "아워", hours: "아워즈",
+      walk: "워크", work: "워크", worker: "워커", workers: "워커즈",
+      build: "빌드", listen: "리슨", listening: "리슨닝", write: "라이트",
+      writing: "라이팅", read: "리드", reading: "리딩", speak: "스피크",
+      speaking: "스피킹", language: "랭귀지", learning: "러닝",
+      money: "머니", music: "뮤직", video: "비디오", energy: "에너지"
+    };
+    if (exactPron[w]) return exactPron[w];
+
     const rules = [
-      [/tion$/g, "션"],
-      [/sion$/g, "전"],
-      [/ture$/g, "처"],
-      [/ous$/g, "어스"],
-      [/able$/g, "어블"],
-      [/ible$/g, "이블"],
-      [/ing$/g, "잉"],
-      [/ght/g, "트"],
-      [/ph/g, "프"],
-      [/sh/g, "쉬"],
-      [/ch/g, "치"],
-      [/th/g, "쓰"],
-      [/qu/g, "쿼"],
-      [/ck/g, "크"],
-      [/ee/g, "이"],
-      [/oo/g, "우"],
-      [/ea/g, "이"],
-      [/ai/g, "에이"],
-      [/ay/g, "에이"],
-      [/oa/g, "오우"],
-      [/ow/g, "아우"],
-      [/ou/g, "아우"],
-      [/er$/g, "어"],
-      [/or$/g, "어"],
-      [/ar$/g, "아"],
-      [/le$/g, "을"],
-      [/y$/g, "이"],
-      [/e$/g, ""]
+      [/tion$/g, "션"], [/sion$/g, "전"], [/ture$/g, "처"],
+      [/ous$/g, "어스"], [/able$/g, "어블"], [/ible$/g, "이블"],
+      [/ing$/g, "잉"], [/ght/g, "트"], [/ph/g, "프"], [/sh/g, "쉬"],
+      [/ch/g, "치"], [/th/g, "쓰"], [/qu/g, "쿼"], [/ck/g, "크"],
+      [/ee/g, "이"], [/oo/g, "우"], [/ea/g, "이"], [/ai/g, "에이"],
+      [/ay/g, "에이"], [/oa/g, "오우"], [/ow/g, "아우"], [/ou/g, "아우"],
+      [/er$/g, "어"], [/or$/g, "어"], [/ar$/g, "아"], [/le$/g, "을"],
+      [/y$/g, "이"], [/e$/g, ""]
     ];
     for (const [pattern, rep] of rules) {
       w = w.replace(pattern, rep);
@@ -645,25 +782,142 @@
     return out;
   }
 
+  const COMMON_IDIOMS_MAP = {
+    time: [
+      { expr: "on time", ko: "정각에, 제시간에", example: "The class always starts on time." },
+      { expr: "in time", ko: "시간에 맞춰, 늦지 않게", example: "I arrived just in time for the lesson." },
+      { expr: "all the time", ko: "항상, 줄곧", example: "Busy workers check their schedule all the time." }
+    ],
+    day: [
+      { expr: "every day", ko: "매일", example: "Studying ten minutes every day builds a habit." },
+      { expr: "day by day", ko: "날이 갈수록, 하루하루", example: "My English is improving day by day." }
+    ],
+    home: [
+      { expr: "at home", ko: "집에서", example: "I prefer relaxing at home after work." },
+      { expr: "go straight home", ko: "곧장 집으로 가다", example: "I usually go straight home after work." }
+    ],
+    way: [
+      { expr: "on the way", ko: "가는 길에", example: "I listen to English on the way to work." },
+      { expr: "the best way to", ko: "~하는 가장 좋은 방법", example: "Daily practice is the best way to learn." }
+    ],
+    help: [
+      { expr: "help + 목적어 + 동사원형", ko: "~가 ...하도록 돕다", example: "Studying at home helps me focus better." },
+      { expr: "can't help ~ing", ko: "~하지 않을 수 없다", example: "I can't help feeling tired after a long day." }
+    ],
+    feel: [
+      { expr: "feel tired / relaxed", ko: "피곤함을 / 편안함을 느끼다", example: "I feel relaxed when I listen to music." }
+    ],
+    make: [
+      { expr: "make time for", ko: "~을 위해 시간을 내다", example: "Try to make time for ten minutes of study." },
+      { expr: "make progress", ko: "발전을 이루다, 실력이 늘다", example: "You will make steady progress every week." }
+    ],
+    get: [
+      { expr: "get enough sleep", ko: "충분한 잠을 자다", example: "Staying home helps me get enough sleep." },
+      { expr: "get used to", ko: "~에 익숙해지다", example: "You will soon get used to daily practice." }
+    ],
+    build: [
+      { expr: "build a habit", ko: "습관을 만들다", example: "Ten minutes a day can build a strong habit." }
+    ],
+    music: [
+      { expr: "listen to music", ko: "음악을 듣다", example: "I often listen to music before going to bed." }
+    ],
+    money: [
+      { expr: "save money", ko: "돈을 아끼다", example: "Cooking at home helps me save money." }
+    ],
+    walk: [
+      { expr: "take a short walk", ko: "짧게 산책하다", example: "I like to take a short walk in the evening." }
+    ]
+  };
+
   function findInVocabularyDict(rawWord) {
     const dict = curriculumData.vocabularyDict || {};
-    const lower = rawWord.toLowerCase().replace(/[^a-z']/g, "");
-    if (dict[lower]) return dict[lower];
-
-    // Simple lemmatization fallback
-    const candidates = [
-      lower.replace(/ies$/, "y"),
-      lower.replace(/es$/, ""),
-      lower.replace(/s$/, ""),
-      lower.replace(/ied$/, "y"),
-      lower.replace(/ed$/, ""),
-      lower.replace(/ing$/, ""),
-      lower.replace(/ly$/, "")
-    ];
-    for (const stem of candidates) {
-      if (stem && dict[stem]) return dict[stem];
+    const candidates = getLemmaCandidates(rawWord);
+    for (const c of candidates) {
+      if (dict[c]) return dict[c];
     }
     return null;
+  }
+
+  const translationCache = {};
+  async function translateToKorean(text) {
+    if (!text) return "";
+    const key = text.trim();
+    if (translationCache[key]) return translationCache[key];
+    try {
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(key)}&langpair=en|ko`;
+      const res = await fetch(url);
+      if (!res.ok) return "";
+      const data = await res.json();
+      const translated =
+        data && data.responseData && data.responseData.translatedText
+          ? data.responseData.translatedText
+          : "";
+      if (translated && translated.toLowerCase() !== key.toLowerCase()) {
+        translationCache[key] = translated;
+        return translated;
+      }
+    } catch (e) {
+      // Silent fallback when offline
+    }
+    return "";
+  }
+
+  function renderOxfordDictBody(posGroups, idioms) {
+    const posHTML = (posGroups || [])
+      .map(
+        (group) => `
+        <div class="dict-pos-section">
+          <div class="dict-pos-header">
+            <span class="dict-pos-badge">${escapeHtml(group.pos)}</span>
+          </div>
+          <div class="dict-sense-list">
+            ${(group.senses || [])
+              .map(
+                (sense, idx) => `
+                <div class="dict-sense-item">
+                  <span class="dict-sense-num">${idx + 1}</span>
+                  <div class="dict-sense-content">
+                    <div class="dict-sense-top">
+                      <span class="dict-level-badge ${sense.level === "심화" ? "advanced" : "basic"}">${escapeHtml(sense.level || "기초")}</span>
+                      <span class="dict-meaning">${escapeHtml(sense.ko)}</span>
+                    </div>
+                    ${sense.en ? `<div class="dict-sense-en">${escapeHtml(sense.en)}</div>` : ""}
+                    ${sense.exampleEn ? `<p class="dict-example">"${escapeHtml(sense.exampleEn)}"</p>` : ""}
+                    ${sense.exampleKo ? `<p class="dict-example-ko">${escapeHtml(sense.exampleKo)}</p>` : ""}
+                  </div>
+                </div>
+              `
+              )
+              .join("")}
+          </div>
+        </div>
+      `
+      )
+      .join("");
+
+    const idiomsHTML =
+      idioms && idioms.length > 0
+        ? `
+        <div class="dict-idioms-section">
+          <h4 class="dict-idioms-title">🔗 관련 숙어 및 필수 표현</h4>
+          ${idioms
+            .map(
+              (idItem) => `
+              <div class="dict-idiom-card">
+                <div>
+                  <span class="dict-idiom-expr">${escapeHtml(idItem.expr)}</span>
+                  <span class="dict-idiom-ko">${escapeHtml(idItem.ko)}</span>
+                </div>
+                ${idItem.example ? `<div class="dict-idiom-ex">"${escapeHtml(idItem.example)}"</div>` : ""}
+              </div>
+            `
+            )
+            .join("")}
+        </div>
+      `
+        : "";
+
+    return `${posHTML}${idiomsHTML}`;
   }
 
   let currentDictWord = "";
@@ -684,7 +938,8 @@
   async function openWordDictionary(rawWord) {
     const cleanWord = rawWord.replace(/^[^a-zA-Z]+|[^a-zA-Z]+$/g, "");
     if (!cleanWord) return;
-    currentDictWord = cleanWord;
+    const lowerClicked = cleanWord.toLowerCase();
+    const lemma = lemmatizeWord(lowerClicked);
 
     wordDictBackdrop.classList.remove("hidden");
     wordDictModal.classList.remove("hidden");
@@ -692,73 +947,134 @@
     const localEntry = findInVocabularyDict(cleanWord);
     if (localEntry) {
       currentDictWord = localEntry.word;
+      const isInflected = lowerClicked !== localEntry.word.toLowerCase();
+      const clickedPron = isInflected ? englishToHangulPron(lowerClicked) : "";
+
       dictWordTitle.textContent = localEntry.word;
-      dictPronKo.textContent = `[${localEntry.pronunciationKo}]`;
-      dictIpa.textContent = localEntry.ipa || "";
-      dictBody.innerHTML = `
-        <div>
-          <span class="dict-pos-badge">${escapeHtml(localEntry.pos)}</span>
-          <span class="dict-meaning">${escapeHtml(localEntry.meaning)}</span>
-        </div>
-        <div class="dict-tip-box">
-          <strong>💡 IELTS 4.5 맥락 & 활용 팁:</strong><br />
-          ${escapeHtml(localEntry.contextTip)}
-        </div>
-        <p class="dict-example">예문: "${escapeHtml(localEntry.example)}"</p>
-      `;
+      dictPronKo.textContent = isInflected && clickedPron
+        ? `[${localEntry.pronunciationKo}] · (${cleanWord}: [${clickedPron}])`
+        : `[${localEntry.pronunciationKo}]`;
+      dictIpa.innerHTML = `${escapeHtml(localEntry.ipa || "")}${
+        isInflected
+          ? ` <span class="dict-lemma-tag">클릭: ${escapeHtml(cleanWord)} → 원형</span>`
+          : ""
+      }`;
+      dictBody.innerHTML = renderOxfordDictBody(
+        localEntry.posGroups,
+        localEntry.idioms
+      );
       return;
     }
 
-    // Fallback: free Dictionary API + built-in Hangul pron & common Korean map
-    const lower = cleanWord.toLowerCase();
-    const fallbackPronKo = englishToHangulPron(lower);
-    const commonKo = COMMON_KO_MAP[lower] || "";
+    // Fallback: free Dictionary API + MyMemory Korean Translation + IPA-to-Hangul
+    const lookupWord = lemma || lowerClicked;
+    currentDictWord = lookupWord;
+    const isInflected = lowerClicked !== lookupWord;
+    const commonKo = COMMON_KO_MAP[lookupWord] || COMMON_KO_MAP[lowerClicked] || "";
 
-    dictWordTitle.textContent = cleanWord;
-    dictPronKo.textContent = fallbackPronKo ? `[${fallbackPronKo}]` : "";
-    dictIpa.textContent = "";
-    dictBody.innerHTML = `<p class="lesson-desc">사전 정보를 불러오는 중...</p>`;
+    dictWordTitle.textContent = lookupWord;
+    dictPronKo.textContent = `[${englishToHangulPron(lookupWord)}]`;
+    dictIpa.innerHTML = isInflected
+      ? `<span class="dict-lemma-tag">클릭: ${escapeHtml(cleanWord)} → 원형</span>`
+      : "";
+    dictBody.innerHTML = `<p class="lesson-desc">옥스퍼드식 사전 정보를 불러오는 중...</p>`;
 
     try {
-      const res = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(lower)}`
+      let res = await fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(lookupWord)}`
       );
+      if (!res.ok && lookupWord !== lowerClicked) {
+        res = await fetch(
+          `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(lowerClicked)}`
+        );
+      }
       if (!res.ok) throw new Error("Not found");
+
       const data = await res.json();
       const entry = Array.isArray(data) ? data[0] : null;
       if (!entry) throw new Error("Empty");
 
       const phoneticObj = (entry.phonetics || []).find((p) => p.text);
-      dictIpa.textContent = entry.phonetic || (phoneticObj ? phoneticObj.text : "");
+      const ipaText = entry.phonetic || (phoneticObj ? phoneticObj.text : "");
+      const ipaHangul = ipaToHangul(ipaText);
+      if (ipaHangul) {
+        dictPronKo.textContent = `[${ipaHangul}]`;
+      }
+      dictIpa.innerHTML = `${escapeHtml(ipaText)}${
+        isInflected
+          ? ` <span class="dict-lemma-tag">클릭: ${escapeHtml(cleanWord)} → 원형</span>`
+          : ""
+      }`;
 
-      const firstMeaning = entry.meanings && entry.meanings[0];
-      const posRaw = firstMeaning ? firstMeaning.partOfSpeech : "word";
-      const posKo = POS_KO_MAP[posRaw] || posRaw;
-      const defObj = firstMeaning && firstMeaning.definitions && firstMeaning.definitions[0];
-      const engDef = defObj ? defObj.definition : "";
-      const engExample = defObj && defObj.example ? defObj.example : "";
+      const meanings = (entry.meanings || []).slice(0, 3);
+      const posGroups = [];
 
-      dictBody.innerHTML = `
-        <div>
-          <span class="dict-pos-badge">${escapeHtml(posKo)}</span>
-          <span class="dict-meaning">${commonKo ? escapeHtml(commonKo) : escapeHtml(cleanWord)}</span>
-        </div>
-        <div class="dict-tip-box">
-          <strong>📖 영영 풀이:</strong><br />
-          ${escapeHtml(engDef || "사전 정의를 찾을 수 없습니다.")}
-        </div>
-        ${engExample ? `<p class="dict-example">예문: "${escapeHtml(engExample)}"</p>` : ""}
-      `;
+      // Prepare translation promises in parallel for Korean meanings
+      const wordKoPromise = commonKo
+        ? Promise.resolve(commonKo)
+        : translateToKorean(lookupWord);
+
+      const sensePromises = [];
+      meanings.forEach((m) => {
+        const posKo = POS_KO_MAP[m.partOfSpeech] || m.partOfSpeech;
+        const defs = (m.definitions || []).slice(0, 2);
+        const group = { pos: posKo, senses: [] };
+        posGroups.push(group);
+
+        defs.forEach((d, dIdx) => {
+          const sense = {
+            level: dIdx === 0 ? "기초" : "심화",
+            ko: commonKo && dIdx === 0 && posGroups.length === 1 ? commonKo : "",
+            en: d.definition || "",
+            exampleEn: d.example || "",
+            exampleKo: ""
+          };
+          group.senses.push(sense);
+
+          if (!sense.ko && sense.en) {
+            sensePromises.push(
+              translateToKorean(sense.en).then((tr) => {
+                sense.ko = tr || commonKo || lookupWord;
+              })
+            );
+          }
+          if (sense.exampleEn) {
+            sensePromises.push(
+              translateToKorean(sense.exampleEn).then((tr) => {
+                sense.exampleKo = tr;
+              })
+            );
+          }
+        });
+      });
+
+      const [wordKo] = await Promise.all([wordKoPromise, ...sensePromises]);
+      posGroups.forEach((g) => {
+        g.senses.forEach((s) => {
+          if (!s.ko) s.ko = wordKo || commonKo || lookupWord;
+        });
+      });
+
+      const idioms = COMMON_IDIOMS_MAP[lookupWord] || COMMON_IDIOMS_MAP[lowerClicked] || [];
+      dictBody.innerHTML = renderOxfordDictBody(posGroups, idioms);
     } catch (e) {
-      dictBody.innerHTML = `
-        <div>
-          <span class="dict-pos-badge">어휘</span>
-          <span class="dict-meaning">${commonKo ? escapeHtml(commonKo) : "기본 단어"}</span>
-        </div>
-        <div class="dict-tip-box">
-          오프라인 상태이거나 사전에 등록되지 않은 형태입니다. 위 🔊 버튼을 눌러 원어민 발음을 직접 들어보세요.
-        </div>
-      `;
+      const translatedWord = commonKo || (await translateToKorean(lookupWord)) || "기본 어휘";
+      const idioms = COMMON_IDIOMS_MAP[lookupWord] || COMMON_IDIOMS_MAP[lowerClicked] || [];
+      dictBody.innerHTML = renderOxfordDictBody(
+        [
+          {
+            pos: "어휘",
+            senses: [
+              {
+                level: "기초",
+                ko: translatedWord,
+                en: "오프라인 상태이거나 외부 사전에 등록되지 않은 형태입니다. 위 🔊 버튼으로 발음을 들어보세요."
+              }
+            ]
+          }
+        ],
+        idioms
+      );
     }
   }
 

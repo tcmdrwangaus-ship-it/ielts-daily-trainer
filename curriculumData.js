@@ -362,348 +362,1153 @@ const curriculumData = {
     }
   ],
   vocabularyDict: {
+    adult: {
+      word: "adult",
+      pronunciationKo: "어덜트",
+      ipa: "/əˈdʌlt/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "어른, 성인",
+              en: "a fully grown person who is no longer a child",
+              exampleEn: "Many working adults want to improve their English.",
+              exampleKo: "많은 직장인 성인들이 영어를 향상시키고 싶어 합니다."
+            },
+            {
+              level: "심화",
+              ko: "(동식물의) 성체, 다 자란 개체",
+              en: "a fully developed animal or plant",
+              exampleEn: "An adult bird feeds its young several times a day.",
+              exampleKo: "성체 새는 하루에 여러 번 새끼에게 먹이를 줍니다."
+            }
+          ]
+        },
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "성인의, 어른을 위한",
+              en: "for or relating to grown-up people",
+              exampleEn: "Short daily practice is effective for adult learners.",
+              exampleKo: "짧은 매일의 연습은 성인 학습자에게 효과적입니다."
+            },
+            {
+              level: "심화",
+              ko: "성숙한, 어른스러운",
+              en: "behaving in a sensible and mature way",
+              exampleEn: "They had an adult discussion about their career plans.",
+              exampleKo: "그들은 진로 계획에 대해 성숙한 대화를 나누었습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "young adult", ko: "청년, 젊은 성인", example: "This program is popular with young adults." },
+        { expr: "adult education", ko: "성인 교육, 평생 교육", example: "Adult education helps workers learn new skills." },
+        { expr: "reach adulthood", ko: "성인이 되다 (IELTS Writing 빈출)", example: "When people reach adulthood, they manage their own time." }
+      ]
+    },
     register: {
       word: "register",
       pronunciationKo: "레지스터",
       ipa: "/ˈredʒ.ɪ.stər/",
-      pos: "동사(v.)",
-      meaning: "등록하다, 신청하다",
-      contextTip: "수업, 시험, 회원 가입 등을 공식적으로 신청할 때 쓰는 IELTS Part 1 단골 동사입니다. 보통 'register for + 명사' 형태로 씁니다.",
-      example: "I'd like to register for an evening English class."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "등록하다, 신청하다",
+              en: "to put your name on an official list to join a class or event",
+              exampleEn: "I'd like to register for an evening English class.",
+              exampleKo: "저녁 영어 수업에 등록하고 싶습니다."
+            },
+            {
+              level: "심화",
+              ko: "(공식적으로) 기록하다, 신고하다",
+              en: "to record information officially",
+              exampleEn: "All visitors must register at the front desk.",
+              exampleKo: "모든 방문객은 안내 데스크에 등록해야 합니다."
+            }
+          ]
+        },
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "명부, 출석부, 등록부",
+              en: "an official list of names or records",
+              exampleEn: "The teacher checked the class register.",
+              exampleKo: "선생님이 수업 출석부를 확인했습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "register for + 명사", ko: "~에 등록(신청)하다", example: "You can register for the IELTS test online." },
+        { expr: "register with + 기관", ko: "~에 회원/이용자 등록하다", example: "Please register with your local library." }
+      ]
     },
     schedule: {
       word: "schedule",
       pronunciationKo: "스케줄",
       ipa: "/ˈskedʒ.uːl/",
-      pos: "명사(n.) / 동사(v.)",
-      meaning: "일정, 시간표 / 일정을 잡다",
-      contextTip: "직장인의 하루 일과나 수업 시간표를 말할 때 쓰입니다. 'fit ~ into my schedule(일정에 맞추다)' 표현으로 익혀두세요.",
-      example: "That fits my daily schedule very well."
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "일정, 시간표",
+              en: "a plan of activities or events and when they will happen",
+              exampleEn: "That class fits my daily schedule.",
+              exampleKo: "그 수업은 제 하루 일정에 잘 맞습니다."
+            },
+            {
+              level: "심화",
+              ko: "예정, 계획표 (업무·교통)",
+              en: "a planned timetable for work, flights, or trains",
+              exampleEn: "The train arrived right on schedule.",
+              exampleKo: "기차가 예정 시간표대로 정각에 도착했습니다."
+            }
+          ]
+        },
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "심화",
+              ko: "(특정 시간으로) 일정을 잡다, 예정하다",
+              en: "to arrange for something to happen at a particular time",
+              exampleEn: "The meeting is scheduled for Tuesday at 7 p.m.",
+              exampleKo: "회의는 화요일 오후 7시로 예정되어 있습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "on schedule", ko: "예정대로, 정각에", example: "We finished the project on schedule." },
+        { expr: "ahead of / behind schedule", ko: "예정보다 앞서 / 늦어져", example: "I have a tight schedule this week." },
+        { expr: "fit into one's schedule", ko: "~의 일정에 맞추다", example: "I can fit ten minutes of study into my schedule." }
+      ]
     },
-    beginner: {
-      word: "beginner",
-      pronunciationKo: "비기너",
-      ipa: "/bɪˈɡɪn.ər/",
-      pos: "명사(n.)",
-      meaning: "초보자, 입문자",
-      contextTip: "수업 난이도를 말할 때 'beginner(초급) - intermediate(중급) - advanced(고급)' 순서로 자주 등장합니다.",
-      example: "We have a beginner conversation class on Tuesdays."
-    },
-    conversation: {
-      word: "conversation",
-      pronunciationKo: "컨버세이션",
-      ipa: "/ˌkɒn.vəˈseɪ.ʃən/",
-      pos: "명사(n.)",
-      meaning: "대화, 회화",
-      contextTip: "두 사람 이상이 나누는 일상적인 대화를 뜻합니다. 'have a conversation with ~' 형태로 자주 쓰입니다.",
-      example: "She joined a conversation club to practice speaking."
-    },
-    nearby: {
-      word: "nearby",
-      pronunciationKo: "니어바이",
-      ipa: "/ˌnɪəˈbaɪ/",
-      pos: "부사(adv.) / 형용사(adj.)",
-      meaning: "근처에, 인근의",
-      contextTip: "집이나 직장 가까이에 있는 장소를 설명할 때 Speaking Part 1에서 매우 유용합니다.",
-      example: "I work nearby, so I can walk to the library."
-    },
-    library: {
-      word: "library",
-      pronunciationKo: "라이브러리",
-      ipa: "/ˈlaɪ.brər.i/",
-      pos: "명사(n.)",
-      meaning: "도서관",
-      contextTip: "IELTS Listening Part 1에서 시설 안내(도서관 회원증, 운영 시간 등) 주제로 매우 자주 출제됩니다.",
-      example: "Welcome to the Central City Library."
-    },
-    completely: {
-      word: "completely",
-      pronunciationKo: "컴플리틀리",
-      ipa: "/kəmˈpliːt.li/",
-      pos: "부사(adv.)",
-      meaning: "완전히, 전적으로",
-      contextTip: "'완전히 무료(completely free)'처럼 형용사를 강조할 때 씁니다. Listening에서 정답 단서를 강조하는 신호가 되기도 합니다.",
-      example: "The class is completely free for local workers."
-    },
-    local: {
-      word: "local",
-      pronunciationKo: "로컬",
-      ipa: "/ˈləʊ.kəl/",
-      pos: "형용사(adj.)",
-      meaning: "지역의, 현지의",
-      contextTip: "내가 사는 동네나 해당 지역 주민을 가리킬 때 쓰입니다. 'local workers(지역 직장인)', 'local library(동네 도서관)'.",
-      example: "This program is popular with local residents."
-    },
-    worker: {
-      word: "worker",
-      pronunciationKo: "워커",
-      ipa: "/ˈwɜː.kər/",
-      pos: "명사(n.)",
-      meaning: "직장인, 근로자",
-      contextTip: "일하는 사람을 일반적으로 가리키며, 'office worker(사무직 직장인)'처럼 직군을 붙여 쓰기도 합니다.",
-      example: "Many local workers attend evening classes."
-    },
-    free: {
-      word: "free",
-      pronunciationKo: "프리",
-      ipa: "/friː/",
-      pos: "형용사(adj.)",
-      meaning: "무료의 / 한가한, 자유로운",
-      contextTip: "문맥에 따라 '돈이 들지 않는(무료)'과 '시간이 비어 있는(한가한)' 두 가지 핵심 뜻으로 쓰입니다.",
-      example: "Are you free this evening? / The pass is free."
+    take: {
+      word: "take",
+      pronunciationKo: "테이크",
+      ipa: "/teɪk/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "가져가다, 데려가다 / (시간이) 걸리다",
+              en: "to carry or move something, or to require a certain amount of time",
+              exampleEn: "It takes ten minutes to walk to the station.",
+              exampleKo: "역까지 걸어가는 데 10분이 걸립니다."
+            },
+            {
+              level: "기초",
+              ko: "(수업·시험을) 듣다, 치르다 / (산책 등을) 하다",
+              en: "to attend a course, do an exam, or perform an action like a walk",
+              exampleEn: "I like to take a short walk after dinner.",
+              exampleKo: "저는 저녁 식사 후에 짧게 산책하는 것을 좋아합니다."
+            },
+            {
+              level: "심화",
+              ko: "(조치·책임·기회를) 취하다, 받아들이다",
+              en: "to accept or act upon an opportunity, responsibility, or measure",
+              exampleEn: "Governments should take action to reduce pollution.",
+              exampleKo: "정부는 오염을 줄이기 위한 조치를 취해야 합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "take a walk / break", ko: "산책하다 / 휴식을 취하다", example: "Let's take a short break." },
+        { expr: "take part in", ko: "~에 참여하다 (IELTS 필수 숙어)", example: "Many adults take part in evening classes." },
+        { expr: "take place", ko: "(행사·사건이) 열리다, 발생하다", example: "The class takes place in Room 204." },
+        { expr: "take care of", ko: "~을 돌보다, 처리하다", example: "She takes care of her family after work." }
+      ]
     },
     improve: {
       word: "improve",
       pronunciationKo: "임프루브",
       ipa: "/ɪmˈpruːv/",
-      pos: "동사(v.)",
-      meaning: "향상시키다, 개선하다",
-      contextTip: "실력이나 상태를 더 낫게 만들 때 쓰는 필수 동사입니다. 'improve my English(영어 실력을 높이다)'.",
-      example: "Many adults want to improve their English."
-    },
-    often: {
-      word: "often",
-      pronunciationKo: "오픈(오프튼)",
-      ipa: "/ˈɒf.ən/",
-      pos: "부사(adv.)",
-      meaning: "자주, 종종",
-      contextTip: "Speaking Part 1에서 습관을 말할 때 'usually(보통)'와 함께 가장 많이 쓰는 빈도 부사입니다.",
-      example: "They often feel tired after a long day."
-    },
-    tired: {
-      word: "tired",
-      pronunciationKo: "타이어드",
-      ipa: "/ˈtaɪəd/",
-      pos: "형용사(adj.)",
-      meaning: "피곤한, 지친",
-      contextTip: "사람의 감정을 말할 때는 '-ed' 형태인 'tired'를 씁니다. (tiring은 '피곤하게 만드는'이라는 뜻).",
-      example: "I feel quite tired after work."
-    },
-    office: {
-      word: "office",
-      pronunciationKo: "오피스",
-      ipa: "/ˈɒf.ɪs/",
-      pos: "명사(n.)",
-      meaning: "사무실, 직장",
-      contextTip: "'at the office(사무실에서)' 형태로 직장 생활을 묘사할 때 자주 쓰입니다.",
-      example: "She had a long day at the office."
-    },
-    recent: {
-      word: "recent",
-      pronunciationKo: "리슨트",
-      ipa: "/ˈriː.sənt/",
-      pos: "형용사(adj.)",
-      meaning: "최근의",
-      contextTip: "IELTS Reading 지문에서 'recent studies(최근 연구)'는 과거와 현재를 대조할 때 자주 나오는 핵심 표현입니다.",
-      example: "Recent education studies show positive results."
-    },
-    effective: {
-      word: "effective",
-      pronunciationKo: "이펙티브",
-      ipa: "/ɪˈfek.tɪv/",
-      pos: "형용사(adj.)",
-      meaning: "효과적인",
-      contextTip: "어떤 방법이나 학습법이 좋은 결과를 낼 때 Writing/Reading에서 'more effective(더 효과적인)'로 자주 쓰입니다.",
-      example: "Short daily practice is very effective."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "더 좋아지다, 실력이 늘다",
+              en: "to become better than before",
+              exampleEn: "My listening skills improved quickly.",
+              exampleKo: "제 듣기 실력이 빠르게 향상되었습니다."
+            },
+            {
+              level: "심화",
+              ko: "~을 향상시키다, 개선하다",
+              en: "to make something better in quality or condition",
+              exampleEn: "Many working adults want to improve their English.",
+              exampleKo: "많은 직장인 성인들이 영어를 향상시키고 싶어 합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "improve one's skills", ko: "실력을 향상시키다", example: "Daily reading helps improve your skills." },
+        { expr: "room for improvement", ko: "개선의 여지", example: "There is always room for improvement." }
+      ]
     },
     concentrate: {
       word: "concentrate",
       pronunciationKo: "컨센트레이트",
       ipa: "/ˈkɒn.sən.treɪt/",
-      pos: "동사(v.)",
-      meaning: "집중하다",
-      contextTip: "IELTS Reading에서 'focus'의 동의어로 자주 출제됩니다. 'concentrate on ~' 형태로 씁니다.",
-      example: "It is easier to concentrate for ten minutes."
-    },
-    remember: {
-      word: "remember",
-      pronunciationKo: "리멤버",
-      ipa: "/rɪˈmem.bər/",
-      pos: "동사(v.)",
-      meaning: "기억하다",
-      contextTip: "반대말은 'forget(잊다)'입니다. 새 어휘를 암기하거나 추억을 말할 때 쓰입니다.",
-      example: "Short lessons help you remember new words."
-    },
-    reduce: {
-      word: "reduce",
-      pronunciationKo: "리듀스",
-      ipa: "/rɪˈdjuːs/",
-      pos: "동사(v.)",
-      meaning: "줄이다, 감소시키다",
-      contextTip: "스트레스, 비용, 시간 등을 줄일 때 쓰는 IELTS Writing/Reading 핵심 동사입니다.",
-      example: "Short lessons also reduce stress."
-    },
-    stress: {
-      word: "stress",
-      pronunciationKo: "스트레스",
-      ipa: "/stres/",
-      pos: "명사(n.) / 동사(v.)",
-      meaning: "스트레스, 긴장 / 강조하다",
-      contextTip: "직장인 주제에서 'reduce stress(스트레스를 줄이다)' 또는 'under stress(스트레스를 받는)'로 자주 쓰입니다.",
-      example: "Listening to music helps reduce stress."
-    },
-    paragraph: {
-      word: "paragraph",
-      pronunciationKo: "패러그래프",
-      ipa: "/ˈpær.ə.ɡrɑːf/",
-      pos: "명사(n.)",
-      meaning: "단락, 문단",
-      contextTip: "IELTS Reading 지문의 각 문단을 가리킬 때 'Paragraph A, B...'처럼 쓰입니다.",
-      example: "Try reading one paragraph during lunch."
-    },
-    habit: {
-      word: "habit",
-      pronunciationKo: "해빗",
-      ipa: "/ˈhæb.ɪt/",
-      pos: "명사(n.)",
-      meaning: "습관",
-      contextTip: "'build a strong habit(탄탄한 습관을 만들다)'처럼 동사 build/form과 함께 쓰면 자연스럽습니다.",
-      example: "Daily practice builds a good study habit."
-    },
-    prefer: {
-      word: "prefer",
-      pronunciationKo: "프리퍼",
-      ipa: "/prɪˈfɜːr/",
-      pos: "동사(v.)",
-      meaning: "~을 더 선호하다",
-      contextTip: "Speaking과 Writing에서 선택을 말할 때 'prefer A to B' 또는 'prefer ~ing' 형태로 매우 자주 쓰입니다.",
-      example: "Many adults prefer studying online."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "집중하다, 정신을 모으다",
+              en: "to give all your attention to the thing you are doing",
+              exampleEn: "It is much easier to concentrate for ten minutes.",
+              exampleKo: "10분 동안 집중하는 것이 훨씬 더 쉽습니다."
+            },
+            {
+              level: "심화",
+              ko: "(자원을) 한곳에 집중시키다, 농축하다",
+              en: "to bring people, efforts, or substances together in one place",
+              exampleEn: "The company decided to concentrate on online education.",
+              exampleKo: "그 회사는 온라인 교육에 집중하기로 결정했습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "concentrate on + 명사/동명사", ko: "~에 집중하다 (= focus on)", example: "I need to concentrate on studying for IELTS." }
+      ]
     },
     convenient: {
       word: "convenient",
       pronunciationKo: "컨비니언트",
       ipa: "/kənˈviː.ni.ənt/",
-      pos: "형용사(adj.)",
-      meaning: "편리한, 간편한",
-      contextTip: "사람이 아닌 사물·서비스·시간이 편리할 때 씁니다. ('I am convenient'는 틀린 표현이고 'It is convenient for me'가 맞습니다.)",
-      example: "Online learning is very convenient for workers."
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "편리한, 쓰기 편한",
+              en: "easy to use or suited to your needs without causing trouble",
+              exampleEn: "Online learning is very convenient for busy adults.",
+              exampleKo: "온라인 학습은 바쁜 성인들에게 매우 편리합니다."
+            },
+            {
+              level: "심화",
+              ko: "(시간·장소가) 알맞은, 형편이 좋은",
+              en: "useful, easy, or quick to do at a suitable time or place",
+              exampleEn: "Would 7:30 p.m. be convenient for you?",
+              exampleKo: "오후 7시 30분이 괜찮으신가요?"
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "be convenient for ~", ko: "~에게 편리하다", example: "The library is convenient for local workers." },
+        { expr: "at your earliest convenience", ko: "가능한 한 빠른 시일 내에 (비즈니스 격식)", example: "Please reply at your earliest convenience." }
+      ]
     },
     focus: {
       word: "focus",
       pronunciationKo: "포커스",
       ipa: "/ˈfəʊ.kəs/",
-      pos: "동사(v.) / 명사(n.)",
-      meaning: "집중하다 / 초점",
-      contextTip: "'concentrate'와 같은 뜻으로, Writing과 Speaking에서 'focus better(더 잘 집중하다)'로 쓰기 좋습니다.",
-      example: "A quiet room helps me focus better."
-    },
-    opinion: {
-      word: "opinion",
-      pronunciationKo: "오피니언",
-      ipa: "/əˈpɪn.jən/",
-      pos: "명사(n.)",
-      meaning: "의견, 생각",
-      contextTip: "IELTS Writing Task 2와 Speaking에서 'In my opinion,(제 생각에는)'으로 문장을 시작할 때 필수입니다.",
-      example: "In my opinion, online study is a great choice."
-    },
-    choice: {
-      word: "choice",
-      pronunciationKo: "초이스",
-      ipa: "/tʃɔɪs/",
-      pos: "명사(n.)",
-      meaning: "선택",
-      contextTip: "'choose(선택하다)'의 명사형입니다. 'a good choice(좋은 선택)'로 자주 쓰입니다.",
-      example: "Online learning is a good choice for busy adults."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "집중하다",
+              en: "to give full attention to something",
+              exampleEn: "Studying in a quiet room helps me focus better.",
+              exampleKo: "조용한 방에서 공부하는 것은 더 잘 집중하는 데 도움이 됩니다."
+            }
+          ]
+        },
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "심화",
+              ko: "초점, 중심, 핵심 관심사",
+              en: "the main center of attention or interest",
+              exampleEn: "The main focus of this course is daily conversation.",
+              exampleKo: "이 강좌의 핵심 초점은 일상 회화입니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "focus on ~", ko: "~에 집중하다", example: "Let's focus on five new words today." },
+        { expr: "stay focused", ko: "집중력을 유지하다", example: "Short sessions help you stay focused." }
+      ]
     },
     relax: {
       word: "relax",
       pronunciationKo: "릴랙스",
       ipa: "/rɪˈlæks/",
-      pos: "동사(v.)",
-      meaning: "휴식을 취하다, 긴장을 풀다",
-      contextTip: "Speaking Part 1 여가·주말 질문에서 'relax at home(집에서 쉬다)'로 가장 자주 쓰이는 동사입니다.",
-      example: "I often relax on the sofa after work."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "쉬다, 휴식을 취하다",
+              en: "to rest and become calm after work or stress",
+              exampleEn: "I often relax on the sofa after work.",
+              exampleKo: "저는 퇴근 후 소파에서 자주 휴식을 취합니다."
+            },
+            {
+              level: "심화",
+              ko: "(규칙·긴장을) 완화하다, 느슨하게 하다",
+              en: "to make a rule or control less strict",
+              exampleEn: "The school decided to relax its dress code.",
+              exampleKo: "학교는 복장 규정을 완화하기로 결정했습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "relax at home", ko: "집에서 편히 쉬다", example: "I prefer to relax at home on weekends." },
+        { expr: "feel relaxed", ko: "편안함을 느끼다", example: "Listening to music makes me feel relaxed." }
+      ]
+    },
+    prefer: {
+      word: "prefer",
+      pronunciationKo: "프리퍼",
+      ipa: "/prɪˈfɜːr/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "~을 더 좋아하다, 선호하다",
+              en: "to like one thing or person better than another",
+              exampleEn: "I definitely prefer spending my evenings at home.",
+              exampleKo: "저는 확실히 저녁 시간을 집에서 보내는 것을 선호합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "prefer A to B", ko: "B보다 A를 더 선호하다", example: "Many adults prefer online study to classroom lessons." },
+        { expr: "prefer to + 동사원형", ko: "~하는 것을 더 선호하다", example: "I prefer to study in the morning." }
+      ]
+    },
+    effective: {
+      word: "effective",
+      pronunciationKo: "이펙티브",
+      ipa: "/ɪˈfek.tɪv/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "효과적인, 효과가 있는",
+              en: "producing the result that was wanted or intended",
+              exampleEn: "Short, daily practice is often more effective.",
+              exampleKo: "짧고 매일 하는 연습이 종종 더 효과적입니다."
+            },
+            {
+              level: "심화",
+              ko: "(법·규칙이) 발효되는, 시행되는",
+              en: "starting to be used or applied officially",
+              exampleEn: "The new library hours are effective from Monday.",
+              exampleKo: "새로운 도서관 운영 시간은 월요일부터 적용됩니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "cost-effective", ko: "비용 대비 효과적인 (가성비 좋은)", example: "Online apps are a cost-effective way to learn." }
+      ]
+    },
+    reduce: {
+      word: "reduce",
+      pronunciationKo: "리듀스",
+      ipa: "/rɪˈdjuːs/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "줄이다, 낮추다",
+              en: "to make something smaller in size, amount, or degree",
+              exampleEn: "Short lessons also reduce stress.",
+              exampleKo: "짧은 수업은 또한 스트레스를 줄여줍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "reduce stress", ko: "스트레스를 줄이다", example: "Walking helps reduce daily stress." },
+        { expr: "reduce the cost / time", ko: "비용/시간을 줄이다", example: "Studying at home reduces travel time." }
+      ]
+    },
+    habit: {
+      word: "habit",
+      pronunciationKo: "해빗",
+      ipa: "/ˈhæb.ɪt/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "습관, 버릇",
+              en: "something that you do often and regularly, sometimes without thinking",
+              exampleEn: "Reading one paragraph can build a strong habit.",
+              exampleKo: "한 단락을 읽는 것이 탄탄한 습관을 만들어 줄 수 있습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "build / form a habit", ko: "습관을 들이다, 형성하다", example: "Try to build a daily study habit." },
+        { expr: "out of habit", ko: "습관적으로", example: "I check my phone out of habit." }
+      ]
+    },
+    study: {
+      word: "study",
+      pronunciationKo: "스터디",
+      ipa: "/ˈstʌd.i/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "공부하다, 학습하다",
+              en: "to spend time learning about a subject",
+              exampleEn: "When you study for just ten minutes a day, it is easier.",
+              exampleKo: "하루에 단 10분만 공부할 때 더 쉽습니다."
+            }
+          ]
+        },
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "공부, 학습",
+              en: "the activity of learning or reading",
+              exampleEn: "Why short daily study works for busy adults.",
+              exampleKo: "왜 짧은 매일의 공부가 바쁜 성인에게 효과가 있을까."
+            },
+            {
+              level: "심화",
+              ko: "(학술) 연구, 조사",
+              en: "a detailed scientific or academic investigation",
+              exampleEn: "Recent education studies show positive results.",
+              exampleKo: "최근 교육 연구들은 긍정적인 결과를 보여줍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "case study", ko: "사례 연구", example: "The report includes a case study on adult learners." }
+      ]
+    },
+    work: {
+      word: "work",
+      pronunciationKo: "워크",
+      ipa: "/wɜːrk/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "일하다, 근무하다",
+              en: "to do a job to earn money",
+              exampleEn: "I work nearby and want to join an evening class.",
+              exampleKo: "저는 근처에서 일하며 저녁 수업에 참여하고 싶습니다."
+            },
+            {
+              level: "심화",
+              ko: "효과가 있다, 작동하다",
+              en: "to operate successfully or produce the expected effect",
+              exampleEn: "Why short daily study works for busy adults.",
+              exampleKo: "짧은 매일의 학습이 왜 바쁜 성인들에게 효과가 있는지."
+            }
+          ]
+        },
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "일, 직장, 업무",
+              en: "a job or place of employment",
+              exampleEn: "What do you usually do after work?",
+              exampleKo: "퇴근 후에 보통 무엇을 하나요?"
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "after work", ko: "퇴근 후에", example: "I usually relax after work." },
+        { expr: "work out", ko: "운동하다 / 잘 풀리다", example: "I work out twice a week." }
+      ]
+    },
+    free: {
+      word: "free",
+      pronunciationKo: "프리",
+      ipa: "/friː/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "무료의, 공짜의",
+              en: "costing no money",
+              exampleEn: "The class is completely free for local workers.",
+              exampleKo: "지역 직장인에게는 수업이 완전히 무료입니다."
+            },
+            {
+              level: "기초",
+              ko: "한가한, 시간이 비어 있는",
+              en: "not busy or not having any planned activities",
+              exampleEn: "Are you free this Tuesday evening?",
+              exampleKo: "이번 주 화요일 저녁에 시간 되시나요?"
+            },
+            {
+              level: "심화",
+              ko: "자유로운, ~이 없는",
+              en: "able to act as you want, or without something unpleasant",
+              exampleEn: "Short lessons offer a stress-free way to learn.",
+              exampleKo: "짧은 수업은 스트레스 없는 학습 방법을 제공합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "free time", ko: "여가 시간, 자유 시간", example: "In my free time, I enjoy reading." },
+        { expr: "for free", ko: "무료로", example: "Members can borrow books for free." }
+      ]
+    },
+    beginner: {
+      word: "beginner",
+      pronunciationKo: "비기너",
+      ipa: "/bɪˈɡɪn.ər/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "초보자, 입문자",
+              en: "a person who has just started learning something",
+              exampleEn: "We have a beginner conversation class every Tuesday.",
+              exampleKo: "매주 화요일에 초급 회화 수업이 있습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "complete beginner", ko: "완전 초보", example: "This guide is designed for complete beginners." }
+      ]
+    },
+    conversation: {
+      word: "conversation",
+      pronunciationKo: "컨버세이션",
+      ipa: "/ˌkɒn.vəˈseɪ.ʃən/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "대화, 회화",
+              en: "an informal talk between two or more people",
+              exampleEn: "She joined a beginner conversation class.",
+              exampleKo: "그녀는 초급 회화 수업에 참여했습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "have a conversation", ko: "대화를 나누다", example: "We had a nice conversation about travel." }
+      ]
+    },
+    nearby: {
+      word: "nearby",
+      pronunciationKo: "니어바이",
+      ipa: "/ˌnɪəˈbaɪ/",
+      posGroups: [
+        {
+          pos: "부사(adv.) / 형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "근처에, 인근의",
+              en: "not far away in distance",
+              exampleEn: "I work nearby and want to register for a class.",
+              exampleKo: "근처에서 일해서 수업에 등록하고 싶습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "live / work nearby", ko: "근처에 살다 / 일하다", example: "A coffee shop nearby stays open late." }
+      ]
+    },
+    library: {
+      word: "library",
+      pronunciationKo: "라이브러리",
+      ipa: "/ˈlaɪ.brər.i/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "도서관",
+              en: "a building where books, newspapers, and media are kept for people to read or borrow",
+              exampleEn: "Welcome to the Central City Library.",
+              exampleKo: "센트럴 시티 도서관에 오신 것을 환영합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "library pass / card", ko: "도서관 출입증 / 회원증", example: "Bring your ID card to get a library pass." }
+      ]
+    },
+    completely: {
+      word: "completely",
+      pronunciationKo: "컴플리틀리",
+      ipa: "/kəmˈpliːt.li/",
+      posGroups: [
+        {
+          pos: "부사(adv.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "완전히, 전적으로",
+              en: "in every way or as much as possible",
+              exampleEn: "The class is completely free for local workers.",
+              exampleKo: "지역 직장인에게는 수업이 완전히 무료입니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "completely agree", ko: "전적으로 동의하다", example: "I completely agree with this opinion." }
+      ]
+    },
+    local: {
+      word: "local",
+      pronunciationKo: "로컬",
+      ipa: "/ˈləʊ.kəl/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "지역의, 동네의, 현지의",
+              en: "relating to the particular area where you live or work",
+              exampleEn: "The class is free for local workers.",
+              exampleKo: "이 수업은 지역 직장인들에게 무료입니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "local community", ko: "지역 사회", example: "The center serves the local community." }
+      ]
+    },
+    worker: {
+      word: "worker",
+      pronunciationKo: "워커",
+      ipa: "/ˈwɜːr.kər/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "직장인, 근로자, 일하는 사람",
+              en: "a person who works in a particular job or industry",
+              exampleEn: "Many local workers attend evening courses.",
+              exampleKo: "많은 지역 직장인들이 저녁 강좌에 다닙니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "office worker", ko: "사무직 직장인", example: "Most office workers commute by subway." }
+      ]
+    },
+    often: {
+      word: "often",
+      pronunciationKo: "오픈",
+      ipa: "/ˈɒf.ən/",
+      posGroups: [
+        {
+          pos: "부사(adv.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "자주, 종종",
+              en: "many times or on many occasions",
+              exampleEn: "They often feel too tired after work.",
+              exampleKo: "그들은 퇴근 후 종종 너무 피곤함을 느낍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "more often than not", ko: "대개, 십중팔구", example: "More often than not, short sessions work best." }
+      ]
+    },
+    tired: {
+      word: "tired",
+      pronunciationKo: "타이어드",
+      ipa: "/ˈtaɪərd/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "피곤한, 지친",
+              en: "feeling that you need to rest or sleep",
+              exampleEn: "I feel quite tired in the evening.",
+              exampleKo: "저녁에는 꽤 피곤함을 느낍니다."
+            },
+            {
+              level: "심화",
+              ko: "~에 싫증난, 지겨운",
+              en: "bored or annoyed with something that has continued too long",
+              exampleEn: "I am tired of waiting for the bus.",
+              exampleKo: "버스를 기다리는 데 지쳤습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "be tired of ~", ko: "~에 지치다/싫증나다", example: "Many people are tired of long commutes." }
+      ]
+    },
+    office: {
+      word: "office",
+      pronunciationKo: "오피스",
+      ipa: "/ˈɒf.ɪs/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "사무실, 직장",
+              en: "a room or building where people work at desks",
+              exampleEn: "They feel tired after a long day at the office.",
+              exampleKo: "사무실에서 긴 하루를 보낸 후 피곤함을 느낍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "at the office", ko: "사무실에서, 직장에서", example: "She stays at the office until 6 p.m." }
+      ]
+    },
+    recent: {
+      word: "recent",
+      pronunciationKo: "리슨트",
+      ipa: "/ˈriː.sənt/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "최근의, 얼마 전의",
+              en: "having happened or started only a short time ago",
+              exampleEn: "Recent education studies show good results.",
+              exampleKo: "최근 교육 연구들은 좋은 결과를 보여줍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "in recent years", ko: "최근 몇 년 동안 (IELTS 에세이 필수)", example: "In recent years, online learning has grown fast." }
+      ]
+    },
+    remember: {
+      word: "remember",
+      pronunciationKo: "리멤버",
+      ipa: "/rɪˈmem.bər/",
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "기억하다, 잊지 않다",
+              en: "to keep a piece of information in your mind",
+              exampleEn: "It is easier to remember new words.",
+              exampleKo: "새로운 단어를 기억하는 것이 더 쉽습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "remember to + 동사", ko: "(앞으로) ~할 것을 기억하다", example: "Remember to bring your ID card." }
+      ]
+    },
+    stress: {
+      word: "stress",
+      pronunciationKo: "스트레스",
+      ipa: "/stres/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "스트레스, 정신적 압박감",
+              en: "pressure or worry caused by problems in life or work",
+              exampleEn: "Short lessons also reduce stress.",
+              exampleKo: "짧은 수업은 또한 스트레스를 줄여줍니다."
+            }
+          ]
+        },
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "심화",
+              ko: "강조하다, 역설하다",
+              en: "to give special importance to something",
+              exampleEn: "Teachers often stress the value of daily practice.",
+              exampleKo: "교사들은 매일 연습하는 것의 가치를 자주 강조합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "under stress", ko: "스트레스를 받고 있는", example: "Many workers are under stress." }
+      ]
+    },
+    paragraph: {
+      word: "paragraph",
+      pronunciationKo: "패러그래프",
+      ipa: "/ˈpær.ə.ɡrɑːf/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "단락, 문단",
+              en: "a distinct section of a piece of writing, starting on a new line",
+              exampleEn: "Try reading one paragraph during lunch.",
+              exampleKo: "점심시간에 한 단락을 읽어 보세요."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "opening paragraph", ko: "첫 문단, 서론 단락", example: "The opening paragraph introduces the main topic." }
+      ]
+    },
+    opinion: {
+      word: "opinion",
+      pronunciationKo: "오피니언",
+      ipa: "/əˈpɪn.jən/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "의견, 생각, 견해",
+              en: "your feelings or beliefs about someone or something",
+              exampleEn: "In my opinion, online learning is a great choice.",
+              exampleKo: "제 생각에는 온라인 학습이 훌륭한 선택입니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "in my opinion", ko: "내 생각에는, 내 의견으로는", example: "In my opinion, daily practice works best." }
+      ]
+    },
+    choice: {
+      word: "choice",
+      pronunciationKo: "초이스",
+      ipa: "/tʃɔɪs/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "선택, 선택권",
+              en: "an act of choosing between two or more possibilities",
+              exampleEn: "Online learning is a good choice for busy adults.",
+              exampleKo: "온라인 학습은 바쁜 성인들에게 좋은 선택입니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "make a choice", ko: "선택을 하다", example: "Students have to make a choice." },
+        { expr: "have no choice but to", ko: "~할 수밖에 없다", example: "Workers have no choice but to study at night." }
+      ]
     },
     neighborhood: {
       word: "neighborhood",
       pronunciationKo: "네이버후드",
-      ipa: "/ˈneɪ.bə.hʊd/",
-      pos: "명사(n.)",
-      meaning: "동네, 이웃 지역",
-      contextTip: "내가 사는 주변 지역을 말할 때 'in my neighborhood(우리 동네에서)' 형태로 씁니다.",
-      example: "I take a short walk in my neighborhood."
+      ipa: "/ˈneɪ.bər.hʊd/",
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "동네, 이웃 지역",
+              en: "a particular area of a town or city where people live",
+              exampleEn: "I like to take a short walk in my neighborhood.",
+              exampleKo: "저는 동네에서 짧게 산책하는 것을 좋아합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "in the neighborhood", ko: "근처에, 우리 동네에", example: "There is a quiet park in the neighborhood." }
+      ]
     },
     comfortable: {
       word: "comfortable",
       pronunciationKo: "컴퍼터블",
-      ipa: "/ˈkʌm.fə.tə.bəl/",
-      pos: "형용사(adj.)",
-      meaning: "편안한, 쾌적한",
-      contextTip: "공간, 의자, 옷 등이 편할 때 씁니다. 발음 시 가운데 'for'를 약하게 [컴퍼터블]로 읽는 것이 포인트입니다.",
-      example: "I just want a quiet, comfortable space."
+      ipa: "/ˈkʌm.fər.tə.bəl/",
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "편안한, 쾌적한",
+              en: "making you feel physically relaxed without pain or discomfort",
+              exampleEn: "I just want a quiet, comfortable space.",
+              exampleKo: "저는 그저 조용하고 편안한 공간을 원합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "feel comfortable with", ko: "~에 편안함을 느끼다, 익숙하다", example: "I feel comfortable speaking English with friends." }
+      ]
     },
     definitely: {
       word: "definitely",
       pronunciationKo: "데피니틀리",
       ipa: "/ˈdef.ɪ.nət.li/",
-      pos: "부사(adv.)",
-      meaning: "확실히, 분명히",
-      contextTip: "Speaking에서 자신의 선호를 자신감 있게 강조할 때 'I definitely prefer ~'처럼 쓰면 좋습니다.",
-      example: "I definitely prefer spending evenings at home."
+      posGroups: [
+        {
+          pos: "부사(adv.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "확실히, 분명히, 틀림없이",
+              en: "without any doubt; certainly",
+              exampleEn: "I definitely prefer spending my evenings at home.",
+              exampleKo: "저는 확실히 저녁 시간을 집에서 보내는 것을 선호합니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "definitely worth + ~ing", ko: "분명히 ~할 가치가 있는", example: "This app is definitely worth trying." }
+      ]
     },
     enough: {
       word: "enough",
       pronunciationKo: "이너프",
       ipa: "/ɪˈnʌf/",
-      pos: "형용사(adj.) / 부사(adv.)",
-      meaning: "충분한 / 충분히",
-      contextTip: "명사 앞에서는 'enough sleep(충분한 잠)', 형용사 뒤에서는 'good enough(충분히 좋은)'처럼 위치가 달라집니다.",
-      example: "Staying at home helps me get enough sleep."
+      posGroups: [
+        {
+          pos: "형용사(adj.) / 부사(adv.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "충분한 / 충분히",
+              en: "as much or as many as necessary",
+              exampleEn: "Staying at home helps me get enough sleep.",
+              exampleKo: "집에 있는 것은 충분한 수면을 취하는 데 도움이 됩니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "fair enough", ko: "그렇군, 일리가 있네", example: "Fair enough, let's try your plan." }
+      ]
     },
     usually: {
       word: "usually",
       pronunciationKo: "유주얼리",
       ipa: "/ˈjuː.ʒu.ə.li/",
-      pos: "부사(adv.)",
-      meaning: "보통, 대개",
-      contextTip: "평소 일과를 말할 때 가장 기본이 되는 빈도 부사입니다.",
-      example: "What do you usually do after work?"
+      posGroups: [
+        {
+          pos: "부사(adv.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "보통, 대개, 평소에는",
+              en: "in the way that most often happens",
+              exampleEn: "What do you usually do after work?",
+              exampleKo: "퇴근 후에는 보통 무엇을 하나요?"
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "as usual", ko: "평소처럼, 늘 그렇듯이", example: "I went straight home as usual." }
+      ]
     },
     evening: {
       word: "evening",
       pronunciationKo: "이브닝",
       ipa: "/ˈiːv.nɪŋ/",
-      pos: "명사(n.)",
-      meaning: "저녁",
-      contextTip: "퇴근 후 시간대를 말할 때 'in the evening(저녁에)', 'evening class(저녁 수업)'로 씁니다.",
-      example: "I prefer spending my evenings at home."
+      posGroups: [
+        {
+          pos: "명사(n.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "저녁, 해 질 녘부터 밤까지",
+              en: "the part of the day between the end of the afternoon and night",
+              exampleEn: "I feel quite tired in the evening.",
+              exampleKo: "저녁에는 꽤 피곤함을 느낍니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "in the evening", ko: "저녁에", example: "I study English in the evening." }
+      ]
     },
     quiet: {
       word: "quiet",
       pronunciationKo: "콰이어트",
       ipa: "/ˈkwaɪ.ət/",
-      pos: "형용사(adj.)",
-      meaning: "조용한",
-      contextTip: "'quite(꽤)'와 철자가 비슷하니 주의하세요! (quiet = 조용한, quite = 꽤)",
-      example: "Studying in a quiet room helps me focus."
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "조용한, 한적한",
+              en: "making very little noise",
+              exampleEn: "Studying in a quiet room helps me focus.",
+              exampleKo: "조용한 방에서 공부하는 것이 집중에 도움이 됩니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "keep quiet", ko: "조용히 하다", example: "Please keep quiet in the library." }
+      ]
     },
     simple: {
       word: "simple",
       pronunciationKo: "심플",
       ipa: "/ˈsɪm.pəl/",
-      pos: "형용사(adj.)",
-      meaning: "간단한, 단순한",
-      contextTip: "거창하지 않고 소박한 식사나 방법을 말할 때 'a simple dinner(간단한 저녁)'처럼 씁니다.",
-      example: "I usually go home and have a simple dinner."
+      posGroups: [
+        {
+          pos: "형용사(adj.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "간단한, 쉬운, 소박한",
+              en: "easy to understand or do; not complicated",
+              exampleEn: "I usually go home and have a simple dinner.",
+              exampleKo: "보통 집에 가서 간단한 저녁을 먹습니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "plain and simple", ko: "명백한, 단순 명료한", example: "It is a good habit, plain and simple." }
+      ]
     },
     save: {
       word: "save",
       pronunciationKo: "세이브",
       ipa: "/seɪv/",
-      pos: "동사(v.)",
-      meaning: "아끼다, 절약하다 / 저장하다",
-      contextTip: "'save time(시간을 아끼다)', 'save money(돈을 아끼다)'는 IELTS Writing/Speaking 만능 표현입니다.",
-      example: "Staying at home helps me save money."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "(돈·시간을) 아끼다, 절약하다 / 저장하다",
+              en: "to keep money or time for the future instead of wasting it",
+              exampleEn: "Staying at home also helps me save money.",
+              exampleKo: "집에 있는 것은 또한 돈을 아끼는 데 도움이 됩니다."
+            },
+            {
+              level: "심화",
+              ko: "(위험에서) 구하다, 구출하다",
+              en: "to rescue someone or something from danger or harm",
+              exampleEn: "Recycling helps save the environment.",
+              exampleKo: "재활용은 환경을 보호하는(구하는) 데 도움이 됩니다."
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "save time / money", ko: "시간 / 돈을 아끼다", example: "Online classes save travel time." },
+        { expr: "save up (for)", ko: "(~을 위해) 돈을 모으다", example: "I am saving up for a trip." }
+      ]
     },
     spend: {
       word: "spend",
       pronunciationKo: "스펜드",
       ipa: "/spend/",
-      pos: "동사(v.)",
-      meaning: "(시간·돈을) 보내다, 쓰다",
-      contextTip: "시간이나 돈을 쓸 때는 'spend + 시간/돈 + ~ing' 형태로 자주 사용합니다.",
-      example: "I like to spend my evenings relaxing at home."
+      posGroups: [
+        {
+          pos: "동사(v.)",
+          senses: [
+            {
+              level: "기초",
+              ko: "(시간을) 보내다 / (돈을) 쓰다",
+              en: "to use time doing something or pay money for something",
+              exampleEn: "Do you prefer spending your evenings at home?",
+              exampleKo: "저녁 시간을 집에서 보내는 것을 선호하나요?"
+            }
+          ]
+        }
+      ],
+      idioms: [
+        { expr: "spend time + ~ing", ko: "~하는 데 시간을 보내다", example: "I spend ten minutes reading every day." }
+      ]
     }
   }
 };
+
 

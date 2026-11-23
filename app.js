@@ -23,31 +23,47 @@
     return "mon";
   }
 
-  function loadState() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        return {
-          completedDays: parsed.completedDays || {},
-          answers: parsed.answers || {},
-          writingDrafts: parsed.writingDrafts || {},
-          speakingDone: parsed.speakingDone || {},
-          wrongNotes: Array.isArray(parsed.wrongNotes) ? parsed.wrongNotes : [],
-          dailyStudySeconds: parsed.dailyStudySeconds || {}
-        };
-      }
-    } catch (e) {
-      console.warn("localStorage load failed:", e);
-    }
+  function getDefaultState() {
     return {
       completedDays: {},
       answers: {},
       writingDrafts: {},
       speakingDone: {},
       wrongNotes: [],
-      dailyStudySeconds: {}
+      dailyStudySeconds: {},
+      lastWeekNumber: curriculumData.weeks[0].weekNumber,
+      lastDayKey: getDefaultDayKey()
     };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const validWeek = curriculumData.weeks.some(
+          (w) => w.weekNumber === parsed.lastWeekNumber
+        )
+          ? parsed.lastWeekNumber
+          : curriculumData.weeks[0].weekNumber;
+        const validDay = DAY_ORDER.includes(parsed.lastDayKey)
+          ? parsed.lastDayKey
+          : getDefaultDayKey();
+        return {
+          completedDays: parsed.completedDays || {},
+          answers: parsed.answers || {},
+          writingDrafts: parsed.writingDrafts || {},
+          speakingDone: parsed.speakingDone || {},
+          wrongNotes: Array.isArray(parsed.wrongNotes) ? parsed.wrongNotes : [],
+          dailyStudySeconds: parsed.dailyStudySeconds || {},
+          lastWeekNumber: validWeek,
+          lastDayKey: validDay
+        };
+      }
+    } catch (e) {
+      console.warn("localStorage load failed:", e);
+    }
+    return getDefaultState();
   }
 
   function saveState() {
@@ -59,8 +75,8 @@
   }
 
   let appState = loadState();
-  let currentWeekNumber = curriculumData.weeks[0].weekNumber;
-  let currentDayKey = getDefaultDayKey();
+  let currentWeekNumber = appState.lastWeekNumber;
+  let currentDayKey = appState.lastDayKey;
 
   // Study Timer State
   let timerRunning = true;
@@ -69,7 +85,10 @@
   // TTS State
   let ttsRate = 1.0;
   let isPlayingDialogue = false;
-  let dialogueStopRequested = false;
+  let activeSpeakingTts = null; // { qid, rate }
+  let ttsStopRequested = false;
+  let activeUtterance = null;
+  let cachedVoices = [];
 
   // Speaking Countdown Timer State
   let activeSpeakingTimerId = null;
@@ -82,6 +101,7 @@
   const milestone5m = document.getElementById("milestone5m");
   const milestone10m = document.getElementById("milestone10m");
   const timerToggleBtn = document.getElementById("timerToggleBtn");
+  const resetProgressBtn = document.getElementById("resetProgressBtn");
 
   const streakCountText = document.getElementById("streakCountText");
   const weeklyGoalSub = document.getElementById("weeklyGoalSub");
@@ -163,105 +183,218 @@
     renderStudyTimer();
   });
 
+  resetProgressBtn.addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "모든 학습 진도, 선택한 답안, 오답 기록 및 오늘의 학습 타이머를 초기화할까요?"
+    );
+    if (!confirmed) return;
+
+    stopAllSpeech();
+    if (activeSpeakingTimerId) {
+      clearInterval(activeSpeakingTimerId);
+      activeSpeakingTimerId = null;
+    }
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (e) {
+      console.warn("localStorage remove failed:", e);
+    }
+
+    appState = getDefaultState();
+    currentWeekNumber = appState.lastWeekNumber;
+    currentDayKey = appState.lastDayKey;
+    saveState();
+
+    renderWeekSelector();
+    renderProgressAndStreak();
+    renderWrongNotesList();
+    renderDayTabs();
+    renderLesson();
+    updateCompletionBanner();
+    renderStudyTimer();
+  });
+
   // =========================================
   // Speech Synthesis (Web Speech API)
   // =========================================
+  function refreshVoices() {
+    if (!("speechSynthesis" in window)) return;
+    const list = window.speechSynthesis.getVoices();
+    if (list && list.length > 0) {
+      cachedVoices = list;
+    }
+  }
+
+  function splitIntoSentences(text) {
+    const matches = String(text).match(/[^.!?]+[.!?]+|[^.!?]+$/g);
+    if (!matches) return [String(text).trim()].filter(Boolean);
+    return matches.map((s) => s.trim()).filter(Boolean);
+  }
+
   function stopAllSpeech() {
-    dialogueStopRequested = true;
+    ttsStopRequested = true;
     isPlayingDialogue = false;
+    activeSpeakingTts = null;
+    activeUtterance = null;
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
     }
     document.querySelectorAll(".dialogue-line.speaking").forEach((el) => {
       el.classList.remove("speaking");
     });
+    updateAudioPlayButtonUI();
+    updateSpeakingTtsButtonsUI();
   }
 
   function getEnglishVoice() {
     if (!("speechSynthesis" in window)) return null;
-    const voices = window.speechSynthesis.getVoices();
+    const voices =
+      cachedVoices.length > 0
+        ? cachedVoices
+        : window.speechSynthesis.getVoices();
+    if (!voices || voices.length === 0) return null;
     return (
       voices.find((v) => v.lang === "en-GB" && v.localService) ||
       voices.find((v) => v.lang === "en-US" && v.localService) ||
-      voices.find((v) => v.lang.startsWith("en-")) ||
+      voices.find((v) => v.lang === "en-US") ||
+      voices.find((v) => v.lang === "en-GB") ||
+      voices.find((v) => v.lang && v.lang.toLowerCase().startsWith("en")) ||
       null
     );
   }
 
-  function speakText(text, rate = 1.0, pitch = 1.0, onEnd = null) {
+  function speakQueue(items, rate = 1.0, onItemStart = null, onComplete = null) {
     if (!("speechSynthesis" in window)) {
       alert("현재 브라우저에서는 음성 재생(TTS)을 지원하지 않습니다.");
-      if (onEnd) onEnd();
+      if (onComplete) onComplete();
       return;
     }
+
+    // 1) 기존 음성 큐 초기화 및 resume() 호출 (Safari/Chrome/모바일 대응)
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    const voice = getEnglishVoice();
-    if (voice) utterance.voice = voice;
-    utterance.lang = voice ? voice.lang : "en-US";
-    utterance.rate = rate;
-    utterance.pitch = pitch;
-    utterance.onend = () => {
-      if (onEnd) onEnd();
-    };
-    utterance.onerror = () => {
-      if (onEnd) onEnd();
-    };
-    window.speechSynthesis.speak(utterance);
+    if (typeof window.speechSynthesis.resume === "function") {
+      window.speechSynthesis.resume();
+    }
+
+    ttsStopRequested = false;
+
+    function playIndex(idx) {
+      if (ttsStopRequested || idx >= items.length) {
+        activeUtterance = null;
+        if (onComplete) onComplete();
+        return;
+      }
+
+      const item = items[idx];
+      if (onItemStart) onItemStart(item, idx);
+
+      const utterance = new SpeechSynthesisUtterance(item.text);
+      activeUtterance = utterance; // Prevent GC from dropping onend in Chrome/Safari
+
+      // 2) getVoices()가 비어있어도 기본 영어 언어로 즉시 폴백 재생
+      const voice = getEnglishVoice();
+      if (voice) {
+        utterance.voice = voice;
+        utterance.lang = voice.lang;
+      } else {
+        utterance.lang = "en-US";
+      }
+
+      utterance.rate = rate;
+      utterance.pitch = item.pitch || 1.0;
+
+      let settled = false;
+      const finishCurrent = () => {
+        if (settled) return;
+        settled = true;
+        if (!ttsStopRequested) {
+          setTimeout(() => playIndex(idx + 1), 180);
+        }
+      };
+
+      utterance.onend = finishCurrent;
+      utterance.onerror = () => {
+        if (!ttsStopRequested) {
+          finishCurrent();
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+      if (window.speechSynthesis.paused && typeof window.speechSynthesis.resume === "function") {
+        window.speechSynthesis.resume();
+      }
+    }
+
+    playIndex(0);
   }
 
-  function playDialogueSequence(dialogue, startIndex = 0) {
-    if (!("speechSynthesis" in window)) {
-      alert("현재 브라우저에서는 음성 재생(TTS)을 지원하지 않습니다.");
-      return;
-    }
-    dialogueStopRequested = false;
+  function speakTextSentences(text, rate = 1.0, pitch = 1.0, qid = null) {
+    const sentences = splitIntoSentences(text);
+    const items = sentences.map((s) => ({ text: s, pitch }));
+    activeSpeakingTts = { qid, rate };
+    updateSpeakingTtsButtonsUI();
+
+    speakQueue(items, rate, null, () => {
+      activeSpeakingTts = null;
+      updateSpeakingTtsButtonsUI();
+    });
+  }
+
+  function playDialogueSequence(dialogue) {
+    const items = [];
+    dialogue.forEach((line, lineIdx) => {
+      splitIntoSentences(line.text).forEach((sentence) => {
+        items.push({
+          text: sentence,
+          pitch: line.voicePitch || 1.0,
+          lineIdx
+        });
+      });
+    });
+
     isPlayingDialogue = true;
     updateAudioPlayButtonUI();
 
-    function playNext(idx) {
-      if (dialogueStopRequested || idx >= dialogue.length) {
+    speakQueue(
+      items,
+      ttsRate,
+      (item) => {
+        document.querySelectorAll(".dialogue-line").forEach((el, i) => {
+          el.classList.toggle("speaking", i === item.lineIdx);
+        });
+      },
+      () => {
         isPlayingDialogue = false;
         document.querySelectorAll(".dialogue-line.speaking").forEach((el) => {
           el.classList.remove("speaking");
         });
         updateAudioPlayButtonUI();
-        return;
       }
-
-      document.querySelectorAll(".dialogue-line").forEach((el, i) => {
-        el.classList.toggle("speaking", i === idx);
-      });
-
-      const line = dialogue[idx];
-      const utterance = new SpeechSynthesisUtterance(line.text);
-      const voice = getEnglishVoice();
-      if (voice) utterance.voice = voice;
-      utterance.lang = voice ? voice.lang : "en-US";
-      utterance.rate = ttsRate;
-      utterance.pitch = line.voicePitch || 1.0;
-
-      utterance.onend = () => {
-        if (!dialogueStopRequested) {
-          setTimeout(() => playNext(idx + 1), 280);
-        }
-      };
-      utterance.onerror = () => {
-        isPlayingDialogue = false;
-        updateAudioPlayButtonUI();
-      };
-      window.speechSynthesis.speak(utterance);
-    }
-
-    window.speechSynthesis.cancel();
-    playNext(startIndex);
+    );
   }
 
   function updateAudioPlayButtonUI() {
     const playBtn = document.getElementById("playDialogueBtn");
     if (playBtn) {
-      playBtn.textContent = isPlayingDialogue ? "⏹ 정지하기" : "▶ 대화 음성 듣기";
+      playBtn.textContent = isPlayingDialogue ? "⏹ 재생 중지" : "▶ 대화 음성 듣기";
     }
+  }
+
+  function updateSpeakingTtsButtonsUI() {
+    document.querySelectorAll(".play-speaking-tts").forEach((btn) => {
+      const qid = btn.dataset.qid;
+      const rate = Number(btn.dataset.rate);
+      const isThisPlaying =
+        activeSpeakingTts &&
+        activeSpeakingTts.qid === qid &&
+        activeSpeakingTts.rate === rate;
+      if (isThisPlaying) {
+        btn.textContent = "⏹ 재생 중지";
+      } else {
+        btn.textContent = rate === 0.8 ? "0.8x 느리게" : "🔊 원어민 발음 듣기";
+      }
+    });
   }
 
   // =========================================
@@ -373,6 +506,8 @@
 
   weekSelector.addEventListener("change", (e) => {
     currentWeekNumber = Number(e.target.value);
+    appState.lastWeekNumber = currentWeekNumber;
+    saveState();
     switchDay(currentDayKey);
   });
 
@@ -409,6 +544,8 @@
       activeSpeakingTimerId = null;
     }
     currentDayKey = dayKey;
+    appState.lastDayKey = dayKey;
+    saveState();
     renderDayTabs();
     renderLesson();
     updateCompletionBanner();
@@ -972,9 +1109,19 @@
       btn.addEventListener("click", () => {
         const qid = btn.dataset.qid;
         const rate = Number(btn.dataset.rate);
+        const isSamePlaying =
+          activeSpeakingTts &&
+          activeSpeakingTts.qid === qid &&
+          activeSpeakingTts.rate === rate;
+
+        if (isSamePlaying) {
+          stopAllSpeech();
+          return;
+        }
+
         const qObj = dayData.questions.find((q) => q.id === qid);
         if (qObj) {
-          speakText(qObj.modelAnswer, rate, 1.0);
+          speakTextSentences(qObj.modelAnswer, rate, 1.0, qid);
         }
       });
     });
@@ -1032,8 +1179,21 @@
   // =========================================
   function init() {
     if ("speechSynthesis" in window) {
-      window.speechSynthesis.getVoices();
+      refreshVoices();
+      if (typeof window.speechSynthesis.addEventListener === "function") {
+        window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
+      } else {
+        window.speechSynthesis.onvoiceschanged = refreshVoices;
+      }
     }
+
+    window.addEventListener("beforeunload", saveState);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        saveState();
+      }
+    });
+
     renderWeekSelector();
     renderProgressAndStreak();
     renderDayTabs();

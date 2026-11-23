@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IELTS 4.5–5.0 매일 10분 마이크로 러닝</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- 상단 헤더: 브랜드 + 주차 선택 + 오늘의 학습 타이머 -->
+    <header class="top-header">
+      <div class="header-inner">
+        <div class="brand-group">
+          <div class="brand-badge">IELTS 4.5–5.0</div>
+          <div class="brand-text">
+            <h1>매일 10분 마이크로 러닝</h1>
+            <div class="week-selector-wrap">
+              <select id="weekSelector" aria-label="주차 선택" class="week-select"></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오늘의 학습 타이머 (5분/10분 카운트업) -->
+        <div class="timer-widget" aria-label="오늘의 학습 타이머">
+          <div class="timer-info">
+            <span class="timer-label">오늘의 학습</span>
+            <span id="studyTimerDisplay" class="timer-value">00:00</span>
+          </div>
+          <div class="timer-milestones">
+            <span id="milestone5m" class="milestone-chip" title="5분 목표">5m</span>
+            <span id="milestone10m" class="milestone-chip" title="10분 목표">10m</span>
+          </div>
+          <button id="timerToggleBtn" class="icon-btn" type="button" title="타이머 일시정지/재개" aria-label="타이머 시작 또는 일시정지">
+            ⏸
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <!-- 주간 출석 체크 (Streak) & 달성률 카드 -->
+      <section class="progress-card card" aria-label="주간 학습 진도">
+        <div class="progress-top">
+          <div class="streak-summary">
+            <span class="streak-fire" aria-hidden="true">🔥</span>
+            <div>
+              <div class="streak-title">
+                주간 출석 <strong id="streakCountText">0일</strong> 완료
+              </div>
+              <div class="streak-sub" id="weeklyGoalSub">이번 주 목표 달성률 0%</div>
+            </div>
+          </div>
+          <button id="wrongNotesToggleBtn" class="ghost-btn" type="button">
+            오답 기록 <span id="wrongCountBadge" class="count-pill">0</span>
+          </button>
+        </div>
+
+        <!-- 주간 달성률 프로그레스 바 -->
+        <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="weeklyProgressBarTrack">
+          <div id="weeklyProgressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+
+        <!-- 월~금 출석 뱃지 -->
+        <div id="streakBadges" class="streak-badges"></div>
+      </section>
+
+      <!-- 오답 기록 드로어 (토글) -->
+      <section id="wrongNotesPanel" class="card wrong-notes-panel hidden" aria-label="오답 노트">
+        <div class="panel-header">
+          <h2>저장된 오답 기록</h2>
+          <div class="panel-actions">
+            <button id="clearWrongNotesBtn" class="text-danger-btn" type="button">기록 비우기</button>
+            <button id="closeWrongNotesBtn" class="ghost-btn-sm" type="button">닫기</button>
+          </div>
+        </div>
+        <div id="wrongNotesList" class="wrong-notes-list"></div>
+      </section>
+
+      <!-- 요일별 맞춤 커리큘럼 탭 [월 / 화 / 수 / 목 / 금] -->
+      <nav class="day-tabs" id="dayTabs" aria-label="요일별 학습 메뉴"></nav>
+
+      <!-- 오늘의 학습 완료 피드백 배너 -->
+      <section id="completionBanner" class="completion-banner hidden" aria-live="polite">
+        <div class="completion-icon" aria-hidden="true">🎉</div>
+        <div class="completion-body">
+          <h2>오늘의 10분 학습 완료!</h2>
+          <p id="completionMessage">꾸준한 매일 10분이 IELTS 4.5~5.0 달성의 가장 빠른 길입니다.</p>
+          <div class="completion-stats">
+            <span id="completionDayScore" class="stat-pill"></span>
+            <span id="completionWeeklyRate" class="stat-pill"></span>
+          </div>
+        </div>
+        <button id="nextDayBtn" class="primary-btn" type="button">다음 요일 보기 →</button>
+      </section>
+
+      <!-- 메인 학습 콘텐츠 영역 -->
+      <section id="lessonContainer" class="lesson-container" aria-live="polite"></section>
+    </main>
+
+    <footer class="app-footer">
+      <p>학습 진도와 오답 기록은 현재 브라우저에 자동 저장됩니다. (로그인 불필요)</p>
+    </footer>
+  </div>
+
+  <script src="curriculumData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

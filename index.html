@@ -42,6 +42,25 @@
           </button>
         </div>
       </div>
+
+      <!-- 기기 간 실시간 동기화 ID 바 -->
+      <div class="sync-bar">
+        <div class="sync-bar-inner">
+          <div class="sync-input-group">
+            <span class="sync-icon" aria-hidden="true">☁️</span>
+            <input
+              id="syncIdInput"
+              type="text"
+              class="sync-input"
+              placeholder="동기화 ID (예: my-ielts-2026)"
+              aria-label="동기화 ID 입력"
+              autocomplete="off"
+            />
+            <button id="syncConnectBtn" type="button" class="sync-btn">연결</button>
+          </div>
+          <span id="syncStatusBadge" class="sync-status-badge">로컬 저장</span>
+        </div>
+      </div>
     </header>
 
     <main class="main-container">
@@ -108,6 +127,25 @@
       <p>학습 진도와 오답 기록은 현재 브라우저에 자동 저장됩니다. (로그인 불필요)</p>
     </footer>
   </div>
+
+  <!-- 클릭형 영단어 사전 팝업 -->
+  <div id="wordDictBackdrop" class="dict-backdrop hidden" aria-hidden="true"></div>
+  <aside id="wordDictModal" class="dict-modal hidden" role="dialog" aria-modal="true" aria-labelledby="dictWordTitle">
+    <div class="dict-modal-header">
+      <div class="dict-word-main">
+        <div class="dict-word-row">
+          <h3 id="dictWordTitle" class="dict-word-title">word</h3>
+          <button id="dictTtsBtn" type="button" class="dict-tts-btn" title="원어민 발음 듣기" aria-label="단어 발음 듣기">🔊</button>
+        </div>
+        <div class="dict-pron-row">
+          <span id="dictPronKo" class="dict-pron-ko"></span>
+          <span id="dictIpa" class="dict-ipa"></span>
+        </div>
+      </div>
+      <button id="dictCloseBtn" type="button" class="dict-close-btn" aria-label="사전 닫기">✕</button>
+    </div>
+    <div id="dictBody" class="dict-modal-body"></div>
+  </aside>
 
   <script src="curriculumData.js"></script>
   <script src="app.js"></script>

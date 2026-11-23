@@ -2,10 +2,19 @@
   "use strict";
 
   const STORAGE_KEY = "ielts_micro_learning_v1";
+  const SYNC_ID_STORAGE_KEY = "ielts_sync_id_v1";
   const DAY_ORDER = ["mon", "tue", "wed", "thu", "fri"];
+  const CLIENT_INSTANCE_ID = `c_${Math.random().toString(36).slice(2, 10)}`;
 
   // =========================================
-  // State Management & localStorage
+  // Firebase Realtime Database Config
+  // =========================================
+  const firebaseConfig = {
+    databaseURL: "https://ielts-daily-trainer-default-rtdb.firebaseio.com"
+  };
+
+  // =========================================
+  // State Management & localStorage + Firebase
   // =========================================
   function getTodayDateKey() {
     const now = new Date();
@@ -36,29 +45,33 @@
     };
   }
 
+  function normalizeState(parsed) {
+    if (!parsed || typeof parsed !== "object") return getDefaultState();
+    const validWeek = curriculumData.weeks.some(
+      (w) => w.weekNumber === parsed.lastWeekNumber
+    )
+      ? parsed.lastWeekNumber
+      : curriculumData.weeks[0].weekNumber;
+    const validDay = DAY_ORDER.includes(parsed.lastDayKey)
+      ? parsed.lastDayKey
+      : getDefaultDayKey();
+    return {
+      completedDays: parsed.completedDays || {},
+      answers: parsed.answers || {},
+      writingDrafts: parsed.writingDrafts || {},
+      speakingDone: parsed.speakingDone || {},
+      wrongNotes: Array.isArray(parsed.wrongNotes) ? parsed.wrongNotes : [],
+      dailyStudySeconds: parsed.dailyStudySeconds || {},
+      lastWeekNumber: validWeek,
+      lastDayKey: validDay
+    };
+  }
+
   function loadState() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw);
-        const validWeek = curriculumData.weeks.some(
-          (w) => w.weekNumber === parsed.lastWeekNumber
-        )
-          ? parsed.lastWeekNumber
-          : curriculumData.weeks[0].weekNumber;
-        const validDay = DAY_ORDER.includes(parsed.lastDayKey)
-          ? parsed.lastDayKey
-          : getDefaultDayKey();
-        return {
-          completedDays: parsed.completedDays || {},
-          answers: parsed.answers || {},
-          writingDrafts: parsed.writingDrafts || {},
-          speakingDone: parsed.speakingDone || {},
-          wrongNotes: Array.isArray(parsed.wrongNotes) ? parsed.wrongNotes : [],
-          dailyStudySeconds: parsed.dailyStudySeconds || {},
-          lastWeekNumber: validWeek,
-          lastDayKey: validDay
-        };
+        return normalizeState(JSON.parse(raw));
       }
     } catch (e) {
       console.warn("localStorage load failed:", e);
@@ -66,17 +79,25 @@
     return getDefaultState();
   }
 
-  function saveState() {
+  let appState = loadState();
+  let currentWeekNumber = appState.lastWeekNumber;
+  let currentDayKey = appState.lastDayKey;
+
+  // Sync State
+  let currentSyncId = "";
+  let syncEventSource = null;
+  let syncPushTimeout = null;
+
+  function saveState(skipRemote = false) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
     } catch (e) {
       console.warn("localStorage save failed:", e);
     }
+    if (!skipRemote && currentSyncId) {
+      scheduleFirebasePush();
+    }
   }
-
-  let appState = loadState();
-  let currentWeekNumber = appState.lastWeekNumber;
-  let currentDayKey = appState.lastDayKey;
 
   // Study Timer State
   let timerRunning = true;
@@ -103,6 +124,10 @@
   const timerToggleBtn = document.getElementById("timerToggleBtn");
   const resetProgressBtn = document.getElementById("resetProgressBtn");
 
+  const syncIdInput = document.getElementById("syncIdInput");
+  const syncConnectBtn = document.getElementById("syncConnectBtn");
+  const syncStatusBadge = document.getElementById("syncStatusBadge");
+
   const streakCountText = document.getElementById("streakCountText");
   const weeklyGoalSub = document.getElementById("weeklyGoalSub");
   const weeklyProgressBarTrack = document.getElementById("weeklyProgressBarTrack");
@@ -123,6 +148,15 @@
   const completionWeeklyRate = document.getElementById("completionWeeklyRate");
   const nextDayBtn = document.getElementById("nextDayBtn");
   const lessonContainer = document.getElementById("lessonContainer");
+
+  const wordDictBackdrop = document.getElementById("wordDictBackdrop");
+  const wordDictModal = document.getElementById("wordDictModal");
+  const dictWordTitle = document.getElementById("dictWordTitle");
+  const dictTtsBtn = document.getElementById("dictTtsBtn");
+  const dictPronKo = document.getElementById("dictPronKo");
+  const dictIpa = document.getElementById("dictIpa");
+  const dictCloseBtn = document.getElementById("dictCloseBtn");
+  const dictBody = document.getElementById("dictBody");
 
   // =========================================
   // Helpers
@@ -151,6 +185,591 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
   }
+
+  function wrapClickableWords(text) {
+    const escaped = escapeHtml(text);
+    return escaped.replace(/\b([A-Za-z]+(?:'[A-Za-z]+)?)\b/g, (match) => {
+      const clean = match.replace(/'/g, "").toLowerCase();
+      if (!clean) return match;
+      return `<span class="clickable-word" data-word="${escapeHtml(match)}">${match}</span>`;
+    });
+  }
+
+  // =========================================
+  // Firebase Realtime Database Sync (REST + SSE)
+  // =========================================
+  function sanitizeSyncId(raw) {
+    return String(raw || "")
+      .trim()
+      .replace(/[^a-zA-Z0-9_-]/g, "");
+  }
+
+  function setSyncUI(status, text) {
+    syncStatusBadge.textContent = text;
+    syncStatusBadge.classList.remove("synced", "error");
+    if (status === "synced") syncStatusBadge.classList.add("synced");
+    if (status === "error") syncStatusBadge.classList.add("error");
+
+    if (currentSyncId) {
+      syncConnectBtn.textContent = "연결 해제";
+      syncConnectBtn.classList.add("connected");
+      syncIdInput.value = currentSyncId;
+    } else {
+      syncConnectBtn.textContent = "연결";
+      syncConnectBtn.classList.remove("connected");
+    }
+  }
+
+  function getFirebaseUserUrl(syncId) {
+    const base = firebaseConfig.databaseURL.replace(/\/+$/, "");
+    return `${base}/users/${encodeURIComponent(syncId)}.json`;
+  }
+
+  async function pushStateToFirebase() {
+    if (!currentSyncId) return;
+    try {
+      const payload = {
+        ...appState,
+        updatedAt: Date.now(),
+        updatedBy: CLIENT_INSTANCE_ID
+      };
+      const res = await fetch(getFirebaseUserUrl(currentSyncId), {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        setSyncUI("synced", "실시간 동기화 중");
+      } else {
+        setSyncUI("error", "동기화 오류 (로컬 저장됨)");
+      }
+    } catch (e) {
+      console.warn("Firebase push failed, using localStorage:", e);
+      setSyncUI("error", "오프라인 (로컬 저장됨)");
+    }
+  }
+
+  function scheduleFirebasePush() {
+    if (!currentSyncId) return;
+    if (syncPushTimeout) clearTimeout(syncPushTimeout);
+    syncPushTimeout = setTimeout(() => {
+      pushStateToFirebase();
+    }, 350);
+  }
+
+  function applyRemoteState(remoteData) {
+    if (!remoteData || typeof remoteData !== "object") return;
+    if (remoteData.updatedBy === CLIENT_INSTANCE_ID) return;
+
+    appState = normalizeState(remoteData);
+    currentWeekNumber = appState.lastWeekNumber;
+    currentDayKey = appState.lastDayKey;
+    saveState(true); // Save locally without re-pushing
+
+    renderWeekSelector();
+    renderProgressAndStreak();
+    renderWrongNotesList();
+    renderDayTabs();
+    renderLesson();
+    updateCompletionBanner();
+    renderStudyTimer();
+  }
+
+  function startSyncStream(syncId) {
+    if (syncEventSource) {
+      syncEventSource.close();
+      syncEventSource = null;
+    }
+    if (typeof EventSource === "undefined") return;
+
+    try {
+      const es = new EventSource(getFirebaseUserUrl(syncId));
+      es.addEventListener("put", (event) => {
+        try {
+          const parsed = JSON.parse(event.data);
+          if (parsed && parsed.path === "/" && parsed.data) {
+            applyRemoteState(parsed.data);
+            setSyncUI("synced", "실시간 동기화 중");
+          }
+        } catch (err) {
+          console.warn("SSE put parse error:", err);
+        }
+      });
+      es.onerror = () => {
+        if (currentSyncId) {
+          setSyncUI("error", "재연결 대기 (로컬 저장됨)");
+        }
+      };
+      syncEventSource = es;
+    } catch (e) {
+      console.warn("EventSource failed:", e);
+    }
+  }
+
+  async function connectSync(rawId) {
+    const safeId = sanitizeSyncId(rawId);
+    if (!safeId) {
+      alert("동기화 ID는 영문, 숫자, 하이픈(-), 밑줄(_)만 입력할 수 있습니다.\n예: my-ielts-2026");
+      return;
+    }
+
+    currentSyncId = safeId;
+    try {
+      localStorage.setItem(SYNC_ID_STORAGE_KEY, safeId);
+    } catch (e) {}
+
+    setSyncUI("synced", "동기화 연결 중...");
+
+    try {
+      const res = await fetch(getFirebaseUserUrl(safeId));
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const remoteData = await res.json();
+
+      if (remoteData && typeof remoteData === "object") {
+        applyRemoteState(remoteData);
+      } else {
+        await pushStateToFirebase();
+      }
+      setSyncUI("synced", "실시간 동기화 중");
+      startSyncStream(safeId);
+    } catch (e) {
+      console.warn("Firebase initial sync failed, falling back to localStorage:", e);
+      setSyncUI("error", "연결 실패 (로컬 저장 사용)");
+    }
+  }
+
+  function disconnectSync() {
+    currentSyncId = "";
+    if (syncEventSource) {
+      syncEventSource.close();
+      syncEventSource = null;
+    }
+    try {
+      localStorage.removeItem(SYNC_ID_STORAGE_KEY);
+    } catch (e) {}
+    syncIdInput.value = "";
+    setSyncUI("local", "로컬 저장");
+  }
+
+  syncConnectBtn.addEventListener("click", () => {
+    if (currentSyncId) {
+      disconnectSync();
+    } else {
+      connectSync(syncIdInput.value);
+    }
+  });
+
+  syncIdInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !currentSyncId) {
+      connectSync(syncIdInput.value);
+    }
+  });
+
+  // =========================================
+  // Clickable Word Dictionary Popup
+  // =========================================
+  const POS_KO_MAP = {
+    noun: "명사(n.)",
+    verb: "동사(v.)",
+    adjective: "형용사(adj.)",
+    adverb: "부사(adv.)",
+    pronoun: "대명사(pron.)",
+    preposition: "전치사(prep.)",
+    conjunction: "접속사(conj.)",
+    interjection: "감탄사(interj.)",
+    determiner: "한정사(det.)"
+  };
+
+  const COMMON_KO_MAP = {
+    adult: "성인, 어른",
+    after: "~후에",
+    all: "모든, 전부",
+    also: "또한",
+    always: "항상",
+    answer: "대답, 정답 / 대답하다",
+    any: "어떤, 조금이라도",
+    app: "앱, 애플리케이션",
+    at: "~에(장소·시간)",
+    attend: "참석하다, 다니다",
+    audio: "오디오, 음성",
+    away: "떨어져",
+    bad: "나쁜",
+    because: "왜냐하면 ~이기 때문에",
+    bed: "침대",
+    before: "~전에",
+    best: "최고의, 가장 좋은",
+    better: "더 좋은, 더 나은",
+    book: "책 / 예약하다",
+    bring: "가져오다",
+    build: "만들다, 쌓다",
+    bus: "버스",
+    busy: "바쁜",
+    but: "하지만",
+    can: "~할 수 있다",
+    card: "카드",
+    center: "센터, 중심지",
+    change: "바꾸다, 변화",
+    cheap: "저렴한, 싼",
+    cheaper: "더 저렴한",
+    check: "확인하다",
+    city: "도시",
+    class: "수업, 강좌",
+    clear: "맑은, 명확한 / 비우다",
+    clip: "클립, 짧은 영상·음성",
+    come: "오다",
+    compare: "비교하다",
+    computer: "컴퓨터",
+    cook: "요리하다",
+    cost: "비용, 비용이 들다",
+    course: "강좌, 과정",
+    daily: "매일의, 일상의",
+    day: "하루, 날",
+    dinner: "저녁 식사",
+    do: "하다",
+    during: "~동안",
+    each: "각각의",
+    easier: "더 쉬운",
+    easy: "쉬운",
+    eat: "먹다",
+    education: "교육",
+    energy: "에너지, 힘",
+    english: "영어",
+    every: "매~, 모든",
+    example: "예시, 예",
+    expensive: "비싼",
+    feel: "느끼다",
+    few: "거의 없는 / 몇몇의",
+    find: "찾다",
+    finish: "끝내다, 끝나다",
+    first: "첫 번째의 / 먼저",
+    fit: "맞다, 적합하다",
+    for: "~을 위해 / ~동안",
+    friend: "친구",
+    from: "~로부터",
+    future: "미래",
+    get: "얻다, 받다",
+    give: "주다",
+    go: "가다",
+    good: "좋은",
+    great: "훌륭한, 아주 좋은",
+    hard: "어려운, 열심히",
+    have: "가지다, 먹다",
+    head: "머리",
+    health: "건강",
+    hear: "듣다",
+    help: "돕다, 도움이 되다",
+    home: "집",
+    hour: "시간(60분)",
+    hours: "시간",
+    how: "어떻게, 얼마나",
+    idea: "아이디어, 생각",
+    important: "중요한",
+    in: "~안에",
+    into: "~안으로",
+    just: "그저, 단지",
+    know: "알다",
+    language: "언어",
+    last: "지난, 마지막의",
+    learn: "배우다",
+    learning: "학습, 배움",
+    lesson: "수업, 레슨",
+    lessons: "수업들",
+    life: "삶, 생활",
+    like: "좋아하다 / ~처럼",
+    listen: "듣다",
+    listening: "듣기",
+    long: "긴, 오랫동안",
+    look: "보다",
+    lunch: "점심 식사",
+    make: "만들다",
+    many: "많은",
+    minute: "분(시간)",
+    minutes: "분",
+    money: "돈",
+    month: "달, 한 달",
+    more: "더 많은 / 더",
+    morning: "아침",
+    most: "대부분의, 가장",
+    much: "많은 / 훨씬",
+    music: "음악",
+    need: "필요하다",
+    new: "새로운",
+    next: "다음의",
+    night: "밤",
+    not: "~아닌",
+    now: "지금",
+    number: "숫자, 번호",
+    once: "한 번 / 한때",
+    one: "하나",
+    only: "오직, 단지",
+    online: "온라인의",
+    other: "다른",
+    out: "밖으로",
+    over: "~이상 / ~동안",
+    pass: "출입증 / 통과하다",
+    past: "과거",
+    pay: "지불하다, 내다",
+    people: "사람들",
+    person: "사람",
+    place: "장소",
+    plan: "계획 / 계획하다",
+    play: "놀다, 재생하다",
+    popular: "인기 있는",
+    practice: "연습 / 연습하다",
+    problem: "문제",
+    question: "질문, 문제",
+    rather: "오히려, 차라리",
+    read: "읽다",
+    reading: "읽기, 독해",
+    room: "방, 호실",
+    same: "같은",
+    school: "학교",
+    see: "보다",
+    session: "시간, 세션",
+    short: "짧은",
+    show: "보여주다",
+    sleep: "잠, 수면 / 자다",
+    small: "작은",
+    sofa: "소파",
+    some: "약간의, 몇몇의",
+    space: "공간",
+    speak: "말하다",
+    speaking: "말하기",
+    start: "시작하다",
+    stay: "머무르다",
+    straight: "곧장, 바로",
+    strong: "강한, 탄탄한",
+    study: "공부하다 / 공부",
+    studying: "공부하는 것",
+    studies: "연구들",
+    take: "타다, 걸리다, 취하다",
+    talk: "이야기하다",
+    ten: "10, 열",
+    than: "~보다",
+    thank: "감사하다",
+    that: "그것, 저것",
+    their: "그들의",
+    then: "그다음에, 그때",
+    they: "그들",
+    thing: "것, 사물",
+    think: "생각하다",
+    this: "이것",
+    three: "3, 셋",
+    thursday: "목요일",
+    time: "시간",
+    today: "오늘",
+    too: "너무 / 또한",
+    traditional: "전통적인",
+    try: "시도하다, 노력하다",
+    tuesday: "화요일",
+    twenty: "20, 스물",
+    two: "2, 둘",
+    use: "사용하다",
+    very: "매우",
+    video: "영상, 비디오",
+    walk: "걷다, 산책하다",
+    want: "원하다",
+    watch: "보다, 시청하다",
+    way: "방법, 길",
+    week: "주, 일주일",
+    weekday: "평일",
+    welcome: "환영하다",
+    well: "잘",
+    what: "무엇",
+    when: "~할 때 / 언제",
+    where: "어디",
+    which: "어느 것",
+    whole: "전체의",
+    why: "왜",
+    will: "~할 것이다",
+    with: "~와 함께",
+    word: "단어",
+    words: "단어들",
+    work: "일하다 / 직장",
+    working: "일하는, 직장인의",
+    write: "쓰다",
+    writing: "쓰기, 영작",
+    year: "년, 해",
+    you: "당신",
+    your: "당신의",
+    youtube: "유튜브"
+  };
+
+  function englishToHangulPron(word) {
+    let w = word.toLowerCase().replace(/[^a-z]/g, "");
+    if (!w) return "";
+    // Common rule-based phonetic approximation for Korean learners
+    const rules = [
+      [/tion$/g, "션"],
+      [/sion$/g, "전"],
+      [/ture$/g, "처"],
+      [/ous$/g, "어스"],
+      [/able$/g, "어블"],
+      [/ible$/g, "이블"],
+      [/ing$/g, "잉"],
+      [/ght/g, "트"],
+      [/ph/g, "프"],
+      [/sh/g, "쉬"],
+      [/ch/g, "치"],
+      [/th/g, "쓰"],
+      [/qu/g, "쿼"],
+      [/ck/g, "크"],
+      [/ee/g, "이"],
+      [/oo/g, "우"],
+      [/ea/g, "이"],
+      [/ai/g, "에이"],
+      [/ay/g, "에이"],
+      [/oa/g, "오우"],
+      [/ow/g, "아우"],
+      [/ou/g, "아우"],
+      [/er$/g, "어"],
+      [/or$/g, "어"],
+      [/ar$/g, "아"],
+      [/le$/g, "을"],
+      [/y$/g, "이"],
+      [/e$/g, ""]
+    ];
+    for (const [pattern, rep] of rules) {
+      w = w.replace(pattern, rep);
+    }
+    const charMap = {
+      a: "애", b: "브", c: "크", d: "드", e: "에", f: "프", g: "그",
+      h: "흐", i: "이", j: "즈", k: "크", l: "을", m: "음", n: "은",
+      o: "오", p: "프", q: "크", r: "르", s: "스", t: "트", u: "어",
+      v: "브", w: "우", x: "크스", y: "이", z: "즈"
+    };
+    let out = "";
+    for (const ch of w) {
+      out += charMap[ch] !== undefined ? charMap[ch] : ch;
+    }
+    return out;
+  }
+
+  function findInVocabularyDict(rawWord) {
+    const dict = curriculumData.vocabularyDict || {};
+    const lower = rawWord.toLowerCase().replace(/[^a-z']/g, "");
+    if (dict[lower]) return dict[lower];
+
+    // Simple lemmatization fallback
+    const candidates = [
+      lower.replace(/ies$/, "y"),
+      lower.replace(/es$/, ""),
+      lower.replace(/s$/, ""),
+      lower.replace(/ied$/, "y"),
+      lower.replace(/ed$/, ""),
+      lower.replace(/ing$/, ""),
+      lower.replace(/ly$/, "")
+    ];
+    for (const stem of candidates) {
+      if (stem && dict[stem]) return dict[stem];
+    }
+    return null;
+  }
+
+  let currentDictWord = "";
+
+  function closeWordDictionary() {
+    wordDictBackdrop.classList.add("hidden");
+    wordDictModal.classList.add("hidden");
+  }
+
+  dictCloseBtn.addEventListener("click", closeWordDictionary);
+  wordDictBackdrop.addEventListener("click", closeWordDictionary);
+  dictTtsBtn.addEventListener("click", () => {
+    if (currentDictWord) {
+      speakTextSentences(currentDictWord, 0.9, 1.0, null);
+    }
+  });
+
+  async function openWordDictionary(rawWord) {
+    const cleanWord = rawWord.replace(/^[^a-zA-Z]+|[^a-zA-Z]+$/g, "");
+    if (!cleanWord) return;
+    currentDictWord = cleanWord;
+
+    wordDictBackdrop.classList.remove("hidden");
+    wordDictModal.classList.remove("hidden");
+
+    const localEntry = findInVocabularyDict(cleanWord);
+    if (localEntry) {
+      currentDictWord = localEntry.word;
+      dictWordTitle.textContent = localEntry.word;
+      dictPronKo.textContent = `[${localEntry.pronunciationKo}]`;
+      dictIpa.textContent = localEntry.ipa || "";
+      dictBody.innerHTML = `
+        <div>
+          <span class="dict-pos-badge">${escapeHtml(localEntry.pos)}</span>
+          <span class="dict-meaning">${escapeHtml(localEntry.meaning)}</span>
+        </div>
+        <div class="dict-tip-box">
+          <strong>💡 IELTS 4.5 맥락 & 활용 팁:</strong><br />
+          ${escapeHtml(localEntry.contextTip)}
+        </div>
+        <p class="dict-example">예문: "${escapeHtml(localEntry.example)}"</p>
+      `;
+      return;
+    }
+
+    // Fallback: free Dictionary API + built-in Hangul pron & common Korean map
+    const lower = cleanWord.toLowerCase();
+    const fallbackPronKo = englishToHangulPron(lower);
+    const commonKo = COMMON_KO_MAP[lower] || "";
+
+    dictWordTitle.textContent = cleanWord;
+    dictPronKo.textContent = fallbackPronKo ? `[${fallbackPronKo}]` : "";
+    dictIpa.textContent = "";
+    dictBody.innerHTML = `<p class="lesson-desc">사전 정보를 불러오는 중...</p>`;
+
+    try {
+      const res = await fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(lower)}`
+      );
+      if (!res.ok) throw new Error("Not found");
+      const data = await res.json();
+      const entry = Array.isArray(data) ? data[0] : null;
+      if (!entry) throw new Error("Empty");
+
+      const phoneticObj = (entry.phonetics || []).find((p) => p.text);
+      dictIpa.textContent = entry.phonetic || (phoneticObj ? phoneticObj.text : "");
+
+      const firstMeaning = entry.meanings && entry.meanings[0];
+      const posRaw = firstMeaning ? firstMeaning.partOfSpeech : "word";
+      const posKo = POS_KO_MAP[posRaw] || posRaw;
+      const defObj = firstMeaning && firstMeaning.definitions && firstMeaning.definitions[0];
+      const engDef = defObj ? defObj.definition : "";
+      const engExample = defObj && defObj.example ? defObj.example : "";
+
+      dictBody.innerHTML = `
+        <div>
+          <span class="dict-pos-badge">${escapeHtml(posKo)}</span>
+          <span class="dict-meaning">${commonKo ? escapeHtml(commonKo) : escapeHtml(cleanWord)}</span>
+        </div>
+        <div class="dict-tip-box">
+          <strong>📖 영영 풀이:</strong><br />
+          ${escapeHtml(engDef || "사전 정의를 찾을 수 없습니다.")}
+        </div>
+        ${engExample ? `<p class="dict-example">예문: "${escapeHtml(engExample)}"</p>` : ""}
+      `;
+    } catch (e) {
+      dictBody.innerHTML = `
+        <div>
+          <span class="dict-pos-badge">어휘</span>
+          <span class="dict-meaning">${commonKo ? escapeHtml(commonKo) : "기본 단어"}</span>
+        </div>
+        <div class="dict-tip-box">
+          오프라인 상태이거나 사전에 등록되지 않은 형태입니다. 위 🔊 버튼을 눌러 원어민 발음을 직접 들어보세요.
+        </div>
+      `;
+    }
+  }
+
+  lessonContainer.addEventListener("click", (e) => {
+    const wordEl = e.target.closest(".clickable-word");
+    if (!wordEl) return;
+    // Do not intercept clicks inside interactive option buttons
+    if (wordEl.closest(".option-btn")) return;
+    e.stopPropagation();
+    openWordDictionary(wordEl.dataset.word || wordEl.textContent);
+  });
 
   // =========================================
   // Study Timer (5m / 10m Count-up)
@@ -631,9 +1250,9 @@
       .map((q, index) => {
         const saved = appState.answers[q.id];
         const statementHTML = q.sentenceBefore
-          ? `<div class="question-statement">${escapeHtml(q.sentenceBefore)} <span class="blank-pill">${saved ? escapeHtml(saved.userAnswer) : "______"}</span> ${escapeHtml(q.sentenceAfter || "")}</div>`
+          ? `<div class="question-statement">${wrapClickableWords(q.sentenceBefore)} <span class="blank-pill">${saved ? escapeHtml(saved.userAnswer) : "______"}</span> ${wrapClickableWords(q.sentenceAfter || "")}</div>`
           : q.statement
-          ? `<div class="question-statement">${escapeHtml(q.statement)}</div>`
+          ? `<div class="question-statement">${wrapClickableWords(q.statement)}</div>`
           : "";
 
         let inputHTML = "";
@@ -748,7 +1367,7 @@
             ${dayData.vocabHighlights
               .map(
                 (v) =>
-                  `<span class="vocab-chip"><strong>${escapeHtml(v.word)}</strong> ${escapeHtml(v.meaning)}</span>`
+                  `<span class="vocab-chip"><strong>${wrapClickableWords(v.word)}</strong> ${escapeHtml(v.meaning)}</span>`
               )
               .join("")}
            </div>`
@@ -773,7 +1392,7 @@
         (line, idx) => `
         <div class="dialogue-line" data-line-idx="${idx}">
           <div class="speaker-name">${escapeHtml(line.speaker)}</div>
-          <div class="dialogue-en">${escapeHtml(line.text)}</div>
+          <div class="dialogue-en">${wrapClickableWords(line.text)}</div>
           <div class="dialogue-ko">${escapeHtml(line.ko)}</div>
         </div>
       `
@@ -806,9 +1425,8 @@
     document.getElementById("playDialogueBtn").addEventListener("click", () => {
       if (isPlayingDialogue) {
         stopAllSpeech();
-        updateAudioPlayButtonUI();
       } else {
-        playDialogueSequence(dayData.dialogue, 0);
+        playDialogueSequence(dayData.dialogue);
       }
     });
 
@@ -822,7 +1440,7 @@
         ttsRate = Number(btn.dataset.rate);
         if (isPlayingDialogue) {
           stopAllSpeech();
-          playDialogueSequence(dayData.dialogue, 0);
+          playDialogueSequence(dayData.dialogue);
         } else {
           renderMonday(dayData);
         }
@@ -843,7 +1461,7 @@
         (s, idx) => `
         <div class="sentence-item">
           <div class="sentence-row">
-            <span class="sentence-en">${escapeHtml(s.en)}</span>
+            <span class="sentence-en">${wrapClickableWords(s.en)}</span>
             <button type="button" class="ghost-btn-sm toggle-sent-ko" data-sidx="${idx}">
               ${openTranslations[idx] ? "해석 닫기" : "해석"}
             </button>
@@ -858,7 +1476,7 @@
       ${renderLessonHeader(dayData)}
       <article class="card">
         <div class="reading-toolbar">
-          <h3 class="passage-title">${escapeHtml(dayData.passageTitle)}</h3>
+          <h3 class="passage-title">${wrapClickableWords(dayData.passageTitle)}</h3>
           <button type="button" id="toggleAllReadingKo" class="ghost-btn-sm">
             ${allOpen ? "전체 해석 숨기기" : "전체 해석 보기"}
           </button>
@@ -905,7 +1523,7 @@
       ${renderLessonHeader(dayData)}
       <article class="card">
         <div class="question-meta">${escapeHtml(dayData.taskType)}</div>
-        <p class="question-prompt" style="margin-top:6px;">${escapeHtml(dayData.writingPrompt)}</p>
+        <p class="question-prompt" style="margin-top:6px;">${wrapClickableWords(dayData.writingPrompt)}</p>
         <p class="lesson-desc" style="margin-top:4px;">${escapeHtml(dayData.writingPromptKo)}</p>
 
         <div style="margin-top:14px;">
@@ -914,7 +1532,7 @@
             ${dayData.requiredWords
               .map((rw) => {
                 const used = checkWordUsed(rw.word);
-                return `<span class="req-word-pill ${used ? "used" : ""}" data-word="${escapeHtml(rw.word)}">${used ? "✓ " : ""}${escapeHtml(rw.word)} (${escapeHtml(rw.meaning)})</span>`;
+                return `<span class="req-word-pill ${used ? "used" : ""}" data-word="${escapeHtml(rw.word)}">${used ? "✓ " : ""}${wrapClickableWords(rw.word)} (${escapeHtml(rw.meaning)})</span>`;
               })
               .join("")}
           </div>
@@ -938,7 +1556,7 @@
 
         <div id="writingModelBox" class="model-compare-box ${isCompleted ? "" : "hidden"}">
           <h3>✨ 모범 답안 (IELTS 4.5–5.0 목표 수준)</h3>
-          <p style="margin:0 0 6px 0; font-weight:500; color:var(--navy-900);">${escapeHtml(dayData.modelAnswer)}</p>
+          <p style="margin:0 0 6px 0; font-weight:500; color:var(--navy-900);">${wrapClickableWords(dayData.modelAnswer)}</p>
           <p style="margin:0 0 10px 0; font-size:0.85rem; color:var(--text-muted);">${escapeHtml(dayData.modelAnswerKo)}</p>
           <div style="font-size:0.84rem;">
             <strong>핵심 표현 정리:</strong>
@@ -946,7 +1564,7 @@
               ${dayData.keyExpressions
                 .map(
                   (ke) =>
-                    `<li><strong>${escapeHtml(ke.expr)}</strong> — ${escapeHtml(ke.desc)}</li>`
+                    `<li><strong>${wrapClickableWords(ke.expr)}</strong> — ${escapeHtml(ke.desc)}</li>`
                 )
                 .join("")}
             </ul>
@@ -971,7 +1589,7 @@
         const used = new RegExp(`\\b${w}\\b`, "i").test(text);
         pill.classList.toggle("used", used);
         const meaning = dayData.requiredWords.find((rw) => rw.word === w).meaning;
-        pill.textContent = `${used ? "✓ " : ""}${w} (${meaning})`;
+        pill.innerHTML = `${used ? "✓ " : ""}${wrapClickableWords(w)} (${escapeHtml(meaning)})`;
       });
     };
 
@@ -1004,7 +1622,7 @@
         return `
           <article class="card question-card">
             <div class="question-meta">Part 1 · 질문 ${q.questionNumber} / ${dayData.questions.length}</div>
-            <h3 style="margin:0; font-size:1.05rem; color:var(--navy-900);">${escapeHtml(q.question)}</h3>
+            <h3 style="margin:0; font-size:1.05rem; color:var(--navy-900);">${wrapClickableWords(q.question)}</h3>
             <p class="lesson-desc">${escapeHtml(q.questionKo)}</p>
 
             <div>
@@ -1013,7 +1631,7 @@
                 ${q.hints
                   .map(
                     (h) =>
-                      `<span class="hint-chip"><strong>${escapeHtml(h.en)}</strong> (${escapeHtml(h.ko)})</span>`
+                      `<span class="hint-chip"><strong>${wrapClickableWords(h.en)}</strong> (${escapeHtml(h.ko)})</span>`
                   )
                   .join("")}
               </div>
@@ -1051,7 +1669,7 @@
 
             <div class="model-compare-box ${isModelOpen ? "" : "hidden"}" style="margin-top:4px;">
               <h3>모범 답변 (Band 4.5–5.0)</h3>
-              <p style="margin:0 0 6px 0; color:var(--navy-900);">${escapeHtml(q.modelAnswer)}</p>
+              <p style="margin:0 0 6px 0; color:var(--navy-900);">${wrapClickableWords(q.modelAnswer)}</p>
               <p style="margin:0 0 8px 0; font-size:0.84rem; color:var(--text-muted);">${escapeHtml(q.modelAnswerKo)}</p>
               <div style="font-size:0.82rem; color:var(--emerald-600);"><strong>Speaking Tip:</strong> ${escapeHtml(q.tip)}</div>
             </div>
@@ -1147,7 +1765,7 @@
           ${dayData.reviewVocab
             .map(
               (v) =>
-                `<span class="vocab-chip"><strong>${escapeHtml(v.word)}</strong>: ${escapeHtml(v.meaning)} <span style="color:var(--text-muted); font-size:0.72rem;">(${escapeHtml(v.day)})</span></span>`
+                `<span class="vocab-chip"><strong>${wrapClickableWords(v.word)}</strong>: ${escapeHtml(v.meaning)} <span style="color:var(--text-muted); font-size:0.72rem;">(${escapeHtml(v.day)})</span></span>`
             )
             .join("")}
         </div>
@@ -1187,10 +1805,10 @@
       }
     }
 
-    window.addEventListener("beforeunload", saveState);
+    window.addEventListener("beforeunload", () => saveState(false));
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") {
-        saveState();
+        saveState(false);
       }
     });
 
@@ -1201,6 +1819,17 @@
     updateCompletionBanner();
     renderStudyTimer();
     startStudyTimer();
+
+    try {
+      const savedSyncId = localStorage.getItem(SYNC_ID_STORAGE_KEY);
+      if (savedSyncId) {
+        connectSync(savedSyncId);
+      } else {
+        setSyncUI("local", "로컬 저장");
+      }
+    } catch (e) {
+      setSyncUI("local", "로컬 저장");
+    }
   }
 
   init();

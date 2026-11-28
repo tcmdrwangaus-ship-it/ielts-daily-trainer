@@ -1310,6 +1310,630 @@ const curriculumData = {
           ]
         }
       }
+    },
+
+    // ========================================================
+    // WEEK 5 (Band 5.0~5.5): 직장 업무와 자기계발
+    // ========================================================
+    {
+      weekNumber: 5,
+      title: "Week 5: 직장 업무와 자기계발",
+      subtitle: "Band 5.0–5.5 도약 · 비즈니스/협업 어휘 및 복문 구조",
+      difficultyLevel: "Level 3 · Band 5.0–5.5",
+      days: {
+        mon: {
+          dayKey: "mon",
+          dayLabel: "월",
+          dayFullLabel: "월요일",
+          skill: "Listening",
+          title: "사내 워크숍 및 교육 일정 안내",
+          description: "인사팀 담당자와 직원의 대화를 듣고 워크숍 주제, 장소, 신청 마감일을 파악해 보세요.",
+          estimatedMinutes: 7,
+          vocabHighlights: [
+            { word: "workshop", meaning: "워크숍, 연수", example: "We are holding a communication workshop." },
+            { word: "deadline", meaning: "마감일", example: "The registration deadline is Thursday." }
+          ],
+          dialogue: [
+            {
+              speaker: "HR Manager",
+              voicePitch: 1.1,
+              text: "Hi, everyone. Just a reminder that our communication skills workshop will take place next Monday.",
+              ko: "안녕하세요, 여러분. 다음 주 월요일에 커뮤니케이션 기술 워크숍이 열린다는 점을 다시 알려드립니다."
+            },
+            {
+              speaker: "Eric",
+              voicePitch: 0.9,
+              text: "Excuse me, which room is it in, and do we need to sign up in advance?",
+              ko: "실례합니다, 몇 호에서 열리며 미리 신청해야 하나요?"
+            },
+            {
+              speaker: "HR Manager",
+              voicePitch: 1.1,
+              text: "It will be held in Conference Room B on the third floor. Please submit your name before the deadline on Thursday at 5 p.m.",
+              ko: "3층 회의실 B에서 진행됩니다. 목요일 오후 5시 마감 전까지 이름을 제출해 주세요."
+            },
+            {
+              speaker: "Eric",
+              voicePitch: 0.9,
+              text: "Got it. Will we receive any printed materials or certificates?",
+              ko: "알겠습니다. 인쇄 자료나 수료증을 받게 되나요?"
+            },
+            {
+              speaker: "HR Manager",
+              voicePitch: 1.1,
+              text: "Digital handouts will be emailed to all participants, and light refreshments will be provided.",
+              ko: "모든 참가자에게 디지털 유인물이 이메일로 발송되며, 간단한 다과가 제공될 예정입니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w5-mon-q1",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+              sentenceBefore: "It will be held in Conference Room B on the",
+              sentenceAfter: "floor.",
+              options: ["first", "second", "third", "fourth"],
+              answer: "third",
+              explanation: "인사팀 담당자가 'on the third floor(3층)'라고 안내했습니다.",
+              translation: "3층 회의실 B에서 진행됩니다."
+            },
+            {
+              id: "w5-mon-q2",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+              sentenceBefore: "Please submit your name before the deadline on",
+              sentenceAfter: "at 5 p.m.",
+              options: ["Monday", "Wednesday", "Thursday", "Friday"],
+              answer: "Thursday",
+              explanation: "신청 마감일은 목요일(Thursday) 오후 5시입니다.",
+              translation: "목요일 오후 5시 마감 전까지 이름을 제출해 주세요."
+            },
+            {
+              id: "w5-mon-q3",
+              type: "short",
+              prompt: "대화 스크립트 빈칸 채우기 (3/3) - 한 단어로 입력하세요",
+              sentenceBefore: "Digital handouts will be emailed to all",
+              sentenceAfter: ".",
+              placeholder: "정답 단어 입력 (예: participants)",
+              answer: "participants",
+              acceptedAnswers: ["participants", "participant"],
+              explanation: "'participants(참가자들)'에게 디지털 유인물이 이메일로 발송됩니다.",
+              translation: "모든 참가자에게 디지털 유인물이 이메일로 발송됩니다."
+            }
+          ]
+        },
+        tue: {
+          dayKey: "tue",
+          dayLabel: "화",
+          dayFullLabel: "화요일",
+          skill: "Reading",
+          title: "원격 근무(재택근무)가 업무 생산성에 미치는 영향",
+          description: "Band 5.0~5.5 수준의 비즈니스 독해 지문을 읽고 TFNG 및 핵심 동의어를 찾아보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "flexible", meaning: "유연한", example: "Flexible hours improve job satisfaction." },
+            { word: "productivity", meaning: "생산성", example: "Quiet environments boost productivity." }
+          ],
+          passageTitle: "How Remote Work Changes Office Productivity",
+          sentences: [
+            {
+              en: "In recent years, many companies have allowed employees to work from home several days a week.",
+              ko: "최근 몇 년 동안 많은 기업들이 직원들에게 일주일에 며칠씩 재택근무를 허용하고 있습니다."
+            },
+            {
+              en: "One major advantage of this flexible arrangement is that workers save significant time by avoiding daily commutes.",
+              ko: "이러한 유연한 근무 방식의 주요 장점 중 하나는 직원들이 매일의 출퇴근을 피해 상당한 시간을 절약한다는 것입니다."
+            },
+            {
+              en: "Studies suggest that employees who work in a quiet home environment often show higher productivity.",
+              ko: "연구에 따르면 조용한 가정 환경에서 일하는 직원들이 종종 더 높은 생산성을 보입니다."
+            },
+            {
+              en: "However, working remotely can sometimes make team communication slower and cause feelings of isolation.",
+              ko: "하지만 원격으로 일하는 것은 때때로 팀 소통을 느리게 만들고 고립감을 유발할 수 있습니다."
+            },
+            {
+              en: "Therefore, a balanced hybrid model that combines office collaboration with home focus is becoming the preferred solution.",
+              ko: "따라서 사무실 협업과 가정에서의 집중을 결합한 균형 잡힌 하이브리드 모델이 선호되는 해결책이 되고 있습니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w5-tue-q1",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Working from home always makes team communication faster.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "FALSE",
+              explanation: "4번째 문장에서 원격 근무가 팀 소통을 때때로 느리게(slower) 만들 수 있다고 했으므로 FALSE입니다.",
+              translation: "재택근무는 항상 팀 소통을 더 빠르게 만든다."
+            },
+            {
+              id: "w5-tue-q2",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Small technology startups adopted remote work earlier than large banks.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "NOT GIVEN",
+              explanation: "지문에서는 소규모 스타트업과 대형 은행을 비교한 내용이 전혀 나오지 않으므로 NOT GIVEN입니다.",
+              translation: "소규모 기술 스타트업들이 대형 은행보다 먼저 재택근무를 도입했다."
+            },
+            {
+              id: "w5-tue-q3",
+              type: "mcq",
+              prompt: "핵심 동의어 찾기: 지문에서 'important or large enough to be noticed(상당한, 중요한)'를 뜻하는 단어는?",
+              statement: "Choose the word from the passage that means 'large or important enough to have an effect'.",
+              options: ["flexible", "significant", "quiet", "balanced"],
+              answer: "significant",
+              explanation: "2번째 문장의 'significant time(상당한 시간)'에서 significant는 IELTS Reading 빈출 학술 형용사입니다.",
+              translation: "지문에서 '효과가 있을 만큼 크거나 중요한(상당한)'이라는 뜻의 단어를 고르세요."
+            }
+          ]
+        },
+        wed: {
+          dayKey: "wed",
+          dayLabel: "수",
+          dayFullLabel: "수요일",
+          skill: "Writing",
+          title: "IELTS Task 2 심화 영작: 재택근무의 장단점",
+          description: "필수 연결어와 핵심 어휘 3개를 조합해 논리적인 3문장을 작성해 보세요.",
+          estimatedMinutes: 9,
+          vocabHighlights: [
+            { word: "flexible", meaning: "유연한", example: "Flexible schedules reduce stress." }
+          ],
+          taskType: "Task 2 (직장/근무 형태 의견 쓰기)",
+          writingPrompt: "Some companies allow employees to work from home part of the week. Do the advantages of this trend outweigh the disadvantages?",
+          writingPromptKo: "일부 기업은 주중 일부를 재택근무하도록 허용합니다. 이러한 추세의 장점이 단점보다 더 크다고 생각하나요?",
+          requiredWords: [
+            { word: "flexible", meaning: "유연한" },
+            { word: "productivity", meaning: "생산성" },
+            { word: "therefore", meaning: "그러므로" }
+          ],
+          sentencePatterns: [
+            "Although working from home can reduce face-to-face talk, it offers a ... schedule. (비록 재택근무가 대면 대화를 줄일 수 있지만, ...한 일정을 제공합니다.)",
+            "This helps employees boost their ... while saving commute time. (이는 출퇴근 시간을 아끼면서 ...을 높이는 데 도움이 됩니다.)",
+            "..., I believe the benefits clearly outweigh the drawbacks. (..., 장점이 단점을 분명히 능가한다고 생각합니다.)"
+          ],
+          modelAnswer: "Although working from home may reduce casual office chat, it gives workers a flexible schedule and saves travel time. As a result, many employees can focus better and improve their productivity. Therefore, I believe the advantages of remote work clearly outweigh the disadvantages.",
+          modelAnswerKo: "재택근무가 가벼운 사무실 대화를 줄일 수는 있지만, 직장인들에게 유연한 일정을 제공하고 이동 시간을 절약해 줍니다. 그 결과 많은 직원들이 더 잘 집중하고 생산성을 높일 수 있습니다. 그러므로 저는 원격 근무의 장점이 단점을 분명히 능가한다고 생각합니다.",
+          keyExpressions: [
+            { expr: "Although + 주어 + 동사,", desc: "비록 ~일지라도 (Band 5.5+ 양보절 핵심 패턴)" },
+            { expr: "As a result,", desc: "그 결과 (원인-결과 연결)" },
+            { expr: "outweigh the disadvantages", desc: "단점을 능가하다 (IELTS 에세이 만능 표현)" }
+          ]
+        },
+        thu: {
+          dayKey: "thu",
+          dayLabel: "목",
+          dayFullLabel: "목요일",
+          skill: "Speaking",
+          title: "IELTS Speaking Part 1: 직업과 업무 환경",
+          description: "30초 준비 후 1분 동안 복문 구조를 활용해 답변하고, 원어민 발음을 들어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "colleague", meaning: "직장 동료", example: "I get along well with my colleagues." }
+          ],
+          questions: [
+            {
+              id: "w5-thu-q1",
+              questionNumber: 1,
+              question: "Do you enjoy working with other people in a team?",
+              questionKo: "팀 안에서 다른 사람들과 함께 일하는 것을 즐기시나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "share ideas", ko: "아이디어를 공유하다" },
+                { en: "helpful colleagues", ko: "도움이 되는 동료들" },
+                { en: "solve problems faster", ko: "문제를 더 빨리 해결하다" },
+                { en: "learn from others", ko: "다른 사람에게서 배우다" }
+              ],
+              modelAnswer: "Yes, I really enjoy working in a team because we can share different ideas. Whenever a difficult problem comes up, my colleagues are always ready to help. Working together not only saves time but also makes the office atmosphere much friendlier.",
+              modelAnswerKo: "네, 서로 다른 아이디어를 공유할 수 있기 때문에 팀으로 일하는 것을 정말 즐깁니다. 어려운 문제가 생길 때마다 동료들이 항상 기꺼이 도와줍니다. 함께 일하는 것은 시간을 절약할 뿐만 아니라 사무실 분위기도 훨씬 더 친근하게 만들어 줍니다.",
+              tip: "'not only A but also B(A뿐만 아니라 B도)' 구문을 Speaking에서 자연스럽게 쓰면 Band 5.5 이상으로 평가받기 좋습니다."
+            },
+            {
+              id: "w5-thu-q2",
+              questionNumber: 2,
+              question: "What kind of skill would you like to learn for your future career?",
+              questionKo: "미래의 커리어를 위해 배우고 싶은 기술이 있다면 무엇인가요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "business English", ko: "비즈니스 영어" },
+                { en: "international clients", ko: "해외 고객" },
+                { en: "career opportunities", ko: "경력 기회" },
+                { en: "more confident", ko: "더 자신감 있는" }
+              ],
+              modelAnswer: "I would like to improve my business English skills so that I can communicate with international clients. These days, many companies value employees who can write clear emails and join global meetings. Learning this skill will definitely open up more career opportunities for me.",
+              modelAnswerKo: "해외 고객들과 소통할 수 있도록 비즈니스 영어 실력을 향상시키고 싶습니다. 요즘 많은 회사들이 명확한 이메일을 쓰고 글로벌 회의에 참여할 수 있는 직원을 높이 평가합니다. 이 기술을 배우면 제게 더 많은 경력 기회가 열릴 것입니다.",
+              tip: "'so that I can ~(~할 수 있도록)'으로 목적을 설명하면 문장 구조가 훨씬 매끄러워집니다."
+            }
+          ]
+        },
+        fri: {
+          dayKey: "fri",
+          dayLabel: "금",
+          dayFullLabel: "금요일",
+          skill: "Weekly Review",
+          title: "5주차 핵심 어휘 & Band 5.5 패턴 복습",
+          description: "5주차 비즈니스·협업 핵심 어휘 5개와 연결 구조를 퀴즈로 복습해 보세요.",
+          estimatedMinutes: 5,
+          reviewVocab: [
+            { word: "deadline", meaning: "마감일", day: "월요일 Listening" },
+            { word: "flexible", meaning: "유연한", day: "화/수요일" },
+            { word: "significant", meaning: "상당한, 중요한", day: "화요일 Reading" },
+            { word: "productivity", meaning: "생산성", day: "화/수요일" },
+            { word: "colleague", meaning: "직장 동료", day: "목요일 Speaking" }
+          ],
+          questions: [
+            {
+              id: "w5-fri-q1",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (1/5)",
+              prompt: "과제나 신청을 마쳐야 하는 '마감일'을 뜻하는 영어 단어는?",
+              options: ["deadline", "handout", "isolation", "client"],
+              answer: "deadline",
+              explanation: "월요일 Listening에서 'before the deadline on Thursday'로 배웠습니다.",
+              translation: "deadline = 마감일"
+            },
+            {
+              id: "w5-fri-q2",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (2/5)",
+              prompt: "다음 중 'significant'의 뜻으로 가장 알맞은 것은?",
+              options: ["상당한, 중요한", "지루한", "불가능한", "느린"],
+              answer: "상당한, 중요한",
+              explanation: "화요일 Reading에서 'save significant time(상당한 시간을 절약하다)'으로 쓰였습니다.",
+              translation: "significant = 상당한, 중요한"
+            },
+            {
+              id: "w5-fri-q3",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (3/5)",
+              prompt: "빈칸에 알맞은 단어는? 'A ______ schedule allows workers to balance work and life.'",
+              options: ["flexible", "crowded", "urgent", "printed"],
+              answer: "flexible",
+              explanation: "'flexible schedule(유연한 일정)'은 일과 삶의 균형을 말할 때 핵심 표현입니다.",
+              translation: "유연한 일정은 직장인들이 일과 삶의 균형을 맞추게 해줍니다."
+            },
+            {
+              id: "w5-fri-q4",
+              type: "short",
+              category: "문장 패턴 빈칸 채우기 (4/5)",
+              prompt: "빈칸에 알맞은 단어를 입력하세요. (힌트: 직장 동료)",
+              sentenceBefore: "Whenever a problem comes up, my",
+              sentenceAfter: "are always ready to help.",
+              placeholder: "단어 입력 (예: colleagues)",
+              answer: "colleagues",
+              acceptedAnswers: ["colleagues", "colleague"],
+              explanation: "목요일 Speaking에서 배운 '직장 동료'를 뜻하는 colleague(복수형 colleagues)입니다.",
+              translation: "문제가 생길 때마다 제 동료들은 항상 기꺼이 도와줍니다."
+            },
+            {
+              id: "w5-fri-q5",
+              type: "mcq",
+              category: "문장 패턴 복습 (5/5)",
+              prompt: "수요일 Writing에서 '그러므로, 따라서'라는 결론을 이끌 때 사용한 연결어는?",
+              options: ["Therefore", "Although", "Whenever", "Instead"],
+              answer: "Therefore",
+              explanation: "'Therefore,(그러므로)'는 앞선 근거를 바탕으로 결론을 내릴 때 가장 적합한 연결 부사입니다.",
+              translation: "Therefore = 그러므로, 따라서"
+            }
+          ]
+        }
+      }
+    },
+
+    // ========================================================
+    // WEEK 6 (Band 5.0~5.5): 환경 보호와 지속 가능한 도시
+    // ========================================================
+    {
+      weekNumber: 6,
+      title: "Week 6: 환경 보호와 지속 가능한 도시",
+      subtitle: "Band 5.0–5.5 도약 · 환경·사회 주제 어휘 및 원인/해결 구조",
+      difficultyLevel: "Level 3 · Band 5.0–5.5",
+      days: {
+        mon: {
+          dayKey: "mon",
+          dayLabel: "월",
+          dayFullLabel: "월요일",
+          skill: "Listening",
+          title: "지역 사회 재활용 캠페인 자원봉사 안내",
+          description: "캠페인 코디네이터와 자원봉사자의 대화를 듣고 집합 장소, 시간, 준비물을 파악해 보세요.",
+          estimatedMinutes: 7,
+          vocabHighlights: [
+            { word: "volunteer", meaning: "자원봉사자 / 자원하다", example: "Thank you for joining as a volunteer." },
+            { word: "separate", meaning: "분리하다", example: "We will separate plastic and glass bottles." }
+          ],
+          dialogue: [
+            {
+              speaker: "Coordinator",
+              voicePitch: 1.1,
+              text: "Thanks for calling the City Clean-Up Campaign. Are you interested in volunteering this Saturday?",
+              ko: "도시 정화 캠페인에 전화 주셔서 감사합니다. 이번 주 토요일 자원봉사에 관심이 있으신가요?"
+            },
+            {
+              speaker: "Minji",
+              voicePitch: 0.95,
+              text: "Yes, I'd love to help. Where do we meet, and what time does it start?",
+              ko: "네, 돕고 싶습니다. 어디서 만나며 몇 시에 시작하나요?"
+            },
+            {
+              speaker: "Coordinator",
+              voicePitch: 1.1,
+              text: "We meet at the East Gate of Riverside Park at 9:30 a.m. Please bring your own reusable water bottle.",
+              ko: "오전 9시 30분에 리버사이드 공원 동쪽 문에서 만납니다. 개인용 다회용 물병을 꼭 가져오세요."
+            },
+            {
+              speaker: "Minji",
+              voicePitch: 0.95,
+              text: "Okay. What kind of work will volunteers do there?",
+              ko: "알겠습니다. 그곳에서 자원봉사자들은 어떤 일을 하게 되나요?"
+            },
+            {
+              speaker: "Coordinator",
+              voicePitch: 1.1,
+              text: "We will collect litter along the river and separate plastic, paper, and glass for recycling.",
+              ko: "강가를 따라 쓰레기를 줍고 재활용을 위해 플라스틱, 종이, 유리를 분리할 예정입니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w6-mon-q1",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+              sentenceBefore: "We meet at the",
+              sentenceAfter: "of Riverside Park at 9:30 a.m.",
+              options: ["North Gate", "South Gate", "East Gate", "West Gate"],
+              answer: "East Gate",
+              explanation: "집합 장소는 리버사이드 공원 동문(East Gate)입니다.",
+              translation: "오전 9시 30분에 리버사이드 공원 동쪽 문에서 만납니다."
+            },
+            {
+              id: "w6-mon-q2",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+              sentenceBefore: "Please bring your own reusable",
+              sentenceAfter: "bottle.",
+              options: ["water", "coffee", "milk", "juice"],
+              answer: "water",
+              explanation: "개인용 다회용 물병(reusable water bottle)을 가져오라고 안내했습니다.",
+              translation: "개인용 다회용 물병을 가져오세요."
+            },
+            {
+              id: "w6-mon-q3",
+              type: "short",
+              prompt: "대화 스크립트 빈칸 채우기 (3/3) - 한 단어로 입력하세요",
+              sentenceBefore: "We will",
+              sentenceAfter: "plastic, paper, and glass for recycling.",
+              placeholder: "정답 단어 입력 (예: separate)",
+              answer: "separate",
+              acceptedAnswers: ["separate"],
+              explanation: "재활용을 위해 플라스틱, 종이, 유리를 '분리하다(separate)'가 정답입니다.",
+              translation: "재활용을 위해 플라스틱, 종이, 유리를 분리할 예정입니다."
+            }
+          ]
+        },
+        tue: {
+          dayKey: "tue",
+          dayLabel: "화",
+          dayFullLabel: "화요일",
+          skill: "Reading",
+          title: "일회용 플라스틱을 줄이기 위한 도시의 노력",
+          description: "환경 정책 지문을 읽고 TFNG 및 학술 동의어 문제를 풀어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "alternative", meaning: "대안, 대체물", example: "Paper bags are a common alternative." },
+            { word: "encourage", meaning: "장려하다, 격려하다", example: "Laws encourage people to recycle." }
+          ],
+          passageTitle: "Reducing Single-Use Plastics in Modern Cities",
+          sentences: [
+            {
+              en: "Single-use plastics, such as shopping bags and coffee cups, create a massive amount of waste every year.",
+              ko: "쇼핑백이나 커피 컵 같은 일회용 플라스틱은 매년 엄청난 양의 쓰레기를 만들어 냅니다."
+            },
+            {
+              en: "Because plastic takes hundreds of years to break down, it often harms oceans and wildlife.",
+              ko: "플라스틱은 분해되는 데 수백 년이 걸리기 때문에 종종 바다와 야생 동물에게 해를 끼칩니다."
+            },
+            {
+              en: "To solve this issue, many cities now charge a small fee for plastic bags in supermarkets.",
+              ko: "이 문제를 해결하기 위해 많은 도시들은 이제 슈퍼마켓에서 비닐봉지에 소액의 요금을 부과합니다."
+            },
+            {
+              en: "At the same time, cafes encourage customers to bring reusable tumblers by offering a small discount.",
+              ko: "동시에 카페들은 소액 할인을 제공함으로써 손님들이 다회용 텀블러를 가져오도록 장려합니다."
+            },
+            {
+              en: "Choosing sustainable alternatives in daily life can make a lasting difference for future generations.",
+              ko: "일상생활에서 지속 가능한 대안을 선택하는 것은 미래 세대를 위해 지속적인 변화를 만들 수 있습니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w6-tue-q1",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Plastic waste breaks down completely within a few months.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "FALSE",
+              explanation: "2번째 문장에서 플라스틱은 분해되는 데 수백 년(hundreds of years)이 걸린다고 했으므로 FALSE입니다.",
+              translation: "플라스틱 쓰레기는 몇 달 안에 완전히 분해된다."
+            },
+            {
+              id: "w6-tue-q2",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Glass bottles are heavier to transport than plastic bottles.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "NOT GIVEN",
+              explanation: "유리병과 플라스틱병의 운송 무게 비교는 지문에 언급되지 않았으므로 NOT GIVEN입니다.",
+              translation: "유리병은 플라스틱병보다 운반하기에 더 무겁다."
+            },
+            {
+              id: "w6-tue-q3",
+              type: "mcq",
+              prompt: "핵심 동의어 찾기: 지문에서 'very large in size or amount(엄청난, 대규모의)'를 뜻하는 단어는?",
+              statement: "Choose the word from the passage that means 'extremely large'.",
+              options: ["massive", "reusable", "small", "lasting"],
+              answer: "massive",
+              explanation: "1번째 문장의 'a massive amount of waste(엄청난 양의 쓰레기)'에서 massive가 '매우 큰/엄청난'입니다.",
+              translation: "지문에서 '극도로 큰, 엄청난'이라는 뜻의 단어를 고르세요."
+            }
+          ]
+        },
+        wed: {
+          dayKey: "wed",
+          dayLabel: "수",
+          dayFullLabel: "수요일",
+          skill: "Writing",
+          title: "IELTS Task 2 심화 영작: 환경 문제의 원인과 해결책",
+          description: "필수 어휘 3개를 모두 포함하여 환경 문제 해결 방안을 3문장으로 작성해 보세요.",
+          estimatedMinutes: 9,
+          vocabHighlights: [
+            { word: "pollution", meaning: "오염", example: "Plastic waste causes serious pollution." }
+          ],
+          taskType: "Task 2 (환경 문제 해결책 제시하기)",
+          writingPrompt: "Plastic waste has become a serious environmental problem. What can individuals do in daily life to reduce this problem?",
+          writingPromptKo: "플라스틱 쓰레기가 심각한 환경 문제가 되었습니다. 개인이 일상생활에서 이 문제를 줄이기 위해 무엇을 할 수 있을까요?",
+          requiredWords: [
+            { word: "pollution", meaning: "오염" },
+            { word: "encourage", meaning: "장려하다" },
+            { word: "alternative", meaning: "대안" }
+          ],
+          sentencePatterns: [
+            "To reduce plastic ..., individuals can choose a reusable ... (플라스틱 ...을 줄이기 위해 개인은 다회용 ...을 선택할 수 있습니다.)",
+            "For instance, carrying a cloth bag is a practical ... to plastic bags. (예를 들어 천 가방을 들고 다니는 것은 비닐봉지의 실용적인 ...입니다.)",
+            "Furthermore, governments and shops should ... people to recycle more. (게다가 정부와 상점들은 사람들이 더 많이 재활용하도록 ...해야 합니다.)"
+          ],
+          modelAnswer: "To reduce plastic pollution, individuals should use fewer single-use items every day. For instance, bringing a reusable tumbler or cloth bag is a simple alternative to plastic products. Furthermore, local communities should encourage citizens to separate and recycle waste properly.",
+          modelAnswerKo: "플라스틱 오염을 줄이기 위해 개인들은 매일 일회용품을 덜 사용해야 합니다. 예를 들어 다회용 텀블러나 천 가방을 가져가는 것은 플라스틱 제품의 간단한 대안입니다. 게다가 지역 사회는 시민들이 쓰레기를 올바르게 분리하고 재활용하도록 장려해야 합니다.",
+          keyExpressions: [
+            { expr: "To reduce ~,", desc: "~을 줄이기 위해서 (목적 부정사로 문장 시작)" },
+            { expr: "a simple alternative to ~", desc: "~에 대한 간단한 대안" },
+            { expr: "Furthermore,", desc: "게다가, 더욱이 (추가 아이디어를 제시할 때)" }
+          ]
+        },
+        thu: {
+          dayKey: "thu",
+          dayLabel: "목",
+          dayFullLabel: "목요일",
+          skill: "Speaking",
+          title: "IELTS Speaking Part 1: 자연과 재활용 습관",
+          description: "30초 준비 후 1분 동안 구체적인 예시를 들어 말하고 원어민 발음을 확인해 보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "environment", meaning: "환경", example: "We should protect the environment." }
+          ],
+          questions: [
+            {
+              id: "w6-thu-q1",
+              questionNumber: 1,
+              question: "Do you recycle things at home? How?",
+              questionKo: "집에서 재활용을 하시나요? 어떻게 하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "separate waste", ko: "쓰레기를 분리하다" },
+                { en: "plastic and paper", ko: "플라스틱과 종이" },
+                { en: "every week", ko: "매주" },
+                { en: "protect the environment", ko: "환경을 보호하다" }
+              ],
+              modelAnswer: "Yes, I always separate my household waste at home. Every week, I sort plastic bottles, paper boxes, and glass cans into different bins. Even though it takes a little extra effort, I think it is essential to protect the environment.",
+              modelAnswerKo: "네, 집에서 항상 생활 쓰레기를 분리수거합니다. 매주 플라스틱 병, 종이 상자, 유리 캔을 각각 다른 통에 나눕니다. 약간의 노력이 더 들긴 하지만, 환경을 보호하기 위해 꼭 필요하다고 생각합니다.",
+              tip: "이유를 말할 때 'I think it is essential to ~(~하는 것이 필수적이라고 생각한다)'를 활용하면 설득력이 높아집니다."
+            },
+            {
+              id: "w6-thu-q2",
+              questionNumber: 2,
+              question: "Are there many parks or green spaces in your city?",
+              questionKo: "당신이 사는 도시에는 공원이나 녹지 공간이 많은 편인가요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "green spaces", ko: "녹지 공간" },
+                { en: "fresh air", ko: "신선한 공기" },
+                { en: "jog or walk", ko: "조깅하거나 산책하다" },
+                { en: "escape city noise", ko: "도시 소음에서 벗어나다" }
+              ],
+              modelAnswer: "Yes, my city has several lovely parks along the river. People often go there on weekends to jog, ride bicycles, and enjoy fresh air. Having these green spaces makes it easy to relax and escape the noisy city streets.",
+              modelAnswerKo: "네, 제가 사는 도시에는 강을 따라 멋진 공원들이 여러 개 있습니다. 사람들은 주말에 조깅을 하거나 자전거를 타고 신선한 공기를 마시러 그곳에 자주 갑니다. 이런 녹지 공간이 있어서 시끄러운 도시 거리에서 벗어나 쉬기가 좋습니다.",
+              tip: "동명사 주어('Having these green spaces makes it easy to...')를 사용하면 Band 5.5 문법 점수를 노릴 수 있습니다."
+            }
+          ]
+        },
+        fri: {
+          dayKey: "fri",
+          dayLabel: "금",
+          dayFullLabel: "금요일",
+          skill: "Weekly Review",
+          title: "6주차 핵심 어휘 & 환경 패턴 스피드 복습",
+          description: "6주차 환경·도시 핵심 어휘 5개와 문장 연결 표현을 퀴즈로 복습해 보세요.",
+          estimatedMinutes: 5,
+          reviewVocab: [
+            { word: "separate", meaning: "분리하다", day: "월요일 Listening" },
+            { word: "massive", meaning: "엄청난, 대규모의", day: "화요일 Reading" },
+            { word: "alternative", meaning: "대안", day: "화/수요일" },
+            { word: "encourage", meaning: "장려하다", day: "화/수요일" },
+            { word: "environment", meaning: "환경", day: "목요일 Speaking" }
+          ],
+          questions: [
+            {
+              id: "w6-fri-q1",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (1/5)",
+              prompt: "재활용을 위해 쓰레기를 종류별로 '분리하다'를 뜻하는 동사는?",
+              options: ["separate", "charge", "harm", "escape"],
+              answer: "separate",
+              explanation: "월요일 Listening에서 'separate plastic, paper, and glass'로 배웠습니다.",
+              translation: "separate = 분리하다"
+            },
+            {
+              id: "w6-fri-q2",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (2/5)",
+              prompt: "다음 중 'massive'의 뜻으로 가장 알맞은 것은?",
+              options: ["엄청난, 대규모의", "다회용의", "조용한", "불필요한"],
+              answer: "엄청난, 대규모의",
+              explanation: "화요일 Reading에서 'a massive amount of waste(엄청난 양의 쓰레기)'로 쓰였습니다.",
+              translation: "massive = 엄청난, 대규모의"
+            },
+            {
+              id: "w6-fri-q3",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (3/5)",
+              prompt: "빈칸에 알맞은 단어는? 'A cloth bag is a practical ______ to plastic bags.'",
+              options: ["alternative", "discount", "litter", "noise"],
+              answer: "alternative",
+              explanation: "'alternative to ~(에 대한 대안)'는 IELTS Writing/Reading 핵심 표현입니다.",
+              translation: "천 가방은 비닐봉지에 대한 실용적인 대안입니다."
+            },
+            {
+              id: "w6-fri-q4",
+              type: "short",
+              category: "문장 패턴 빈칸 채우기 (4/5)",
+              prompt: "빈칸에 알맞은 단어를 입력하세요. (힌트: 장려하다)",
+              sentenceBefore: "Cafes",
+              sentenceAfter: "customers to bring reusable tumblers.",
+              placeholder: "단어 입력 (예: encourage)",
+              answer: "encourage",
+              acceptedAnswers: ["encourage"],
+              explanation: "화요일 Reading과 수요일 Writing에서 배운 '장려하다(encourage)'입니다.",
+              translation: "카페들은 손님들이 다회용 텀블러를 가져오도록 장려합니다."
+            },
+            {
+              id: "w6-fri-q5",
+              type: "mcq",
+              category: "문장 패턴 복습 (5/5)",
+              prompt: "목요일 Speaking에서 '환경을 보호하다'를 뜻하는 가장 자연스러운 표현은?",
+              options: ["protect the environment", "break down plastic", "charge a fee", "avoid traffic"],
+              answer: "protect the environment",
+              explanation: "'protect the environment(환경을 보호하다)'는 환경 주제의 가장 기본적인 필수 연어입니다.",
+              translation: "protect the environment = 환경을 보호하다"
+            }
+          ]
+        }
+      }
     }
   ],
   vocabularyDict: {
@@ -2461,5 +3085,420 @@ const curriculumData = {
     }
   }
 };
+
+/**
+ * 주차별 순차적 난이도 메타데이터 반환
+ */
+curriculumData.getDifficultyMeta = function (weekNumber) {
+  if (weekNumber <= 2) {
+    return { tier: 1, label: "Level 1 · Band 4.5 기초", desc: "기초 필수 어휘 및 단문 구조" };
+  }
+  if (weekNumber <= 4) {
+    return { tier: 2, label: "Level 2 · Band 4.5–5.0 도약", desc: "비교 표현 및 일상 복문 구조" };
+  }
+  if (weekNumber <= 6) {
+    return { tier: 3, label: "Level 3 · Band 5.0–5.5 중급", desc: "비즈니스·사회 어휘 및 양보/인과절" };
+  }
+  if (weekNumber <= 10) {
+    return { tier: 4, label: "Level 4 · Band 5.5–6.0 심화", desc: "학술 동의어 및 논리적 에세이 구조" };
+  }
+  return {
+    tier: 5,
+    label: `Level ${Math.min(10, 4 + Math.floor((weekNumber - 7) / 4))} · Band 6.0+ 마스터`,
+    desc: "고급 연어 및 심층 분석 훈련"
+  };
+};
+
+/**
+ * 무제한 연속 학습 커리큘럼 생성기 (Week 1~6 정적 데이터 + Week 7+ 동적 확장)
+ */
+curriculumData.getWeek = function (weekNumber) {
+  const existing = this.weeks.find((w) => w.weekNumber === weekNumber);
+  if (existing) {
+    return {
+      ...existing,
+      difficultyMeta: this.getDifficultyMeta(weekNumber)
+    };
+  }
+
+  const meta = this.getDifficultyMeta(weekNumber);
+  const themes = [
+    {
+      topicKo: "평생 교육과 온라인 학습",
+      listeningTitle: "대학교 평생교육원 강좌 상담",
+      listeningDialogue: [
+        { speaker: "Advisor", voicePitch: 1.1, text: "Good afternoon, Lifelong Learning Center. How can I assist you?", ko: "안녕하세요, 평생교육원입니다. 무엇을 도와드릴까요?" },
+        { speaker: "Learner", voicePitch: 0.95, text: "Hello, I want to enroll in the academic writing course starting next month.", ko: "안녕하세요, 다음 달에 시작하는 아카데믹 라이팅 강좌에 등록하고 싶습니다." },
+        { speaker: "Advisor", voicePitch: 1.1, text: "Certainly. That course runs for eight weeks and costs 120 dollars, including online feedback.", ko: "물론입니다. 해당 강좌는 8주 과정이며 온라인 피드백을 포함해 120달러입니다." },
+        { speaker: "Learner", voicePitch: 0.95, text: "Are the lectures recorded in case I have to work late?", ko: "야근을 해야 할 경우를 대비해 강의가 녹화되나요?" },
+        { speaker: "Advisor", voicePitch: 1.1, text: "Yes, every session is uploaded within two hours, so you can review anytime.", ko: "네, 모든 수업은 2시간 이내에 업로드되므로 언제든 복습하실 수 있습니다." }
+      ],
+      lQ1: { before: "That course runs for", after: "weeks.", opts: ["four", "six", "eight", "ten"], ans: "eight", exp: "상담원이 8주 과정(eight weeks)이라고 안내했습니다.", ko: "해당 강좌는 8주 동안 진행됩니다." },
+      lQ2: { before: "The total fee is", after: "dollars, including online feedback.", opts: ["100", "110", "120", "150"], ans: "120", exp: "수강료는 온라인 피드백 포함 120달러입니다.", ko: "온라인 피드백을 포함해 총 비용은 120달러입니다." },
+      lQ3: { before: "Every session is uploaded within two", after: ".", ans: "hours", acc: ["hours", "hour"], exp: "수업 종료 후 2시간(two hours) 이내에 녹화본이 업로드됩니다.", ko: "모든 수업은 2시간 이내에 업로드됩니다." },
+      readingTitle: "Why Lifelong Learning Matters in a Changing Economy",
+      readingSentences: [
+        { en: "As technology develops rapidly, many job skills become outdated within just a few years.", ko: "기술이 빠르게 발전함에 따라 많은 직무 기술이 불과 몇 년 만에 구식이 됩니다." },
+        { en: "Consequently, continuous learning is no longer optional for adults who wish to advance their careers.", ko: "그 결과, 경력을 발전시키고자 하는 성인들에게 지속적인 학습은 더 이상 선택 사항이 아닙니다." },
+        { en: "Flexible online platforms enable workers to acquire new qualifications without leaving their jobs.", ko: "유연한 온라인 플랫폼은 직장인들이 직장을 그만두지 않고도 새로운 자격을 취득할 수 있게 해줍니다." },
+        { en: "Furthermore, regular mental stimulation keeps the brain active and improves long-term problem-solving ability.", ko: "게다가 규칙적인 두뇌 자극은 뇌를 활발하게 유지하고 장기적인 문제 해결 능력을 향상시킵니다." }
+      ],
+      rQ1: { stmt: "Once you finish university, your job skills never become outdated.", ans: "FALSE", exp: "첫 문장에서 많은 직무 기술이 몇 년 만에 구식이 된다(become outdated)고 했으므로 FALSE입니다.", ko: "대학을 졸업하면 직무 기술은 절대 구식이 되지 않는다." },
+      rQ2: { stmt: "Online courses are more expensive than evening university degrees.", ans: "NOT GIVEN", exp: "온라인 강좌와 야간 대학 학위의 가격 비교는 지문에 언급되지 않았습니다.", ko: "온라인 강좌는 야간 대학 학위보다 더 비싸다." },
+      rQ3: { stmt: "Choose the word that means 'to gain or learn a skill or qualification'.", opts: ["develop", "acquire", "leave", "keep"], ans: "acquire", exp: "3번째 문장의 'acquire new qualifications(새 자격을 취득하다)'에서 acquire가 '습득하다/취득하다'입니다.", ko: "'기술이나 자격을 얻다, 습득하다'라는 뜻의 단어를 고르세요." },
+      writingPrompt: "Some people believe adults should continue learning new skills throughout their lives. To what extent do you agree?",
+      writingPromptKo: "일부 사람들은 성인이 평생 동안 새로운 기술을 계속 배워야 한다고 믿습니다. 어느 정도 동의하나요?",
+      reqWords: [
+        { word: "essential", meaning: "필수적인" },
+        { word: "acquire", meaning: "습득하다" },
+        { word: "career", meaning: "경력" }
+      ],
+      modelAnswer: "I strongly agree that lifelong learning is essential for modern adults. Because industries change quickly, workers must acquire new skills to protect and grow their career. In addition, studying regularly keeps our minds sharp and confident.",
+      modelAnswerKo: "저는 평생 학습이 현대 성인에게 필수적이라는 데 깊이 동의합니다. 산업이 빠르게 변하기 때문에 직장인들은 경력을 지키고 성장시키기 위해 새로운 기술을 습득해야 합니다. 게다가 규칙적으로 공부하는 것은 정신을 명석하고 자신감 있게 유지해 줍니다.",
+      speakingQ1: "Do you enjoy learning new skills outside of work?",
+      speakingQ1Ko: "직장 밖에서 새로운 기술을 배우는 것을 즐기시나요?",
+      speakingA1: "Yes, I really enjoy learning practical skills such as English and digital tools. Even though my weekdays are busy, spending ten minutes a day helps me make steady progress.",
+      speakingA1Ko: "네, 영어와 디지털 도구 같은 실용적인 기술을 배우는 것을 정말 즐깁니다. 평일이 바쁘지만 하루 10분씩 투자하면 꾸준한 발전을 이룰 수 있습니다.",
+      speakingQ2: "Is it easier for adults to learn online or in a classroom?",
+      speakingQ2Ko: "성인이 온라인으로 배우는 것과 교실에서 배우는 것 중 어느 쪽이 더 쉽다고 생각하나요?",
+      speakingA2: "For working adults, learning online is usually much easier because there is no commute. You can review recorded lessons whenever your schedule allows.",
+      speakingA2Ko: "직장인 성인에게는 출퇴근 이동이 없기 때문에 보통 온라인 학습이 훨씬 쉽습니다. 일정이 허락할 때마다 녹화된 수업을 복습할 수 있습니다.",
+      vocab5: [
+        { word: "enroll", meaning: "등록하다", day: "월요일" },
+        { word: "acquire", meaning: "습득하다", day: "화/수요일" },
+        { word: "essential", meaning: "필수적인", day: "수요일" },
+        { word: "outdated", meaning: "구식의", day: "화요일" },
+        { word: "steady", meaning: "꾸준한", day: "목요일" }
+      ]
+    },
+    {
+      topicKo: "글로벌 관광과 지역 문화 보존",
+      listeningTitle: "시립 박물관 가이드 투어 예약",
+      listeningDialogue: [
+        { speaker: "Guide", voicePitch: 1.1, text: "Welcome to the Heritage Museum booking desk. How may I help you?", ko: "문화유산 박물관 예약 데스크에 오신 것을 환영합니다. 무엇을 도와드릴까요?" },
+        { speaker: "Visitor", voicePitch: 0.95, text: "I'd like to book two tickets for the afternoon cultural tour.", ko: "오후 문화 투어 티켓 두 장을 예약하고 싶습니다." },
+        { speaker: "Guide", voicePitch: 1.1, text: "Sure. The English tour starts at 2:30 p.m. and lasts ninety minutes.", ko: "네. 영어 투어는 오후 2시 30분에 시작해서 90분 동안 진행됩니다." },
+        { speaker: "Visitor", voicePitch: 0.95, text: "Are photographs allowed inside the traditional gallery?", ko: "전통 전시관 안에서 사진 촬영이 허용되나요?" },
+        { speaker: "Guide", voicePitch: 1.1, text: "Yes, you can take photos without flash to protect the ancient paintings.", ko: "네, 고대 회화를 보호하기 위해 플래시 없이 촬영하실 수 있습니다." }
+      ],
+      lQ1: { before: "The English tour starts at", after: "p.m.", opts: ["1:30", "2:00", "2:30", "3:30"], ans: "2:30", exp: "가이드가 오후 2시 30분(2:30 p.m.)에 시작한다고 안내했습니다.", ko: "영어 투어는 오후 2시 30분에 시작합니다." },
+      lQ2: { before: "The tour lasts", after: "minutes.", opts: ["60", "75", "90", "120"], ans: "90", exp: "투어 소요 시간은 90분(ninety minutes)입니다.", ko: "투어는 90분 동안 진행됩니다." },
+      lQ3: { before: "You can take photos without", after: "to protect the paintings.", ans: "flash", acc: ["flash"], exp: "플래시(flash) 없이 촬영이 가능합니다.", ko: "그림을 보호하기 위해 플래시 없이 사진을 찍을 수 있습니다." },
+      readingTitle: "Balancing Tourism Growth and Local Heritage",
+      readingSentences: [
+        { en: "International tourism brings vital income to historic towns and supports local small businesses.", ko: "국제 관광은 역사적인 도시에 중요한 수입을 가져다주고 지역 소상공인을 지원합니다." },
+        { en: "Visitors also gain a deeper appreciation of traditional architecture, cuisine, and local customs.", ko: "방문객들은 또한 전통 건축, 음식, 지역 관습에 대한 더 깊은 이해를 얻게 됩니다." },
+        { en: "However, overcrowding during peak seasons can damage fragile monuments and raise housing prices.", ko: "하지만 성수기 동안의 과밀 현상은 손상되기 쉬운 유적지를 훼손하고 주거비를 올릴 수 있습니다." },
+        { en: "To preserve their culture, many destinations now limit daily visitor numbers and promote off-season travel.", ko: "문화를 보존하기 위해 많은 여행지들은 이제 일일 방문객 수를 제한하고 비수기 여행을 장려합니다." }
+      ],
+      rQ1: { stmt: "Tourism always lowers housing prices in historic towns.", ans: "FALSE", exp: "3번째 문장에서 과밀 현상이 주거비를 올릴 수 있다(raise housing prices)고 했으므로 FALSE입니다.", ko: "관광은 항상 역사 도시의 주거비를 낮춘다." },
+      rQ2: { stmt: "Tourists spend more money on souvenirs than on hotel rooms.", ans: "NOT GIVEN", exp: "기념품과 호텔 지출 비교는 지문에 나오지 않았습니다.", ko: "관광객들은 호텔 객실보다 기념품에 더 많은 돈을 쓴다." },
+      rQ3: { stmt: "Choose the word that means 'to keep something safe from harm or change'.", opts: ["support", "damage", "preserve", "raise"], ans: "preserve", exp: "4번째 문장의 'preserve their culture(문화를 보존하다)'에서 preserve가 '보존하다'입니다.", ko: "'해나 변화로부터 안전하게 지키다(보존하다)'라는 뜻의 단어를 고르세요." },
+      writingPrompt: "International tourism has both positive and negative effects on local communities. Discuss one benefit and one drawback.",
+      writingPromptKo: "국제 관광은 지역 사회에 긍정적 영향과 부정적 영향을 모두 줍니다. 장점과 단점을 한 가지씩 서술해 보세요.",
+      reqWords: [
+        { word: "income", meaning: "수입" },
+        { word: "preserve", meaning: "보존하다" },
+        { word: "however", meaning: "하지만" }
+      ],
+      modelAnswer: "Tourism creates valuable income for local shops and restaurants in historic areas. However, too many visitors can cause overcrowding and litter. Therefore, cities must preserve their heritage by managing tourist numbers carefully.",
+      modelAnswerKo: "관광은 역사 지역의 지역 상점과 식당에 귀중한 수입을 창출합니다. 하지만 너무 많은 방문객은 과밀과 쓰레기 문제를 일으킬 수 있습니다. 따라서 도시들은 관광객 수를 신중히 관리하여 유산을 보존해야 합니다.",
+      speakingQ1: "Do you like visiting museums or historic places when you travel?",
+      speakingQ1Ko: "여행할 때 박물관이나 역사적인 장소를 방문하는 것을 좋아하나요?",
+      speakingA1: "Yes, I always visit at least one local museum when I travel to a new city. It helps me understand the history and traditions of the people who live there.",
+      speakingA1Ko: "네, 새로운 도시를 여행할 때 항상 최소 한 곳의 지역 박물관을 방문합니다. 그곳에 사는 사람들의 역사와 전통을 이해하는 데 도움이 됩니다.",
+      speakingQ2: "What kind of places are popular with tourists in your country?",
+      speakingQ2Ko: "당신의 나라에서는 어떤 장소들이 관광객들에게 인기가 많나요?",
+      speakingA2: "Traditional palaces and modern shopping districts are both very popular. Many visitors enjoy wearing traditional clothes while taking photos in historic neighborhoods.",
+      speakingA2Ko: "전통 궁궐과 현대적인 쇼핑 지구 모두 매우 인기가 많습니다. 많은 방문객들이 역사적인 동네에서 사진을 찍으며 전통 의상을 입는 것을 즐깁니다.",
+      vocab5: [
+        { word: "heritage", meaning: "문화유산", day: "월/수요일" },
+        { word: "preserve", meaning: "보존하다", day: "화/수요일" },
+        { word: "income", meaning: "수입", day: "화/수요일" },
+        { word: "fragile", meaning: "손상되기 쉬운", day: "화요일" },
+        { word: "custom", meaning: "관습, 풍습", day: "화요일" }
+      ]
+    },
+    {
+      topicKo: "인공지능과 미래의 업무 방식",
+      listeningTitle: "스마트 오피스 소프트웨어 교육 문의",
+      listeningDialogue: [
+        { speaker: "Trainer", voicePitch: 1.1, text: "Hello, IT Support Desk. Are you calling about the new automation tool?", ko: "안녕하세요, IT 지원 데스크입니다. 새로운 자동화 도구 때문에 전화하셨나요?" },
+        { speaker: "Staff", voicePitch: 0.9, text: "Yes, I'd like to know how it helps with our weekly data reports.", ko: "네, 주간 데이터 보고서 작성에 어떻게 도움이 되는지 알고 싶습니다." },
+        { speaker: "Trainer", voicePitch: 1.1, text: "It summarizes long spreadsheets in thirty seconds and reduces manual errors.", ko: "긴 스프레드시트를 30초 만에 요약해 주고 수작업 오류를 줄여줍니다." },
+        { speaker: "Staff", voicePitch: 0.9, text: "That sounds efficient. Is there a user guide available?", ko: "효율적이네요. 사용자 안내서가 있나요?" },
+        { speaker: "Trainer", voicePitch: 1.1, text: "Yes, you can download the PDF manual from the company portal using your employee ID.", ko: "네, 사번을 이용해 회사 포털에서 PDF 매뉴얼을 다운로드하실 수 있습니다." }
+      ],
+      lQ1: { before: "It summarizes long spreadsheets in", after: "seconds.", opts: ["10", "20", "30", "60"], ans: "30", exp: "30초(thirty seconds) 만에 요약해 준다고 안내했습니다.", ko: "긴 스프레드시트를 30초 만에 요약합니다." },
+      lQ2: { before: "You can download the", after: "manual from the company portal.", opts: ["video", "PDF", "audio", "paper"], ans: "PDF", exp: "PDF 매뉴얼을 다운로드할 수 있습니다.", ko: "회사 포털에서 PDF 매뉴얼을 다운로드할 수 있습니다." },
+      lQ3: { before: "Log in using your employee", after: ".", ans: "ID", acc: ["id"], exp: "사번(employee ID)을 사용해 로그인합니다.", ko: "사번(employee ID)을 사용해 로그인하세요." },
+      readingTitle: "How Automation Is Reshaping Workplace Tasks",
+      readingSentences: [
+        { en: "Modern software and artificial intelligence are transforming how routine office tasks are completed.", ko: "현대 소프트웨어와 인공지능은 반복적인 사무 업무가 처리되는 방식을 변화시키고 있습니다." },
+        { en: "Automated systems can process large amounts of data far more accurately than human workers.", ko: "자동화 시스템은 인간 작업자보다 훨씬 더 정확하게 대량의 데이터를 처리할 수 있습니다." },
+        { en: "While some people worry about job losses, experts point out that technology also creates new roles.", ko: "일부 사람들은 일자리 감소를 걱정하지만, 전문가들은 기술이 새로운 역할도 만들어 낸다고 지적합니다." },
+        { en: "Employees who develop creative thinking and interpersonal skills will remain in high demand.", ko: "창의적 사고와 대인 관계 기술을 기르는 직원들은 계속해서 높은 수요를 유지할 것입니다." }
+      ],
+      rQ1: { stmt: "Humans always process large amounts of data more accurately than automated systems.", ans: "FALSE", exp: "2번째 문장에서 자동화 시스템이 훨씬 더 정확하게(far more accurately) 처리한다고 했으므로 FALSE입니다.", ko: "인간은 항상 자동화 시스템보다 대량의 데이터를 더 정확하게 처리한다." },
+      rQ2: { stmt: "Software engineers earn higher salaries than medical doctors.", ans: "NOT GIVEN", exp: "소프트웨어 엔지니어와 의사의 급여 비교는 지문에 전혀 없습니다.", ko: "소프트웨어 엔지니어는 의사보다 더 높은 급여를 받는다." },
+      rQ3: { stmt: "Choose the word that means 'changing the form or structure of something'.", opts: ["worrying", "transforming", "completing", "remaining"], ans: "transforming", exp: "1번째 문장의 'transforming(변화시키다)'이 정답입니다.", ko: "'무언가의 형태나 구조를 바꾸다(변화시키다)'라는 뜻의 단어를 고르세요." },
+      writingPrompt: "Artificial intelligence is increasingly used in workplaces. Is this a positive or negative development for workers?",
+      writingPromptKo: "직장에서 인공지능이 점점 더 많이 사용되고 있습니다. 이것이 직장인들에게 긍정적인 발전일까요, 부정적인 발전일까요?",
+      reqWords: [
+        { word: "efficient", meaning: "효율적인" },
+        { word: "replace", meaning: "대체하다" },
+        { word: "creative", meaning: "창의적인" }
+      ],
+      modelAnswer: "Using AI in the workplace is mostly a positive development because it makes routine work much more efficient. Although technology may replace some repetitive tasks, workers can focus on creative projects and teamwork instead.",
+      modelAnswerKo: "직장에서 AI를 사용하는 것은 반복 업무를 훨씬 더 효율적으로 만들기 때문에 대체로 긍정적인 발전입니다. 비록 기술이 일부 반복적인 작업을 대체할 수는 있지만, 직장인들은 대신 창의적인 프로젝트와 팀워크에 집중할 수 있습니다.",
+      speakingQ1: "Do you think technology makes your daily work easier?",
+      speakingQ1Ko: "기술이 당신의 일상 업무를 더 쉽게 만든다고 생각하나요?",
+      speakingA1: "Yes, definitely. Cloud tools and messaging apps allow me to share files instantly and finish reports in half the time.",
+      speakingA1Ko: "네, 확실히 그렇습니다. 클라우드 도구와 메신저 앱 덕분에 파일을 즉시 공유하고 보고서를 절반의 시간 만에 마칠 수 있습니다.",
+      speakingQ2: "What kind of jobs cannot be easily replaced by machines?",
+      speakingQ2Ko: "기계로 쉽게 대체할 수 없는 직업은 어떤 것들이 있을까요?",
+      speakingA2: "Jobs that require empathy and human care, such as teachers, nurses, and counselors, cannot be easily replaced because people need real emotional connection.",
+      speakingA2Ko: "교사, 간호사, 상담사처럼 공감과 인간적인 돌봄이 필요한 직업은 사람들이 진정한 정서적 교감을 필요로 하기 때문에 쉽게 대체될 수 없습니다.",
+      vocab5: [
+        { word: "efficient", meaning: "효율적인", day: "월/수요일" },
+        { word: "transform", meaning: "변화시키다", day: "화요일" },
+        { word: "replace", meaning: "대체하다", day: "수/목요일" },
+        { word: "creative", meaning: "창의적인", day: "화/수요일" },
+        { word: "accurate", meaning: "정확한", day: "화요일" }
+      ]
+    }
+  ];
+
+  const theme = themes[(weekNumber - 7) % themes.length];
+  const cycleNum = Math.floor((weekNumber - 7) / themes.length) + 1;
+  const prefix = `w${weekNumber}`;
+
+  return {
+    weekNumber,
+    title: `Week ${weekNumber}: ${theme.topicKo}${cycleNum > 1 ? ` (심화 ${cycleNum})` : ""}`,
+    subtitle: `${meta.label} · ${meta.desc}`,
+    difficultyLevel: meta.label,
+    difficultyMeta: meta,
+    days: {
+      mon: {
+        dayKey: "mon",
+        dayLabel: "월",
+        dayFullLabel: "월요일",
+        skill: "Listening",
+        title: theme.listeningTitle,
+        description: `${meta.label} 수준 대화 음성을 듣고 핵심 정보 빈칸 3개를 채워 보세요.`,
+        estimatedMinutes: 7,
+        vocabHighlights: theme.vocab5.slice(0, 2).map((v) => ({ word: v.word, meaning: v.meaning })),
+        dialogue: theme.listeningDialogue,
+        questions: [
+          {
+            id: `${prefix}-mon-q1`,
+            type: "mcq",
+            prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+            sentenceBefore: theme.lQ1.before,
+            sentenceAfter: theme.lQ1.after,
+            options: theme.lQ1.opts,
+            answer: theme.lQ1.ans,
+            explanation: theme.lQ1.exp,
+            translation: theme.lQ1.ko
+          },
+          {
+            id: `${prefix}-mon-q2`,
+            type: "mcq",
+            prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+            sentenceBefore: theme.lQ2.before,
+            sentenceAfter: theme.lQ2.after,
+            options: theme.lQ2.opts,
+            answer: theme.lQ2.ans,
+            explanation: theme.lQ2.exp,
+            translation: theme.lQ2.ko
+          },
+          {
+            id: `${prefix}-mon-q3`,
+            type: "short",
+            prompt: "대화 스크립트 빈칸 채우기 (3/3) - 한 단어로 입력하세요",
+            sentenceBefore: theme.lQ3.before,
+            sentenceAfter: theme.lQ3.after,
+            placeholder: "정답 입력",
+            answer: theme.lQ3.ans,
+            acceptedAnswers: theme.lQ3.acc,
+            explanation: theme.lQ3.exp,
+            translation: theme.lQ3.ko
+          }
+        ]
+      },
+      tue: {
+        dayKey: "tue",
+        dayLabel: "화",
+        dayFullLabel: "화요일",
+        skill: "Reading",
+        title: theme.readingTitle,
+        description: `${meta.label} 수준 실용 지문을 읽고 TFNG 및 핵심 동의어 문제를 풀어보세요.`,
+        estimatedMinutes: 8,
+        vocabHighlights: theme.vocab5.slice(2, 4).map((v) => ({ word: v.word, meaning: v.meaning })),
+        passageTitle: theme.readingTitle,
+        sentences: theme.readingSentences,
+        questions: [
+          {
+            id: `${prefix}-tue-q1`,
+            type: "tfng",
+            prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+            statement: theme.rQ1.stmt,
+            options: ["TRUE", "FALSE", "NOT GIVEN"],
+            answer: theme.rQ1.ans,
+            explanation: theme.rQ1.exp,
+            translation: theme.rQ1.ko
+          },
+          {
+            id: `${prefix}-tue-q2`,
+            type: "tfng",
+            prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+            statement: theme.rQ2.stmt,
+            options: ["TRUE", "FALSE", "NOT GIVEN"],
+            answer: theme.rQ2.ans,
+            explanation: theme.rQ2.exp,
+            translation: theme.rQ2.ko
+          },
+          {
+            id: `${prefix}-tue-q3`,
+            type: "mcq",
+            prompt: "핵심 동의어 찾기",
+            statement: theme.rQ3.stmt,
+            options: theme.rQ3.opts,
+            answer: theme.rQ3.ans,
+            explanation: theme.rQ3.exp,
+            translation: theme.rQ3.ko
+          }
+        ]
+      },
+      wed: {
+        dayKey: "wed",
+        dayLabel: "수",
+        dayFullLabel: "수요일",
+        skill: "Writing",
+        title: `IELTS Task 2 심화 영작: ${theme.topicKo}`,
+        description: "필수 영단어 3개를 모두 조합하여 2~3문장의 논리적인 의견을 작성해 보세요.",
+        estimatedMinutes: 9,
+        vocabHighlights: [theme.vocab5[1], theme.vocab5[2]].map((v) => ({ word: v.word, meaning: v.meaning })),
+        taskType: `Task 2 (${meta.label})`,
+        writingPrompt: theme.writingPrompt,
+        writingPromptKo: theme.writingPromptKo,
+        requiredWords: theme.reqWords,
+        sentencePatterns: [
+          "In my opinion, ... because ... (제 생각에는 ~이기 때문에 ...합니다.)",
+          "Although ..., it is clear that ... (비록 ~일지라도 ...한 것은 분명합니다.)"
+        ],
+        modelAnswer: theme.modelAnswer,
+        modelAnswerKo: theme.modelAnswerKo,
+        keyExpressions: theme.reqWords.map((rw) => ({
+          expr: rw.word,
+          desc: `${rw.meaning} — 이번 주 핵심 필수 어휘`
+        }))
+      },
+      thu: {
+        dayKey: "thu",
+        dayLabel: "목",
+        dayFullLabel: "목요일",
+        skill: "Speaking",
+        title: `IELTS Speaking Part 1: ${theme.topicKo}`,
+        description: "30초 준비 후 1분 동안 복문 구조를 활용해 답변하고 원어민 발음을 들어보세요.",
+        estimatedMinutes: 8,
+        vocabHighlights: [theme.vocab5[4]].map((v) => ({ word: v.word, meaning: v.meaning })),
+        questions: [
+          {
+            id: `${prefix}-thu-q1`,
+            questionNumber: 1,
+            question: theme.speakingQ1,
+            questionKo: theme.speakingQ1Ko,
+            prepSeconds: 30,
+            speakSeconds: 60,
+            hints: theme.vocab5.slice(0, 3).map((v) => ({ en: v.word, ko: v.meaning })),
+            modelAnswer: theme.speakingA1,
+            modelAnswerKo: theme.speakingA1Ko,
+            tip: "이유와 구체적 사례를 한 문장씩 덧붙이면 Band 5.5 이상으로 자연스럽게 답변할 수 있습니다."
+          },
+          {
+            id: `${prefix}-thu-q2`,
+            questionNumber: 2,
+            question: theme.speakingQ2,
+            questionKo: theme.speakingQ2Ko,
+            prepSeconds: 30,
+            speakSeconds: 60,
+            hints: theme.vocab5.slice(2, 5).map((v) => ({ en: v.word, ko: v.meaning })),
+            modelAnswer: theme.speakingA2,
+            modelAnswerKo: theme.speakingA2Ko,
+            tip: "Although / Because 같은 접속사를 활용해 두 문장을 하나로 연결해 보세요."
+          }
+        ]
+      },
+      fri: {
+        dayKey: "fri",
+        dayLabel: "금",
+        dayFullLabel: "금요일",
+        skill: "Weekly Review",
+        title: `${weekNumber}주차 핵심 어휘 & 패턴 스피드 복습`,
+        description: `${weekNumber}주차 핵심 어휘 5개와 문장 구조를 퀴즈로 최종 복습해 보세요.`,
+        estimatedMinutes: 5,
+        reviewVocab: theme.vocab5,
+        questions: [
+          {
+            id: `${prefix}-fri-q1`,
+            type: "mcq",
+            category: "어휘 뜻 매칭 (1/5)",
+            prompt: `다음 중 '${theme.vocab5[0].meaning}'이라는 뜻의 영어 단어는?`,
+            options: [theme.vocab5[0].word, theme.vocab5[1].word, theme.vocab5[2].word, theme.vocab5[3].word],
+            answer: theme.vocab5[0].word,
+            explanation: `'${theme.vocab5[0].word}'는 '${theme.vocab5[0].meaning}'이라는 뜻입니다.`,
+            translation: `${theme.vocab5[0].word} = ${theme.vocab5[0].meaning}`
+          },
+          {
+            id: `${prefix}-fri-q2`,
+            type: "mcq",
+            category: "어휘 뜻 매칭 (2/5)",
+            prompt: `다음 중 '${theme.vocab5[1].word}'의 뜻으로 가장 알맞은 것은?`,
+            options: [theme.vocab5[1].meaning, theme.vocab5[0].meaning, theme.vocab5[3].meaning, theme.vocab5[4].meaning],
+            answer: theme.vocab5[1].meaning,
+            explanation: `'${theme.vocab5[1].word}'는 '${theme.vocab5[1].meaning}'이라는 뜻입니다.`,
+            translation: `${theme.vocab5[1].word} = ${theme.vocab5[1].meaning}`
+          },
+          {
+            id: `${prefix}-fri-q3`,
+            type: "mcq",
+            category: "어휘 뜻 매칭 (3/5)",
+            prompt: `다음 중 '${theme.vocab5[2].meaning}'을 뜻하는 영어 단어는?`,
+            options: [theme.vocab5[2].word, theme.vocab5[0].word, theme.vocab5[1].word, theme.vocab5[4].word],
+            answer: theme.vocab5[2].word,
+            explanation: `'${theme.vocab5[2].word}'는 '${theme.vocab5[2].meaning}'이라는 뜻입니다.`,
+            translation: `${theme.vocab5[2].word} = ${theme.vocab5[2].meaning}`
+          },
+          {
+            id: `${prefix}-fri-q4`,
+            type: "short",
+            category: "어휘 스펠링 복습 (4/5)",
+            prompt: `다음 뜻에 해당하는 영어 단어를 입력하세요: '${theme.vocab5[3].meaning}' (첫 글자: ${theme.vocab5[3].word[0]})`,
+            sentenceBefore: "Target word:",
+            sentenceAfter: `(${theme.vocab5[3].meaning})`,
+            placeholder: "영어 단어 입력",
+            answer: theme.vocab5[3].word,
+            acceptedAnswers: [theme.vocab5[3].word.toLowerCase()],
+            explanation: `'${theme.vocab5[3].meaning}'을 뜻하는 핵심 어휘는 '${theme.vocab5[3].word}'입니다.`,
+            translation: `${theme.vocab5[3].word} = ${theme.vocab5[3].meaning}`
+          },
+          {
+            id: `${prefix}-fri-q5`,
+            type: "mcq",
+            category: "어휘 뜻 매칭 (5/5)",
+            prompt: `다음 중 '${theme.vocab5[4].word}'의 뜻으로 알맞은 것은?`,
+            options: [theme.vocab5[4].meaning, theme.vocab5[1].meaning, theme.vocab5[2].meaning, theme.vocab5[0].meaning],
+            answer: theme.vocab5[4].meaning,
+            explanation: `'${theme.vocab5[4].word}'는 '${theme.vocab5[4].meaning}'이라는 뜻입니다.`,
+            translation: `${theme.vocab5[4].word} = ${theme.vocab5[4].meaning}`
+          }
+        ]
+      }
+    }
+  };
+};
+
 
 

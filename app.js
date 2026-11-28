@@ -47,11 +47,10 @@
 
   function normalizeState(parsed) {
     if (!parsed || typeof parsed !== "object") return getDefaultState();
-    const validWeek = curriculumData.weeks.some(
-      (w) => w.weekNumber === parsed.lastWeekNumber
-    )
-      ? parsed.lastWeekNumber
-      : curriculumData.weeks[0].weekNumber;
+    const validWeek =
+      Number.isInteger(parsed.lastWeekNumber) && parsed.lastWeekNumber >= 1
+        ? parsed.lastWeekNumber
+        : 1;
     const validDay = DAY_ORDER.includes(parsed.lastDayKey)
       ? parsed.lastDayKey
       : getDefaultDayKey();
@@ -162,10 +161,7 @@
   // Helpers
   // =========================================
   function getCurrentWeek() {
-    return (
-      curriculumData.weeks.find((w) => w.weekNumber === currentWeekNumber) ||
-      curriculumData.weeks[0]
-    );
+    return curriculumData.getWeek(currentWeekNumber);
   }
 
   function getDayStorageKey(weekNum, dayKey) {
@@ -1369,15 +1365,17 @@
     );
   }
 
+  function getHighestUnlockedWeek() {
+    let w = 1;
+    while (isWeekCompleted(w) && w < 500) {
+      w += 1;
+    }
+    return w;
+  }
+
   function ensureValidUnlockedSelection() {
     if (!isWeekUnlocked(currentWeekNumber)) {
-      const unlockedWeeks = curriculumData.weeks.filter((w) =>
-        isWeekUnlocked(w.weekNumber)
-      );
-      currentWeekNumber =
-        unlockedWeeks.length > 0
-          ? unlockedWeeks[unlockedWeeks.length - 1].weekNumber
-          : curriculumData.weeks[0].weekNumber;
+      currentWeekNumber = getHighestUnlockedWeek();
       appState.lastWeekNumber = currentWeekNumber;
     }
 
@@ -1463,18 +1461,25 @@
   });
 
   // =========================================
-  // Week Selector & Day Tabs (Unified + Sequential Lock)
+  // Week Selector & Day Tabs (Dynamic +1 Week & Sequential Lock)
   // =========================================
   function renderWeekSelector() {
-    weekSelector.innerHTML = curriculumData.weeks
-      .map((w) => {
-        const unlocked = isWeekUnlocked(w.weekNumber);
-        const completed = isWeekCompleted(w.weekNumber);
-        const prefix = completed ? "✅ " : unlocked ? "" : "🔒 ";
-        const suffix = unlocked ? "" : " (이전 주차 완료 시 해금)";
-        return `<option value="${w.weekNumber}" ${w.weekNumber === currentWeekNumber ? "selected" : ""} ${unlocked ? "" : "disabled"}>${prefix}${escapeHtml(w.title)}${suffix}</option>`;
-      })
-      .join("");
+    const highestUnlocked = getHighestUnlockedWeek();
+    const maxVisibleWeek = Math.max(highestUnlocked + 1, currentWeekNumber + 1);
+    const options = [];
+
+    for (let wNum = 1; wNum <= maxVisibleWeek; wNum += 1) {
+      const w = curriculumData.getWeek(wNum);
+      const unlocked = isWeekUnlocked(wNum);
+      const completed = isWeekCompleted(wNum);
+      const prefix = completed ? "✅ " : unlocked ? "" : "🔒 ";
+      const suffix = unlocked ? "" : " (이전 주차 완료 시 해금)";
+      options.push(
+        `<option value="${wNum}" ${wNum === currentWeekNumber ? "selected" : ""} ${unlocked ? "" : "disabled"}>${prefix}${escapeHtml(w.title)}${suffix}</option>`
+      );
+    }
+
+    weekSelector.innerHTML = options.join("");
   }
 
   weekSelector.addEventListener("change", (e) => {
@@ -1584,9 +1589,7 @@
 
     const { completedCount, total, percent } = getWeeklyCompletionStats();
     const weekFinished = isWeekCompleted(week.weekNumber);
-    const nextWeekObj = curriculumData.weeks.find(
-      (w) => w.weekNumber === week.weekNumber + 1
-    );
+    const nextWeekObj = curriculumData.getWeek(week.weekNumber + 1);
 
     completionBanner.classList.remove("hidden");
 
@@ -1600,15 +1603,11 @@
     }
 
     completionWeeklyRate.textContent = `Week ${week.weekNumber} 달성률: ${percent}% (${completedCount}/${total}일)`;
-    if (weekFinished && !nextWeekObj) {
-      completionMessage.textContent =
-        "축하합니다! 4주 전체 IELTS 4.5~5.0 커리큘럼을 모두 완주했습니다!";
-    } else if (weekFinished) {
-      completionMessage.textContent =
-        `Week ${week.weekNumber} 월~금 학습을 모두 완주했습니다! 다음 주차로 넘어가 보세요.`;
+    if (weekFinished) {
+      completionMessage.textContent = `Week ${week.weekNumber} 월~금 학습을 모두 완주했습니다! 다음 주차(${nextWeekObj.difficultyMeta.label})로 넘어가 보세요.`;
     } else {
       completionMessage.textContent =
-        "꾸준한 매일 10분이 IELTS 4.5~5.0 달성의 가장 빠른 길입니다.";
+        "꾸준한 매일 10분이 IELTS 실력 향상의 가장 빠른 길입니다.";
     }
 
     const currentIdx = DAY_ORDER.indexOf(currentDayKey);
@@ -1642,9 +1641,7 @@
       alert("현재 주차의 모든 요일을 완료해야 다음 주차로 이동할 수 있습니다.");
       return;
     }
-    const nextWeekObj = curriculumData.weeks.find(
-      (w) => w.weekNumber === nextWeekNum
-    );
+    const nextWeekObj = curriculumData.getWeek(nextWeekNum);
     if (!nextWeekObj) return;
 
     currentWeekNumber = nextWeekNum;
@@ -1776,6 +1773,8 @@
   // Day-Specific Renderers
   // =========================================
   function renderLessonHeader(dayData) {
+    const week = getCurrentWeek();
+    const diffLabel = week.difficultyMeta ? week.difficultyMeta.label : "";
     const vocabHTML =
       dayData.vocabHighlights && dayData.vocabHighlights.length
         ? `<div class="vocab-chips">
@@ -1790,7 +1789,10 @@
 
     return `
       <article class="card lesson-header-card">
-        <span class="skill-tag">${escapeHtml(dayData.dayFullLabel)} · ${escapeHtml(dayData.skill)} (약 ${dayData.estimatedMinutes}분)</span>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:8px;">
+          <span class="skill-tag" style="margin-bottom:0;">${escapeHtml(dayData.dayFullLabel)} · ${escapeHtml(dayData.skill)} (약 ${dayData.estimatedMinutes}분)</span>
+          ${diffLabel ? `<span class="skill-tag" style="margin-bottom:0; background:var(--emerald-50); color:var(--emerald-600);">${escapeHtml(diffLabel)}</span>` : ""}
+        </div>
         <h2 class="lesson-title">${escapeHtml(dayData.title)}</h2>
         <p class="lesson-desc">${escapeHtml(dayData.description)}</p>
         ${vocabHTML}

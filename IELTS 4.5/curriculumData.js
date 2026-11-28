@@ -359,6 +359,957 @@ const curriculumData = {
           ]
         }
       }
+    },
+
+    // ========================================================
+    // WEEK 2: 건강한 식습관과 운동·여가 생활
+    // ========================================================
+    {
+      weekNumber: 2,
+      title: "Week 2: 건강한 식습관과 운동·여가",
+      subtitle: "건강·운동 필수 어휘 및 비교 문장 익히기",
+      days: {
+        mon: {
+          dayKey: "mon",
+          dayLabel: "월",
+          dayFullLabel: "월요일",
+          skill: "Listening",
+          title: "동네 스포츠 센터 회원 등록하기",
+          description: "스포츠 센터 직원과 회원의 대화를 듣고 이용 시간, 요금, 시설 정보를 파악해 보세요.",
+          estimatedMinutes: 7,
+          vocabHighlights: [
+            { word: "membership", meaning: "회원권", example: "We offer a monthly membership." },
+            { word: "include", meaning: "포함하다", example: "The fee includes the swimming pool." }
+          ],
+          dialogue: [
+            {
+              speaker: "Receptionist",
+              voicePitch: 1.1,
+              text: "Good morning! Welcome to Green Park Sports Center. How can I help you?",
+              ko: "안녕하세요! 그린 파크 스포츠 센터에 오신 것을 환영합니다. 무엇을 도와드릴까요?"
+            },
+            {
+              speaker: "Minho",
+              voicePitch: 0.9,
+              text: "Hi, I'd like to ask about a monthly membership for the gym.",
+              ko: "안녕하세요, 헬스장 월간 회원권에 대해 문의하고 싶습니다."
+            },
+            {
+              speaker: "Receptionist",
+              voicePitch: 1.1,
+              text: "Sure! Our standard membership is 45 dollars per month.",
+              ko: "물론이죠! 기본 회원권은 한 달에 45달러입니다."
+            },
+            {
+              speaker: "Minho",
+              voicePitch: 0.9,
+              text: "Does that price include the swimming pool?",
+              ko: "그 가격에 수영장 이용도 포함되나요?"
+            },
+            {
+              speaker: "Receptionist",
+              voicePitch: 1.1,
+              text: "Yes, it includes both the gym and the pool, and we open at 6:00 a.m. on weekdays.",
+              ko: "네, 헬스장과 수영장이 모두 포함되며, 평일에는 오전 6시에 문을 엽니다."
+            },
+            {
+              speaker: "Minho",
+              voicePitch: 0.9,
+              text: "That's great. Do I need to wear special shoes inside the gym?",
+              ko: "좋네요. 헬스장 안에서는 특별한 신발을 신어야 하나요?"
+            },
+            {
+              speaker: "Receptionist",
+              voicePitch: 1.1,
+              text: "Yes, please bring clean sports shoes and a small towel every time you visit.",
+              ko: "네, 방문하실 때마다 깨끗한 운동화와 작은 수건을 꼭 가져오세요."
+            }
+          ],
+          questions: [
+            {
+              id: "w2-mon-q1",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+              sentenceBefore: "Our standard membership is",
+              sentenceAfter: "dollars per month.",
+              options: ["35", "40", "45", "55"],
+              answer: "45",
+              explanation: "직원이 '45 dollars per month'라고 안내했습니다.",
+              translation: "기본 회원권은 한 달에 45달러입니다."
+            },
+            {
+              id: "w2-mon-q2",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+              sentenceBefore: "We open at",
+              sentenceAfter: "a.m. on weekdays.",
+              options: ["5:30", "6:00", "6:30", "7:00"],
+              answer: "6:00",
+              explanation: "평일 개장 시간은 오전 6시(6:00 a.m.)입니다.",
+              translation: "평일에는 오전 6시에 문을 엽니다."
+            },
+            {
+              id: "w2-mon-q3",
+              type: "short",
+              prompt: "대화 스크립트 빈칸 채우기 (3/3) - 한 단어로 입력하세요",
+              sentenceBefore: "Please bring clean sports shoes and a small",
+              sentenceAfter: "every time you visit.",
+              placeholder: "정답 단어 입력 (예: towel)",
+              answer: "towel",
+              acceptedAnswers: ["towel"],
+              explanation: "직원이 깨끗한 운동화와 작은 수건(towel)을 가져오라고 안내했습니다.",
+              translation: "방문하실 때마다 깨끗한 운동화와 작은 수건을 가져오세요."
+            }
+          ]
+        },
+        tue: {
+          dayKey: "tue",
+          dayLabel: "화",
+          dayFullLabel: "화요일",
+          skill: "Reading",
+          title: "하루 30분 걷기가 주는 놀라운 변화",
+          description: "짧은 건강 칼럼을 읽고 True/False/Not Given 및 동의어 문제를 풀어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "benefit", meaning: "이점, 혜택", example: "Walking has many health benefits." }
+          ],
+          passageTitle: "The Simple Benefits of a Daily Walk",
+          sentences: [
+            {
+              en: "Many office workers sit at a desk for eight hours or more every day.",
+              ko: "많은 사무직 직장인들이 매일 8시간 이상 책상에 앉아 있습니다."
+            },
+            {
+              en: "Because they are busy, they often think they need an expensive gym to stay healthy.",
+              ko: "바쁘기 때문에, 그들은 건강을 유지하기 위해 비싼 헬스장이 필요하다고 자주 생각합니다."
+            },
+            {
+              en: "However, doctors say that walking for just thirty minutes a day brings huge health benefits.",
+              ko: "하지만 의사들은 하루에 단 30분만 걸어도 큰 건강상 이점이 있다고 말합니다."
+            },
+            {
+              en: "Regular walking strengthens your heart and helps you maintain a healthy weight.",
+              ko: "규칙적인 걷기는 심장을 튼튼하게 하고 건강한 체중을 유지하도록 돕습니다."
+            },
+            {
+              en: "Walking outdoors in a park can also improve your mood and clear your mind after work.",
+              ko: "공원에서 야외 산책을 하는 것은 또한 기분을 좋게 하고 퇴근 후 머리를 맑게 해줍니다."
+            },
+            {
+              en: "Best of all, walking is completely free and requires no special equipment.",
+              ko: "무엇보다도 걷기는 완전히 무료이며 특별한 장비가 필요하지 않습니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w2-tue-q1",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Doctors believe you must join an expensive gym to stay healthy.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "FALSE",
+              explanation: "3번째 문장에서 의사들은 하루 30분 걷기만으로도 큰 이점이 있다고 했으므로, 비싼 헬스장에 꼭 다녀야 한다는 진술은 FALSE입니다.",
+              translation: "의사들은 건강을 유지하기 위해 비싼 헬스장에 꼭 등록해야 한다고 믿는다."
+            },
+            {
+              id: "w2-tue-q2",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Morning walks burn more calories than evening walks.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "NOT GIVEN",
+              explanation: "지문에서는 아침 산책과 저녁 산책의 칼로리 소모량을 비교한 내용이 전혀 나오지 않으므로 NOT GIVEN입니다.",
+              translation: "아침 산책은 저녁 산책보다 더 많은 칼로리를 소모한다."
+            },
+            {
+              id: "w2-tue-q3",
+              type: "mcq",
+              prompt: "핵심 동의어 찾기: 지문에서 'keep something at the same level(유지하다)'과 같은 의미의 단어는?",
+              statement: "Choose the word from the passage that means 'to keep in a good condition or level'.",
+              options: ["sit", "maintain", "require", "bring"],
+              answer: "maintain",
+              explanation: "4번째 문장의 'maintain a healthy weight(건강한 체중을 유지하다)'에서 maintain이 '유지하다'라는 뜻입니다.",
+              translation: "지문에서 '좋은 상태나 수준을 유지하다'라는 뜻의 단어를 고르세요."
+            }
+          ]
+        },
+        wed: {
+          dayKey: "wed",
+          dayLabel: "수",
+          dayFullLabel: "수요일",
+          skill: "Writing",
+          title: "IELTS Task 2 미니 영작: 집밥 vs 패스트푸드",
+          description: "주어진 필수 영단어 3개를 모두 포함하여 2~3문장으로 자신의 의견을 작성해 보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "healthy", meaning: "건강한", example: "Home-cooked meals are healthy." }
+          ],
+          taskType: "Task 2 (식습관 비교 의견 쓰기)",
+          writingPrompt: "Many busy people eat fast food instead of cooking at home. Do you think cooking at home is better for your health?",
+          writingPromptKo: "바쁜 많은 사람들이 집에서 요리하는 대신 패스트푸드를 먹습니다. 집에서 요리하는 것이 건강에 더 좋다고 생각하나요?",
+          requiredWords: [
+            { word: "healthy", meaning: "건강한" },
+            { word: "fresh", meaning: "신선한" },
+            { word: "money", meaning: "돈" }
+          ],
+          sentencePatterns: [
+            "I believe cooking at home is ... (집에서 요리하는 것이 ...하다고 생각합니다.)",
+            "First, we can use ... ingredients, which makes meals ... (먼저 ...한 재료를 사용할 수 있어 식사가 ...해집니다.)",
+            "In addition, it helps us save ... (게다가 ...를 아끼는 데 도움이 됩니다.)"
+          ],
+          modelAnswer: "I believe cooking at home is much better than eating fast food. First, we can choose fresh vegetables and meat, so our meals are very healthy. In addition, making food at home helps us save money every month.",
+          modelAnswerKo: "집에서 요리하는 것이 패스트푸드를 먹는 것보다 훨씬 더 좋다고 생각합니다. 첫째, 신선한 채소와 고기를 고를 수 있어서 식사가 매우 건강합니다. 게다가 집에서 음식을 만드는 것은 매달 돈을 아끼는 데 도움이 됩니다.",
+          keyExpressions: [
+            { expr: "much better than", desc: "~보다 훨씬 더 나은 (비교급 강조)" },
+            { expr: "fresh vegetables", desc: "신선한 채소" },
+            { expr: "In addition,", desc: "게다가, 또한 (문장 연결 부사)" }
+          ]
+        },
+        thu: {
+          dayKey: "thu",
+          dayLabel: "목",
+          dayFullLabel: "목요일",
+          skill: "Speaking",
+          title: "IELTS Speaking Part 1: 음식과 운동",
+          description: "30초 동안 답변을 구상하고, 1분 동안 말한 뒤 원어민 모범 답변을 들어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "energetic", meaning: "활기찬, 에너지 넘치는", example: "Exercise makes me feel energetic." }
+          ],
+          questions: [
+            {
+              id: "w2-thu-q1",
+              questionNumber: 1,
+              question: "What kind of food do you like to eat on weekends?",
+              questionKo: "주말에는 주로 어떤 종류의 음식을 먹는 것을 좋아하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "home-cooked meal", ko: "집밥" },
+                { en: "spicy soup", ko: "매운 국물 요리" },
+                { en: "eat with family", ko: "가족과 함께 먹다" },
+                { en: "fresh fruit", ko: "신선한 과일" }
+              ],
+              modelAnswer: "On weekends, I really enjoy eating home-cooked Korean food with my family. My favorite dish is warm soup with rice and fresh vegetables. It tastes delicious and helps me feel relaxed after a busy week.",
+              modelAnswerKo: "주말에는 가족과 함께 집에서 만든 한식을 먹는 것을 정말 좋아합니다. 제가 가장 좋아하는 음식은 밥과 신선한 채소가 곁들여진 따뜻한 국입니다. 맛있고 바쁜 한 주 뒤에 편안한 기분이 들게 해줍니다.",
+              tip: "좋아하는 음식을 말할 때는 '음식 이름 + 누구와 먹는지 + 맛/기분'을 함께 말하면 자연스럽게 3문장이 완성됩니다."
+            },
+            {
+              id: "w2-thu-q2",
+              questionNumber: 2,
+              question: "Do you do any exercise to stay healthy?",
+              questionKo: "건강을 유지하기 위해 하는 운동이 있나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "go for a walk", ko: "산책하러 가다" },
+                { en: "three times a week", ko: "일주일에 세 번" },
+                { en: "feel energetic", ko: "활기차게 느끼다" },
+                { en: "stretch at home", ko: "집에서 스트레칭하다" }
+              ],
+              modelAnswer: "Yes, I try to go for a thirty-minute walk three times a week. Walking in the park near my house is simple and free. After walking, I always feel more energetic and sleep much better at night.",
+              modelAnswerKo: "네, 일주일에 세 번 30분씩 산책하려고 노력합니다. 집 근처 공원에서 걷는 것은 간단하고 무료입니다. 걷고 나면 항상 더 활기차지고 밤에 잠도 훨씬 잘 잡니다.",
+              tip: "빈도 표현(three times a week, every weekend)을 넣으면 답변이 훨씬 구체적으로 들립니다."
+            }
+          ]
+        },
+        fri: {
+          dayKey: "fri",
+          dayLabel: "금",
+          dayFullLabel: "금요일",
+          skill: "Weekly Review",
+          title: "2주차 핵심 어휘 & 패턴 스피드 복습",
+          description: "2주차에 배운 건강·운동 핵심 어휘 5개와 문장 구조를 퀴즈로 복습해 보세요.",
+          estimatedMinutes: 5,
+          reviewVocab: [
+            { word: "membership", meaning: "회원권", day: "월요일 Listening" },
+            { word: "include", meaning: "포함하다", day: "월요일 Listening" },
+            { word: "maintain", meaning: "유지하다", day: "화요일 Reading" },
+            { word: "healthy", meaning: "건강한", day: "수요일 Writing" },
+            { word: "energetic", meaning: "활기찬", day: "목요일 Speaking" }
+          ],
+          questions: [
+            {
+              id: "w2-fri-q1",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (1/5)",
+              prompt: "다음 중 '헬스장이나 클럽의 회원권'을 뜻하는 단어는?",
+              options: ["equipment", "membership", "vegetable", "weekend"],
+              answer: "membership",
+              explanation: "월요일 Listening에서 'a monthly membership(월간 회원권)'으로 배웠습니다.",
+              translation: "membership = 회원권"
+            },
+            {
+              id: "w2-fri-q2",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (2/5)",
+              prompt: "다음 중 'include'의 뜻으로 가장 알맞은 것은?",
+              options: ["포함하다", "줄이다", "걷다", "아끼다"],
+              answer: "포함하다",
+              explanation: "'Does that price include the swimming pool?'에서 '포함하다'라는 뜻으로 쓰였습니다.",
+              translation: "include = 포함하다"
+            },
+            {
+              id: "w2-fri-q3",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (3/5)",
+              prompt: "빈칸에 알맞은 단어는? 'Regular walking helps you ______ a healthy weight.'",
+              options: ["maintain", "forget", "spend", "register"],
+              answer: "maintain",
+              explanation: "'maintain a healthy weight'는 '건강한 체중을 유지하다'라는 뜻입니다.",
+              translation: "규칙적인 걷기는 건강한 체중을 유지하도록 돕습니다."
+            },
+            {
+              id: "w2-fri-q4",
+              type: "short",
+              category: "문장 패턴 빈칸 채우기 (4/5)",
+              prompt: "빈칸에 알맞은 단어를 입력하세요. (힌트: 건강한)",
+              sentenceBefore: "Fresh vegetables make our meals very",
+              sentenceAfter: ".",
+              placeholder: "단어 입력 (예: healthy)",
+              answer: "healthy",
+              acceptedAnswers: ["healthy"],
+              explanation: "수요일 Writing에서 배운 '건강한'을 뜻하는 형용사 healthy입니다.",
+              translation: "신선한 채소는 우리의 식사를 매우 건강하게 만듭니다."
+            },
+            {
+              id: "w2-fri-q5",
+              type: "mcq",
+              category: "문장 패턴 복습 (5/5)",
+              prompt: "목요일 Speaking에서 '더 활기찬 기분이 들다'를 뜻하는 단어는? 'I always feel more ______ after walking.'",
+              options: ["tired", "energetic", "expensive", "quiet"],
+              answer: "energetic",
+              explanation: "'feel energetic(활기찬 기분이 들다)'은 운동 효과를 설명할 때 아주 좋은 형용사입니다.",
+              translation: "나는 걷고 나면 항상 더 활기차진다."
+            }
+          ]
+        }
+      }
+    },
+
+    // ========================================================
+    // WEEK 3: 교통수단과 도심 출퇴근
+    // ========================================================
+    {
+      weekNumber: 3,
+      title: "Week 3: 교통수단과 도심 출퇴근",
+      subtitle: "교통·이동 필수 어휘 및 수치 비교 표현 익히기",
+      days: {
+        mon: {
+          dayKey: "mon",
+          dayLabel: "월",
+          dayFullLabel: "월요일",
+          skill: "Listening",
+          title: "지하철역에서 정기 승차권 문의하기",
+          description: "역무원과 승객의 대화를 듣고 요금, 플랫폼 번호, 출발 시간을 파악해 보세요.",
+          estimatedMinutes: 7,
+          vocabHighlights: [
+            { word: "commute", meaning: "통근하다, 출퇴근하다", example: "I commute by subway every day." },
+            { word: "platform", meaning: "승강장, 플랫폼", example: "The express train leaves from Platform 3." }
+          ],
+          dialogue: [
+            {
+              speaker: "Passenger",
+              voicePitch: 0.9,
+              text: "Excuse me, I commute to the city center every day. Is there a weekly travel pass?",
+              ko: "실례합니다, 매일 시내로 출퇴근하는데 주간 정기 승차권이 있나요?"
+            },
+            {
+              speaker: "Staff",
+              voicePitch: 1.1,
+              text: "Yes! A seven-day city pass costs 28 dollars and allows unlimited rides.",
+              ko: "네! 7일 시내 정기권은 28달러이며 무제한 탑승이 가능합니다."
+            },
+            {
+              speaker: "Passenger",
+              voicePitch: 0.9,
+              text: "That sounds convenient. Which platform does the express train leave from?",
+              ko: "편리해 보이네요. 급행열차는 몇 번 승강장에서 출발하나요?"
+            },
+            {
+              speaker: "Staff",
+              voicePitch: 1.1,
+              text: "It leaves from Platform 3, right next to the ticket gate.",
+              ko: "개찰구 바로 옆에 있는 3번 승강장에서 출발합니다."
+            },
+            {
+              speaker: "Passenger",
+              voicePitch: 0.9,
+              text: "Great. And how often does the express train run in the morning?",
+              ko: "좋습니다. 그리고 아침에는 급행열차가 얼마나 자주 오나요?"
+            },
+            {
+              speaker: "Staff",
+              voicePitch: 1.1,
+              text: "It runs every ten minutes between 7 a.m. and 9 a.m.",
+              ko: "오전 7시에서 9시 사이에는 10분마다 운행합니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w3-mon-q1",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+              sentenceBefore: "A seven-day city pass costs",
+              sentenceAfter: "dollars.",
+              options: ["18", "24", "28", "38"],
+              answer: "28",
+              explanation: "역무원이 7일 시내 정기권 가격은 28달러(28 dollars)라고 말했습니다.",
+              translation: "7일 시내 정기권은 28달러입니다."
+            },
+            {
+              id: "w3-mon-q2",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+              sentenceBefore: "The express train leaves from",
+              sentenceAfter: ".",
+              options: ["Platform 1", "Platform 2", "Platform 3", "Platform 5"],
+              answer: "Platform 3",
+              explanation: "급행열차는 3번 승강장(Platform 3)에서 출발합니다.",
+              translation: "급행열차는 3번 승강장에서 출발합니다."
+            },
+            {
+              id: "w3-mon-q3",
+              type: "short",
+              prompt: "대화 스크립트 빈칸 채우기 (3/3) - 숫자로 입력하세요",
+              sentenceBefore: "It runs every",
+              sentenceAfter: "minutes between 7 a.m. and 9 a.m.",
+              placeholder: "숫자 입력 (예: 10)",
+              answer: "10",
+              acceptedAnswers: ["10", "ten"],
+              explanation: "오전 7시~9시 사이에는 10분(10 minutes)마다 운행합니다.",
+              translation: "오전 7시와 9시 사이에 10분마다 운행합니다."
+            }
+          ]
+        },
+        tue: {
+          dayKey: "tue",
+          dayLabel: "화",
+          dayFullLabel: "화요일",
+          skill: "Reading",
+          title: "도심에서 자전거 출퇴근이 늘어나는 이유",
+          description: "짧은 도시 교통 지문을 읽고 True/False/Not Given 및 동의어 문제를 풀어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "traffic", meaning: "교통, 차량 통행", example: "Cycling helps avoid heavy traffic." }
+          ],
+          passageTitle: "Why More Workers Are Cycling to Work",
+          sentences: [
+            {
+              en: "In many large cities, traffic congestion is a serious problem during the morning rush hour.",
+              ko: "많은 대도시에서 아침 출근 시간대의 교통 체증은 심각한 문제입니다."
+            },
+            {
+              en: "Driving a car to the office often takes a long time and costs a lot for parking.",
+              ko: "사무실까지 자가용을 운전해서 가는 것은 종종 시간이 오래 걸리고 주차 비용도 많이 듭니다."
+            },
+            {
+              en: "As a result, an increasing number of adults are choosing to ride bicycles to work.",
+              ko: "그 결과, 점점 더 많은 성인들이 직장에 갈 때 자전거를 타는 것을 선택하고 있습니다."
+            },
+            {
+              en: "City governments have also built safe bike lanes to encourage this healthy trend.",
+              ko: "시 정부들도 이 건강한 추세를 장려하기 위해 안전한 자전거 도로를 건설했습니다."
+            },
+            {
+              en: "Cycling not only saves money on fuel, but it also reduces air pollution in busy areas.",
+              ko: "자전거 타기는 연료비를 아낄 뿐만 아니라 번잡한 지역의 대기 오염도 줄여줍니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w3-tue-q1",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Parking a car in large cities is usually inexpensive.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "FALSE",
+              explanation: "2번째 문장에서 주차 비용이 많이 든다(costs a lot for parking)고 했으므로, 저렴하다는 진술은 FALSE입니다.",
+              translation: "대도시에서 자동차를 주차하는 것은 보통 저렴하다."
+            },
+            {
+              id: "w3-tue-q2",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Electric bicycles are more popular than regular bicycles in Europe.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "NOT GIVEN",
+              explanation: "지문에서는 전기 자전거(electric bicycles)나 유럽(Europe)에 대한 언급이 전혀 없으므로 NOT GIVEN입니다.",
+              translation: "유럽에서는 일반 자전거보다 전기 자전거가 더 인기가 많다."
+            },
+            {
+              id: "w3-tue-q3",
+              type: "mcq",
+              prompt: "핵심 동의어 찾기: 지문에서 'growing / getting bigger in number(점점 늘어나는)'를 뜻하는 단어는?",
+              statement: "Choose the word from the passage that means 'becoming larger in number or amount'.",
+              options: ["serious", "increasing", "safe", "busy"],
+              answer: "increasing",
+              explanation: "3번째 문장의 'an increasing number of adults(점점 늘어나는 수의 성인들)'에서 increasing이 '증가하는'이라는 뜻입니다.",
+              translation: "지문에서 '수나 양이 점점 늘어나는'이라는 뜻의 단어를 고르세요."
+            }
+          ]
+        },
+        wed: {
+          dayKey: "wed",
+          dayLabel: "수",
+          dayFullLabel: "수요일",
+          skill: "Writing",
+          title: "IELTS Task 1 미니 영작: 출퇴근 교통수단 비율 비교",
+          description: "간단한 수치 데이터를 보고 필수 영단어 3개를 포함해 2~3문장으로 비교 설명해 보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "popular", meaning: "인기 있는, 대중적인", example: "The subway was the most popular choice." }
+          ],
+          taskType: "Task 1 (간단한 수치 비교: 직장인 출퇴근 수단 — 지하철 55%, 자가용 30%, 자전거 15%)",
+          writingPrompt: "The chart shows how workers travel to work in a city: Subway (55%), Car (30%), and Bicycle (15%). Write 2–3 sentences comparing these numbers.",
+          writingPromptKo: "어느 도시 직장인들의 출근 교통수단 비율(지하철 55%, 자가용 30%, 자전거 15%)을 2~3문장으로 비교하여 작성해 보세요.",
+          requiredWords: [
+            { word: "popular", meaning: "인기 있는" },
+            { word: "while", meaning: "반면에" },
+            { word: "lowest", meaning: "가장 낮은" }
+          ],
+          sentencePatterns: [
+            "According to the chart, the subway is the most ... (차트에 따르면 지하철이 가장 ...합니다.)",
+            "About 30% of workers use a car, ... only 15% ride a bicycle. (약 30%는 자가용을 이용하고, ... 단 15%만이 자전거를 탑니다.)",
+            "Overall, cycling has the ... percentage. (전반적으로 자전거가 ... 비율을 보입니다.)"
+          ],
+          modelAnswer: "According to the chart, the subway is the most popular way to commute, at 55%. Around 30% of workers drive a car, while only 15% ride a bicycle. Overall, cycling has the lowest percentage among the three options.",
+          modelAnswerKo: "차트에 따르면 지하철은 55%로 가장 인기 있는 출근 수단입니다. 약 30%의 직장인은 자가용을 운전하는 반면, 단 15%만이 자전거를 탑니다. 전반적으로 세 가지 선택지 중 자전거가 가장 낮은 비율을 차지합니다.",
+          keyExpressions: [
+            { expr: "According to the chart,", desc: "차트에 따르면 (Task 1 핵심 시작 표현)" },
+            { expr: "while", desc: "~인 반면에 (두 수치를 대조할 때 필수)" },
+            { expr: "the lowest percentage", desc: "가장 낮은 비율" }
+          ]
+        },
+        thu: {
+          dayKey: "thu",
+          dayLabel: "목",
+          dayFullLabel: "목요일",
+          skill: "Speaking",
+          title: "IELTS Speaking Part 1: 대중교통과 이동",
+          description: "30초 동안 답변을 구상하고, 1분 동안 말한 뒤 원어민 모범 답변을 들어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "crowded", meaning: "붐비는, 혼잡한", example: "The subway is crowded in the morning." }
+          ],
+          questions: [
+            {
+              id: "w3-thu-q1",
+              questionNumber: 1,
+              question: "How do you usually travel to work or school?",
+              questionKo: "보통 직장이나 학교에 갈 때 어떤 교통수단을 이용하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "take the subway", ko: "지하철을 타다" },
+                { en: "about 30 minutes", ko: "약 30분" },
+                { en: "listen to a podcast", ko: "팟캐스트를 듣다" },
+                { en: "avoid traffic", ko: "교통 체증을 피하다" }
+              ],
+              modelAnswer: "I usually take the subway to work because it is fast and reliable. The trip takes about thirty minutes from my house to the office. During the ride, I often read news or listen to English audio.",
+              modelAnswerKo: "저는 빠르고 정확하기 때문에 보통 지하철을 타고 출근합니다. 집에서 사무실까지 약 30분 정도 걸립니다. 타는 동안에는 뉴스를 읽거나 영어 오디오를 자주 듣습니다.",
+              tip: "'It takes about ~ minutes'로 소요 시간을 말해주면 IELTS Part 1 답변이 매우 자연스러워집니다."
+            },
+            {
+              id: "w3-thu-q2",
+              questionNumber: 2,
+              question: "Do you prefer using public transport or driving a car?",
+              questionKo: "대중교통을 이용하는 것과 직접 운전하는 것 중 어느 쪽을 더 선호하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "public transport", ko: "대중교통" },
+                { en: "save on parking", ko: "주차비를 아끼다" },
+                { en: "crowded during rush hour", ko: "출근 시간에 붐비다" },
+                { en: "less stressful", ko: "스트레스가 덜한" }
+              ],
+              modelAnswer: "I prefer using public transport, especially the subway. Even though it can be crowded during rush hour, I do not have to worry about traffic or parking. It is also much cheaper and less stressful than driving.",
+              modelAnswerKo: "저는 대중교통, 특히 지하철을 이용하는 것을 선호합니다. 출퇴근 시간에는 붐빌 수 있지만, 교통 체증이나 주차 걱정을 할 필요가 없습니다. 또한 운전하는 것보다 훨씬 저렴하고 스트레스도 덜합니다.",
+              tip: "'Even though ~(비록 ~일지라도)'로 단점을 살짝 인정한 뒤 장점을 말하면 논리력이 돋보입니다."
+            }
+          ]
+        },
+        fri: {
+          dayKey: "fri",
+          dayLabel: "금",
+          dayFullLabel: "금요일",
+          skill: "Weekly Review",
+          title: "3주차 핵심 어휘 & 패턴 스피드 복습",
+          description: "3주차에 배운 교통·출퇴근 핵심 어휘 5개와 비교 표현을 퀴즈로 복습해 보세요.",
+          estimatedMinutes: 5,
+          reviewVocab: [
+            { word: "commute", meaning: "출퇴근하다", day: "월요일 Listening" },
+            { word: "platform", meaning: "승강장", day: "월요일 Listening" },
+            { word: "traffic", meaning: "교통, 차량 통행", day: "화요일 Reading" },
+            { word: "popular", meaning: "인기 있는", day: "수요일 Writing" },
+            { word: "crowded", meaning: "붐비는", day: "목요일 Speaking" }
+          ],
+          questions: [
+            {
+              id: "w3-fri-q1",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (1/5)",
+              prompt: "다음 중 '집과 직장 사이를 오가며 출퇴근하다'라는 뜻의 동사는?",
+              options: ["commute", "include", "relax", "prefer"],
+              answer: "commute",
+              explanation: "월요일 Listening에서 'I commute to the city center every day.'로 배웠습니다.",
+              translation: "commute = 통근하다, 출퇴근하다"
+            },
+            {
+              id: "w3-fri-q2",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (2/5)",
+              prompt: "기차나 지하철을 타는 '승강장'을 뜻하는 영어 단어는?",
+              options: ["parking", "platform", "pollution", "fuel"],
+              answer: "platform",
+              explanation: "'The express train leaves from Platform 3.'에서 platform이 승강장입니다.",
+              translation: "platform = 승강장, 플랫폼"
+            },
+            {
+              id: "w3-fri-q3",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (3/5)",
+              prompt: "빈칸에 알맞은 단어는? 'The subway can be very ______ during the morning rush hour.'",
+              options: ["crowded", "fresh", "simple", "lowest"],
+              answer: "crowded",
+              explanation: "출근 시간대(rush hour)에는 지하철이 매우 '붐빈다(crowded)'가 자연스럽습니다.",
+              translation: "아침 출근 시간에는 지하철이 매우 붐빌 수 있습니다."
+            },
+            {
+              id: "w3-fri-q4",
+              type: "short",
+              category: "문장 패턴 빈칸 채우기 (4/5)",
+              prompt: "빈칸에 알맞은 단어를 입력하세요. (힌트: 인기 있는)",
+              sentenceBefore: "The subway is the most",
+              sentenceAfter: "way to commute.",
+              placeholder: "단어 입력 (예: popular)",
+              answer: "popular",
+              acceptedAnswers: ["popular"],
+              explanation: "수요일 Writing에서 배운 '가장 인기 있는(the most popular)' 패턴입니다.",
+              translation: "지하철은 가장 인기 있는 출근 수단입니다."
+            },
+            {
+              id: "w3-fri-q5",
+              type: "mcq",
+              category: "문장 패턴 복습 (5/5)",
+              prompt: "화요일 Reading에서 '교통 체증'을 뜻할 때 함께 쓰인 핵심 명사는? '______ congestion'",
+              options: ["traffic", "membership", "habit", "opinion"],
+              answer: "traffic",
+              explanation: "'traffic congestion'은 IELTS에서 '교통 체증'을 뜻하는 필수 연어(Collocation)입니다.",
+              translation: "traffic congestion = 교통 체증"
+            }
+          ]
+        }
+      }
+    },
+
+    // ========================================================
+    // WEEK 4: 디지털 소통과 스마트 기기 활용
+    // ========================================================
+    {
+      weekNumber: 4,
+      title: "Week 4: 디지털 소통과 스마트 기기",
+      subtitle: "기술·소통 필수 어휘 및 4주 종합 마무리",
+      days: {
+        mon: {
+          dayKey: "mon",
+          dayLabel: "월",
+          dayFullLabel: "월요일",
+          skill: "Listening",
+          title: "모바일 요금제 변경 문의하기",
+          description: "통신사 고객센터 직원과 고객의 대화를 듣고 데이터 용량, 요금, 약정 조건을 파악해 보세요.",
+          estimatedMinutes: 7,
+          vocabHighlights: [
+            { word: "plan", meaning: "요금제, 계획", example: "I want to change my mobile plan." },
+            { word: "contract", meaning: "계약, 약정", example: "There is no long-term contract." }
+          ],
+          dialogue: [
+            {
+              speaker: "Agent",
+              voicePitch: 1.1,
+              text: "Hello, Star Mobile customer service. How may I assist you today?",
+              ko: "안녕하세요, 스타 모바일 고객센터입니다. 오늘 무엇을 도와드릴까요?"
+            },
+            {
+              speaker: "Jisoo",
+              voicePitch: 0.95,
+              text: "Hi, I'd like to upgrade my mobile data plan because I watch study videos on my phone.",
+              ko: "안녕하세요, 휴대폰으로 학습 영상을 봐서 모바일 데이터 요금제를 올리고 싶습니다."
+            },
+            {
+              speaker: "Agent",
+              voicePitch: 1.1,
+              text: "No problem. Our Smart Plan gives you 50 gigabytes of data for 32 dollars a month.",
+              ko: "문제없습니다. 스마트 요금제는 월 32달러에 50기가바이트의 데이터를 제공합니다."
+            },
+            {
+              speaker: "Jisoo",
+              voicePitch: 0.95,
+              text: "Does that require a two-year contract?",
+              ko: "그 요금제는 2년 약정이 필요한가요?"
+            },
+            {
+              speaker: "Agent",
+              voicePitch: 1.1,
+              text: "No, there is no contract, and you can cancel anytime. Your new plan will start on Friday.",
+              ko: "아니요, 약정은 없으며 언제든 해지할 수 있습니다. 새 요금제는 금요일부터 시작됩니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w4-mon-q1",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (1/3)",
+              sentenceBefore: "Our Smart Plan gives you",
+              sentenceAfter: "gigabytes of data.",
+              options: ["20", "30", "50", "100"],
+              answer: "50",
+              explanation: "상담원이 50기가바이트(50 gigabytes) 데이터를 제공한다고 안내했습니다.",
+              translation: "스마트 요금제는 50기가바이트의 데이터를 제공합니다."
+            },
+            {
+              id: "w4-mon-q2",
+              type: "mcq",
+              prompt: "대화 스크립트 빈칸 채우기 (2/3)",
+              sentenceBefore: "The monthly price is",
+              sentenceAfter: "dollars.",
+              options: ["22", "32", "42", "52"],
+              answer: "32",
+              explanation: "월 요금은 32달러(32 dollars a month)입니다.",
+              translation: "월 요금은 32달러입니다."
+            },
+            {
+              id: "w4-mon-q3",
+              type: "short",
+              prompt: "대화 스크립트 빈칸 채우기 (3/3) - 요일을 영어로 입력하세요",
+              sentenceBefore: "Your new plan will start on",
+              sentenceAfter: ".",
+              placeholder: "요일 입력 (예: Friday)",
+              answer: "Friday",
+              acceptedAnswers: ["friday"],
+              explanation: "새 요금제는 금요일(Friday)부터 시작됩니다.",
+              translation: "새 요금제는 금요일부터 시작됩니다."
+            }
+          ]
+        },
+        tue: {
+          dayKey: "tue",
+          dayLabel: "화",
+          dayFullLabel: "화요일",
+          skill: "Reading",
+          title: "스마트폰으로 읽는 전자책의 장단점",
+          description: "짧은 IT/독서 지문을 읽고 True/False/Not Given 및 동의어 문제를 풀어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "screen", meaning: "화면", example: "Reading on a bright screen can tire your eyes." }
+          ],
+          passageTitle: "Reading E-books on Smartphones",
+          sentences: [
+            {
+              en: "Today, millions of people read articles and e-books on their smartphones every day.",
+              ko: "오늘날 수백만 명의 사람들이 매일 스마트폰으로 기사와 전자책을 읽습니다."
+            },
+            {
+              en: "One clear advantage is that you can carry hundreds of books in your pocket wherever you go.",
+              ko: "한 가지 분명한 장점은 어디를 가든 주머니 속에 수백 권의 책을 가지고 다닐 수 있다는 것입니다."
+            },
+            {
+              en: "In addition, digital dictionaries allow readers to check unfamiliar words in just one second.",
+              ko: "게다가 디지털 사전은 독자들이 낯선 단어를 단 1초 만에 확인할 수 있게 해줍니다."
+            },
+            {
+              en: "On the other hand, looking at a bright screen for too long can cause eye strain.",
+              ko: "반면에, 밝은 화면을 너무 오래 보는 것은 눈의 피로를 유발할 수 있습니다."
+            },
+            {
+              en: "For this reason, many experts suggest taking a short break every thirty minutes.",
+              ko: "이러한 이유로 많은 전문가들은 30분마다 짧은 휴식을 취할 것을 제안합니다."
+            }
+          ],
+          questions: [
+            {
+              id: "w4-tue-q1",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Digital dictionaries make it slow to look up new words.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "FALSE",
+              explanation: "3번째 문장에서 디지털 사전은 단 1초 만에(in just one second) 단어를 확인할 수 있게 해준다고 했으므로, 느리다는 진술은 FALSE입니다.",
+              translation: "디지털 사전은 새 단어를 찾아보는 데 시간이 오래 걸리게 한다."
+            },
+            {
+              id: "w4-tue-q2",
+              type: "tfng",
+              prompt: "지문의 내용과 일치하면 TRUE, 반대되면 FALSE, 언급되지 않았으면 NOT GIVEN을 선택하세요.",
+              statement: "Paper books are more popular among teenagers than older adults.",
+              options: ["TRUE", "FALSE", "NOT GIVEN"],
+              answer: "NOT GIVEN",
+              explanation: "지문에는 십대와 노년층의 종이책 선호도를 비교한 내용이 전혀 나오지 않으므로 NOT GIVEN입니다.",
+              translation: "종이책은 노년층보다 십대들 사이에서 더 인기가 많다."
+            },
+            {
+              id: "w4-tue-q3",
+              type: "mcq",
+              prompt: "핵심 동의어 찾기: 지문에서 'not known or not seen before(낯선, 익숙하지 않은)'를 뜻하는 단어는?",
+              statement: "Choose the word from the passage that means 'new to you; not familiar'.",
+              options: ["clear", "unfamiliar", "bright", "digital"],
+              answer: "unfamiliar",
+              explanation: "3번째 문장의 'unfamiliar words(낯선 단어들)'에서 unfamiliar가 '익숙하지 않은'이라는 뜻입니다.",
+              translation: "지문에서 '새롭고 익숙하지 않은'이라는 뜻의 단어를 고르세요."
+            }
+          ]
+        },
+        wed: {
+          dayKey: "wed",
+          dayLabel: "수",
+          dayFullLabel: "수요일",
+          skill: "Writing",
+          title: "IELTS Task 2 미니 영작: 스마트폰 사용",
+          description: "주어진 필수 영단어 3개를 모두 포함하여 2~3문장으로 장단점을 서술해 보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "useful", meaning: "유용한", example: "Smartphones are very useful for learning." }
+          ],
+          taskType: "Task 2 (기술/스마트폰 장단점 쓰기)",
+          writingPrompt: "Smartphones have become an essential part of daily life. What are the advantages and disadvantages of using a smartphone?",
+          writingPromptKo: "스마트폰은 일상생활의 필수품이 되었습니다. 스마트폰 사용의 장점과 단점은 무엇인가요?",
+          requiredWords: [
+            { word: "useful", meaning: "유용한" },
+            { word: "communicate", meaning: "소통하다" },
+            { word: "however", meaning: "하지만" }
+          ],
+          sentencePatterns: [
+            "Smartphones are very ... because we can ... (스마트폰은 ~할 수 있기 때문에 매우 ...합니다.)",
+            "..., spending too much time on the screen can ... (..., 화면을 너무 오래 보는 것은 ...할 수 있습니다.)"
+          ],
+          modelAnswer: "Smartphones are very useful tools because they help us communicate with friends and learn new things anytime. However, spending too much time looking at the screen can be bad for our eyes and sleep.",
+          modelAnswerKo: "스마트폰은 언제든 친구들과 소통하고 새로운 것을 배우도록 도와주기 때문에 매우 유용한 도구입니다. 하지만 화면을 보며 너무 많은 시간을 보내는 것은 눈과 수면에 해로울 수 있습니다.",
+          keyExpressions: [
+            { expr: "useful tools", desc: "유용한 도구들" },
+            { expr: "communicate with ~", desc: "~와 소통하다" },
+            { expr: "However,", desc: "하지만, 그러나 (장점에서 단점으로 전환할 때 필수)" }
+          ]
+        },
+        thu: {
+          dayKey: "thu",
+          dayLabel: "목",
+          dayFullLabel: "목요일",
+          skill: "Speaking",
+          title: "IELTS Speaking Part 1: 스마트폰과 인터넷",
+          description: "30초 동안 답변을 구상하고, 1분 동안 말한 뒤 원어민 모범 답변을 들어보세요.",
+          estimatedMinutes: 8,
+          vocabHighlights: [
+            { word: "message", meaning: "메시지, 문자", example: "I send messages to my colleagues." }
+          ],
+          questions: [
+            {
+              id: "w4-thu-q1",
+              questionNumber: 1,
+              question: "How often do you use your smartphone?",
+              questionKo: "스마트폰을 얼마나 자주 사용하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "every day", ko: "매일" },
+                { en: "check emails", ko: "이메일을 확인하다" },
+                { en: "send messages", ko: "메시지를 보내다" },
+                { en: "study English", ko: "영어를 공부하다" }
+              ],
+              modelAnswer: "I use my smartphone every day for both work and personal life. In the morning, I check my messages and read the news on the bus. In the evening, I also use it to study English for ten minutes.",
+              modelAnswerKo: "저는 업무와 개인 생활 모두를 위해 매일 스마트폰을 사용합니다. 아침에는 버스에서 메시지를 확인하고 뉴스를 읽습니다. 저녁에는 10분 동안 영어를 공부하는 데도 사용합니다.",
+              tip: "'for both work and personal life(일과 개인 생활 모두를 위해)'는 성인 학습자가 쓰기 아주 좋은 만능 표현입니다."
+            },
+            {
+              id: "w4-thu-q2",
+              questionNumber: 2,
+              question: "Do you prefer calling people or sending text messages?",
+              questionKo: "전화로 통화하는 것과 문자 메시지를 보내는 것 중 어느 것을 더 선호하나요?",
+              prepSeconds: 30,
+              speakSeconds: 60,
+              hints: [
+                { en: "send text messages", ko: "문자 메시지를 보내다" },
+                { en: "quick and polite", ko: "빠르고 예의 바른" },
+                { en: "at the office", ko: "사무실에서" },
+                { en: "call in an emergency", ko: "급할 때 전화하다" }
+              ],
+              modelAnswer: "I usually prefer sending text messages because it is quick and does not disturb others. When I am at the office, texting is much easier than making a phone call. Of course, I still call people if something is urgent.",
+              modelAnswerKo: "저는 빠르고 다른 사람을 방해하지 않기 때문에 보통 문자 메시지를 보내는 것을 선호합니다. 사무실에 있을 때는 전화 통화보다 문자가 훨씬 쉽습니다. 물론 급한 일이 있으면 여전히 전화를 겁니다.",
+              tip: "두 가지 선택지를 비교할 때 '보통은 A를 선호하지만, 급할 때는 B를 쓴다'처럼 예외를 덧붙이면 답변이 풍부해집니다."
+            }
+          ]
+        },
+        fri: {
+          dayKey: "fri",
+          dayLabel: "금",
+          dayFullLabel: "금요일",
+          skill: "Weekly Review",
+          title: "4주차 핵심 어휘 & 4주 완성 스피드 복습",
+          description: "4주차에 배운 디지털·소통 핵심 어휘 5개와 문장 연결 표현을 최종 복습해 보세요.",
+          estimatedMinutes: 5,
+          reviewVocab: [
+            { word: "plan", meaning: "요금제, 계획", day: "월요일 Listening" },
+            { word: "contract", meaning: "계약, 약정", day: "월요일 Listening" },
+            { word: "unfamiliar", meaning: "낯선, 익숙하지 않은", day: "화요일 Reading" },
+            { word: "communicate", meaning: "소통하다", day: "수요일 Writing" },
+            { word: "useful", meaning: "유용한", day: "수요일 Writing" }
+          ],
+          questions: [
+            {
+              id: "w4-fri-q1",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (1/5)",
+              prompt: "통신사 등에서 '약정, 계약'을 뜻하는 영어 단어는?",
+              options: ["contract", "screen", "message", "pocket"],
+              answer: "contract",
+              explanation: "월요일 Listening에서 'a two-year contract(2년 약정)'으로 배웠습니다.",
+              translation: "contract = 계약, 약정"
+            },
+            {
+              id: "w4-fri-q2",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (2/5)",
+              prompt: "다음 중 'unfamiliar'의 뜻으로 가장 알맞은 것은?",
+              options: ["낯선, 익숙하지 않은", "유용한", "빠른", "무료의"],
+              answer: "낯선, 익숙하지 않은",
+              explanation: "화요일 Reading에서 'check unfamiliar words(낯선 단어를 확인하다)'로 등장했습니다.",
+              translation: "unfamiliar = 낯선, 익숙하지 않은"
+            },
+            {
+              id: "w4-fri-q3",
+              type: "mcq",
+              category: "어휘 뜻 매칭 (3/5)",
+              prompt: "빈칸에 알맞은 단어는? 'Smartphones help us ______ with friends anytime.'",
+              options: ["communicate", "cancel", "cause", "upgrade"],
+              answer: "communicate",
+              explanation: "'communicate with ~(와 소통하다)'는 IELTS Writing/Speaking 핵심 동사입니다.",
+              translation: "스마트폰은 우리가 언제든 친구들과 소통하도록 도와줍니다."
+            },
+            {
+              id: "w4-fri-q4",
+              type: "short",
+              category: "문장 패턴 빈칸 채우기 (4/5)",
+              prompt: "빈칸에 알맞은 단어를 입력하세요. (힌트: 유용한)",
+              sentenceBefore: "Digital dictionaries are very",
+              sentenceAfter: "for English learners.",
+              placeholder: "단어 입력 (예: useful)",
+              answer: "useful",
+              acceptedAnswers: ["useful"],
+              explanation: "수요일 Writing에서 배운 '유용한'을 뜻하는 형용사 useful입니다.",
+              translation: "디지털 사전은 영어 학습자들에게 매우 유용합니다."
+            },
+            {
+              id: "w4-fri-q5",
+              type: "mcq",
+              category: "문장 패턴 복습 (5/5)",
+              prompt: "장점에서 단점으로 이야기를 전환할 때 가장 적절한 연결 부사는?",
+              options: ["However", "Because", "First", "Inside"],
+              answer: "However",
+              explanation: "'However,(하지만)'는 앞 문장과 반대되는 단점이나 다른 의견을 이어줄 때 필수입니다.",
+              translation: "However = 하지만, 그러나"
+            }
+          ]
+        }
+      }
     }
   ],
   vocabularyDict: {

@@ -372,6 +372,26 @@ body {
   color: #6ee7b7;
 }
 
+.day-tab.locked {
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
+.day-tab.locked:hover {
+  border-color: var(--border-color);
+}
+
+.day-tab.locked::after {
+  content: "🔒";
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  font-size: 0.65rem;
+}
+
 /* =========================================
    Completion Banner
    ========================================= */

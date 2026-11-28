@@ -132,7 +132,6 @@
   const weeklyGoalSub = document.getElementById("weeklyGoalSub");
   const weeklyProgressBarTrack = document.getElementById("weeklyProgressBarTrack");
   const weeklyProgressBarFill = document.getElementById("weeklyProgressBarFill");
-  const streakBadgesEl = document.getElementById("streakBadges");
 
   const wrongNotesToggleBtn = document.getElementById("wrongNotesToggleBtn");
   const wrongCountBadge = document.getElementById("wrongCountBadge");
@@ -147,6 +146,7 @@
   const completionDayScore = document.getElementById("completionDayScore");
   const completionWeeklyRate = document.getElementById("completionWeeklyRate");
   const nextDayBtn = document.getElementById("nextDayBtn");
+  const nextWeekBtn = document.getElementById("nextWeekBtn");
   const lessonContainer = document.getElementById("lessonContainer");
 
   const wordDictBackdrop = document.getElementById("wordDictBackdrop");
@@ -264,6 +264,7 @@
     appState = normalizeState(remoteData);
     currentWeekNumber = appState.lastWeekNumber;
     currentDayKey = appState.lastDayKey;
+    ensureValidUnlockedSelection();
     saveState(true); // Save locally without re-pushing
 
     renderWeekSelector();
@@ -1346,25 +1347,59 @@
     return { completedCount, total: DAY_ORDER.length, percent };
   }
 
+  function isWeekCompleted(weekNum) {
+    return DAY_ORDER.every(
+      (dKey) => !!appState.completedDays[getDayStorageKey(weekNum, dKey)]
+    );
+  }
+
+  function isWeekUnlocked(weekNum) {
+    if (weekNum <= 1) return true;
+    return isWeekCompleted(weekNum - 1);
+  }
+
+  function isDayUnlocked(weekNum, dayKey) {
+    if (!isWeekUnlocked(weekNum)) return false;
+    const idx = DAY_ORDER.indexOf(dayKey);
+    if (idx <= 0) return true;
+    const prevDayKey = DAY_ORDER[idx - 1];
+    return (
+      isDayUnlocked(weekNum, prevDayKey) &&
+      !!appState.completedDays[getDayStorageKey(weekNum, prevDayKey)]
+    );
+  }
+
+  function ensureValidUnlockedSelection() {
+    if (!isWeekUnlocked(currentWeekNumber)) {
+      const unlockedWeeks = curriculumData.weeks.filter((w) =>
+        isWeekUnlocked(w.weekNumber)
+      );
+      currentWeekNumber =
+        unlockedWeeks.length > 0
+          ? unlockedWeeks[unlockedWeeks.length - 1].weekNumber
+          : curriculumData.weeks[0].weekNumber;
+      appState.lastWeekNumber = currentWeekNumber;
+    }
+
+    if (!isDayUnlocked(currentWeekNumber, currentDayKey)) {
+      const firstIncompleteUnlocked =
+        DAY_ORDER.find(
+          (dKey) =>
+            isDayUnlocked(currentWeekNumber, dKey) &&
+            !appState.completedDays[getDayStorageKey(currentWeekNumber, dKey)]
+        ) || "mon";
+      currentDayKey = firstIncompleteUnlocked;
+      appState.lastDayKey = currentDayKey;
+    }
+  }
+
   function renderProgressAndStreak() {
-    const week = getCurrentWeek();
     const { completedCount, percent } = getWeeklyCompletionStats();
 
     streakCountText.textContent = `${completedCount}일`;
-    weeklyGoalSub.textContent = `이번 주 목표 달성률 ${percent}% (${completedCount}/5일)`;
+    weeklyGoalSub.textContent = `Week ${currentWeekNumber} 달성률 ${percent}% (${completedCount}/5일)`;
     weeklyProgressBarTrack.setAttribute("aria-valuenow", String(percent));
     weeklyProgressBarFill.style.width = `${percent}%`;
-
-    streakBadgesEl.innerHTML = DAY_ORDER.map((dKey) => {
-      const dayObj = week.days[dKey];
-      const isDone = !!appState.completedDays[getDayStorageKey(week.weekNumber, dKey)];
-      return `
-        <div class="streak-badge-item ${isDone ? "done" : ""}">
-          <span class="badge-icon">${isDone ? "✅" : "○"}</span>
-          <span>${dayObj.dayLabel}</span>
-        </div>
-      `;
-    }).join("");
 
     wrongCountBadge.textContent = String(appState.wrongNotes.length);
   }
@@ -1428,21 +1463,32 @@
   });
 
   // =========================================
-  // Week Selector & Day Tabs
+  // Week Selector & Day Tabs (Unified + Sequential Lock)
   // =========================================
   function renderWeekSelector() {
     weekSelector.innerHTML = curriculumData.weeks
-      .map(
-        (w) =>
-          `<option value="${w.weekNumber}" ${w.weekNumber === currentWeekNumber ? "selected" : ""}>${escapeHtml(w.title)}</option>`
-      )
+      .map((w) => {
+        const unlocked = isWeekUnlocked(w.weekNumber);
+        const completed = isWeekCompleted(w.weekNumber);
+        const prefix = completed ? "✅ " : unlocked ? "" : "🔒 ";
+        const suffix = unlocked ? "" : " (이전 주차 완료 시 해금)";
+        return `<option value="${w.weekNumber}" ${w.weekNumber === currentWeekNumber ? "selected" : ""} ${unlocked ? "" : "disabled"}>${prefix}${escapeHtml(w.title)}${suffix}</option>`;
+      })
       .join("");
   }
 
   weekSelector.addEventListener("change", (e) => {
-    currentWeekNumber = Number(e.target.value);
+    const targetWeek = Number(e.target.value);
+    if (!isWeekUnlocked(targetWeek)) {
+      alert("이전 주차의 월~금 학습을 모두 완료해야 다음 주차로 이동할 수 있습니다.");
+      renderWeekSelector();
+      return;
+    }
+    currentWeekNumber = targetWeek;
     appState.lastWeekNumber = currentWeekNumber;
+    ensureValidUnlockedSelection();
     saveState();
+    renderProgressAndStreak();
     switchDay(currentDayKey);
   });
 
@@ -1452,12 +1498,15 @@
       const day = week.days[dKey];
       const isActive = dKey === currentDayKey;
       const isCompleted = !!appState.completedDays[getDayStorageKey(week.weekNumber, dKey)];
+      const isUnlocked = isDayUnlocked(week.weekNumber, dKey);
       return `
         <button
           type="button"
-          class="day-tab ${isActive ? "active" : ""} ${isCompleted ? "completed" : ""}"
+          class="day-tab ${isActive ? "active" : ""} ${isCompleted ? "completed" : ""} ${isUnlocked ? "" : "locked"}"
           data-day="${dKey}"
+          data-unlocked="${isUnlocked}"
           aria-pressed="${isActive}"
+          title="${isUnlocked ? `${day.dayFullLabel} (${day.skill})` : "이전 요일을 완료하면 열립니다"}"
         >
           <span class="day-tab-label">${day.dayLabel}</span>
           <span class="day-tab-skill">${day.skill}</span>
@@ -1467,12 +1516,20 @@
 
     dayTabsEl.querySelectorAll(".day-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (btn.dataset.unlocked !== "true") {
+          alert("이전 요일의 학습을 100% 완료해야 다음 요일이 열립니다!");
+          return;
+        }
         switchDay(btn.dataset.day);
       });
     });
   }
 
   function switchDay(dayKey) {
+    if (!isDayUnlocked(currentWeekNumber, dayKey)) {
+      alert("이전 요일의 학습을 100% 완료해야 다음 요일이 열립니다!");
+      return;
+    }
     stopAllSpeech();
     if (activeSpeakingTimerId) {
       clearInterval(activeSpeakingTimerId);
@@ -1481,6 +1538,8 @@
     currentDayKey = dayKey;
     appState.lastDayKey = dayKey;
     saveState();
+    renderWeekSelector();
+    renderProgressAndStreak();
     renderDayTabs();
     renderLesson();
     updateCompletionBanner();
@@ -1505,6 +1564,7 @@
     if (isDone) {
       appState.completedDays[dayStorageKey] = true;
       saveState();
+      renderWeekSelector();
       renderProgressAndStreak();
       renderDayTabs();
     }
@@ -1523,6 +1583,11 @@
     }
 
     const { completedCount, total, percent } = getWeeklyCompletionStats();
+    const weekFinished = isWeekCompleted(week.weekNumber);
+    const nextWeekObj = curriculumData.weeks.find(
+      (w) => w.weekNumber === week.weekNumber + 1
+    );
+
     completionBanner.classList.remove("hidden");
 
     if (dayData.questions && dayData.dayKey !== "thu") {
@@ -1534,19 +1599,32 @@
       completionDayScore.textContent = `${dayData.dayFullLabel} (${dayData.skill}) 완료`;
     }
 
-    completionWeeklyRate.textContent = `주간 달성률: ${percent}% (${completedCount}/${total}일)`;
-    completionMessage.textContent =
-      completedCount === total
-        ? "이번 주 월~금 모든 학습을 완주했습니다! 정말 대단해요!"
-        : "꾸준한 매일 10분이 IELTS 4.5~5.0 달성의 가장 빠른 길입니다.";
+    completionWeeklyRate.textContent = `Week ${week.weekNumber} 달성률: ${percent}% (${completedCount}/${total}일)`;
+    if (weekFinished && !nextWeekObj) {
+      completionMessage.textContent =
+        "축하합니다! 4주 전체 IELTS 4.5~5.0 커리큘럼을 모두 완주했습니다!";
+    } else if (weekFinished) {
+      completionMessage.textContent =
+        `Week ${week.weekNumber} 월~금 학습을 모두 완주했습니다! 다음 주차로 넘어가 보세요.`;
+    } else {
+      completionMessage.textContent =
+        "꾸준한 매일 10분이 IELTS 4.5~5.0 달성의 가장 빠른 길입니다.";
+    }
 
     const currentIdx = DAY_ORDER.indexOf(currentDayKey);
     if (currentIdx < DAY_ORDER.length - 1) {
       nextDayBtn.classList.remove("hidden");
       const nextDay = week.days[DAY_ORDER[currentIdx + 1]];
       nextDayBtn.textContent = `${nextDay.dayFullLabel} (${nextDay.skill}) 보기 →`;
+      nextWeekBtn.classList.add("hidden");
     } else {
       nextDayBtn.classList.add("hidden");
+      if (weekFinished && nextWeekObj) {
+        nextWeekBtn.classList.remove("hidden");
+        nextWeekBtn.textContent = `다음 주차로 이동하기 (Week ${nextWeekObj.weekNumber}) →`;
+      } else {
+        nextWeekBtn.classList.add("hidden");
+      }
     }
   }
 
@@ -1556,6 +1634,27 @@
       switchDay(DAY_ORDER[idx + 1]);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  });
+
+  nextWeekBtn.addEventListener("click", () => {
+    const nextWeekNum = currentWeekNumber + 1;
+    if (!isWeekUnlocked(nextWeekNum)) {
+      alert("현재 주차의 모든 요일을 완료해야 다음 주차로 이동할 수 있습니다.");
+      return;
+    }
+    const nextWeekObj = curriculumData.weeks.find(
+      (w) => w.weekNumber === nextWeekNum
+    );
+    if (!nextWeekObj) return;
+
+    currentWeekNumber = nextWeekNum;
+    currentDayKey = "mon";
+    appState.lastWeekNumber = currentWeekNumber;
+    appState.lastDayKey = currentDayKey;
+    saveState();
+
+    switchDay("mon");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
   // =========================================
@@ -2128,6 +2227,7 @@
       }
     });
 
+    ensureValidUnlockedSelection();
     renderWeekSelector();
     renderProgressAndStreak();
     renderDayTabs();

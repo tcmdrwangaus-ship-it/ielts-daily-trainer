@@ -82,12 +82,9 @@
         </div>
 
         <!-- 주간 달성률 프로그레스 바 -->
-        <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="weeklyProgressBarTrack">
+        <div class="progress-bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="weeklyProgressBarTrack" style="margin-bottom: 0;">
           <div id="weeklyProgressBarFill" class="progress-bar-fill" style="width: 0%;"></div>
         </div>
-
-        <!-- 월~금 출석 뱃지 -->
-        <div id="streakBadges" class="streak-badges"></div>
       </section>
 
       <!-- 오답 기록 드로어 (토글) -->
@@ -102,7 +99,7 @@
         <div id="wrongNotesList" class="wrong-notes-list"></div>
       </section>
 
-      <!-- 요일별 맞춤 커리큘럼 탭 [월 / 화 / 수 / 목 / 금] -->
+      <!-- 통합 요일별 학습 & 출석 메뉴 [월 / 화 / 수 / 목 / 금] -->
       <nav class="day-tabs" id="dayTabs" aria-label="요일별 학습 메뉴"></nav>
 
       <!-- 오늘의 학습 완료 피드백 배너 -->
@@ -117,6 +114,7 @@
           </div>
         </div>
         <button id="nextDayBtn" class="primary-btn" type="button">다음 요일 보기 →</button>
+        <button id="nextWeekBtn" class="emerald-btn hidden" type="button">다음 주차로 이동하기 →</button>
       </section>
 
       <!-- 메인 학습 콘텐츠 영역 -->
